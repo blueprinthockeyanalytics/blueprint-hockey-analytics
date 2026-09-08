@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Player Reports — Blueprint Hockey</title>
+<link rel="stylesheet" href="shared.css?v=2">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+body { background: #fff; margin: 0; }
+.pr-hero { background: #041E42; padding: 56px 24px 64px; position: relative; overflow: hidden; }
+.pr-hero-inner { max-width: 1080px; margin: 0 auto; display: flex; align-items: center; gap: 48px; }
+.pr-hero-text { flex: 1; min-width: 280px; }
+.pr-kicker { font-family: 'Inter',sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #F5C518; margin-bottom: 12px; }
+.pr-h1 { font-family: 'Barlow Condensed',sans-serif; font-weight: 900; font-size: 44px; line-height: 1.05; color: #fff; letter-spacing: -0.5px; margin: 0 0 16px; }
+.pr-sub { font-family: 'Inter',sans-serif; font-size: 16px; line-height: 1.6; color: #B9C4D6; max-width: 480px; margin: 0 0 28px; }
+.pr-cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.pr-btn { font-family: 'Inter',sans-serif; font-size: 14px; font-weight: 700; padding: 13px 26px; border-radius: 8px; cursor: pointer; text-decoration: none; display: inline-block; border: none; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+.pr-btn-primary { background: #F5C518; color: #041E42; box-shadow: 0 4px 14px rgba(245,197,24,0.3); }
+.pr-btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(245,197,24,0.4); }
+.pr-btn-ghost { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.3); }
+.pr-btn-ghost:hover { border-color: #fff; }
+.pr-hero-img-wrap { flex-shrink: 0; position: relative; }
+.pr-hero-img-wrap img { width: 240px; border-radius: 10px; box-shadow: 0 24px 60px rgba(0,0,0,0.45); transform: rotate(3deg); display: block; cursor: pointer; transition: transform 0.2s ease; }
+.pr-hero-img-wrap img:hover { transform: rotate(1deg) scale(1.02); }
+
+.pr-section { max-width: 1080px; margin: 0 auto; padding: 64px 24px; }
+.pr-section-label { font-family: 'Inter',sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #9AA5B8; margin-bottom: 10px; }
+.pr-h2 { font-family: 'Barlow Condensed',sans-serif; font-weight: 900; font-size: 32px; color: #041E42; letter-spacing: -0.3px; margin: 0 0 12px; }
+.pr-p { font-family: 'Inter',sans-serif; font-size: 15px; line-height: 1.65; color: #4A5568; max-width: 640px; }
+
+.pr-examples { display: flex; gap: 28px; margin-top: 36px; flex-wrap: wrap; }
+.pr-example-card { flex: 1; min-width: 260px; max-width: 340px; }
+.pr-example-card img { width: 100%; border-radius: 10px; box-shadow: 0 8px 28px rgba(4,30,66,0.14); cursor: pointer; display: block; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+.pr-example-card img:hover { transform: translateY(-4px); box-shadow: 0 14px 36px rgba(4,30,66,0.2); }
+.pr-example-caption { font-family: 'Inter',sans-serif; font-size: 13px; color: #6B7686; margin-top: 10px; text-align: center; }
+.pr-example-caption strong { color: #041E42; }
+.pr-privacy-note { font-family: 'Inter',sans-serif; font-size: 12px; color: #9AA5B8; margin-top: 20px; font-style: italic; }
+
+.pr-value-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 36px; }
+.pr-value-box { background: #F7F8FA; border-radius: 12px; padding: 24px 22px; }
+.pr-value-icon { font-size: 22px; margin-bottom: 10px; }
+.pr-value-title { font-family: 'Inter',sans-serif; font-weight: 700; font-size: 15px; color: #041E42; margin-bottom: 6px; }
+.pr-value-desc { font-family: 'Inter',sans-serif; font-size: 13.5px; line-height: 1.55; color: #6B7686; }
+
+.pr-steps { counter-reset: pr-step; margin-top: 36px; display: flex; flex-direction: column; gap: 0; }
+.pr-step { display: flex; gap: 20px; padding: 20px 0; border-bottom: 1px solid #EEF0F3; }
+.pr-step:last-child { border-bottom: none; }
+.pr-step-num { counter-increment: pr-step; font-family: 'Barlow Condensed',sans-serif; font-weight: 900; font-size: 28px; color: #F5C518; width: 44px; flex-shrink: 0; }
+.pr-step-num::before { content: counter(pr-step); }
+.pr-step-title { font-family: 'Inter',sans-serif; font-weight: 700; font-size: 15px; color: #041E42; margin-bottom: 4px; }
+.pr-step-desc { font-family: 'Inter',sans-serif; font-size: 13.5px; color: #6B7686; line-height: 1.5; }
+
+.pr-guide-row { display: flex; gap: 32px; align-items: center; margin-top: 32px; flex-wrap: wrap; }
+.pr-guide-row img { width: 260px; border-radius: 10px; box-shadow: 0 8px 28px rgba(4,30,66,0.14); cursor: pointer; flex-shrink: 0; }
+
+.pr-quote-section { background: #F7F8FA; }
+.pr-form { max-width: 560px; margin-top: 28px; display: flex; flex-direction: column; gap: 14px; }
+.pr-form-row { display: flex; gap: 14px; flex-wrap: wrap; }
+.pr-form-row > div { flex: 1; min-width: 200px; }
+.pr-label { font-family: 'Inter',sans-serif; font-size: 12px; font-weight: 700; color: #041E42; margin-bottom: 6px; display: block; }
+.pr-input, .pr-textarea, .pr-select { width: 100%; font-family: 'Inter',sans-serif; font-size: 14px; padding: 11px 13px; border: 1.5px solid #DDE2E8; border-radius: 8px; box-sizing: border-box; background: #fff; }
+.pr-input:focus, .pr-textarea:focus, .pr-select:focus { outline: none; border-color: #041E42; }
+.pr-textarea { resize: vertical; min-height: 100px; font-family: 'Inter',sans-serif; }
+.pr-submit { align-self: flex-start; margin-top: 6px; }
+.pr-form-note { font-family: 'Inter',sans-serif; font-size: 12px; color: #9AA5B8; margin-top: 4px; }
+.pr-success { display: none; font-family: 'Inter',sans-serif; background: #E8F5EE; color: #1a7a3c; padding: 16px 18px; border-radius: 8px; font-size: 14px; font-weight: 600; margin-top: 16px; }
+
+.pr-lightbox { display: none; position: fixed; inset: 0; background: rgba(4,30,66,0.9); z-index: 999; align-items: center; justify-content: center; padding: 32px; cursor: zoom-out; }
+.pr-lightbox.open { display: flex; }
+.pr-lightbox img { max-width: 100%; max-height: 100%; border-radius: 8px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+.pr-lightbox-close { position: absolute; top: 20px; right: 28px; color: #fff; font-size: 28px; cursor: pointer; font-family: 'Inter',sans-serif; }
+
+@media (max-width: 720px) {
+  .pr-hero-inner { flex-direction: column; text-align: center; }
+  .pr-hero-text { order: 2; }
+  .pr-hero-img-wrap { order: 1; }
+  .pr-h1 { font-size: 32px; }
+  .pr-value-grid { grid-template-columns: 1fr; }
+  .pr-cta-row { justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<div id="nav-placeholder"></div>
+
+<div class="pr-hero">
+  <div class="pr-hero-inner">
+    <div class="pr-hero-text">
+      <div class="pr-kicker">Custom Player Reports</div>
+      <h1 class="pr-h1">Your game, broken down like a pro scout would do it.</h1>
+      <p class="pr-sub">A personalized analytics report on your season — shot locations, zone entries, puck battles, and everything else that doesn't show up in the box score. We pair the model with direct video review, using tools such as InStat and FloHockey, and deliver it built to order.</p>
+      <div class="pr-cta-row">
+        <a href="#pr-quote" class="pr-btn pr-btn-primary">Get a Quote</a>
+        <a href="#pr-examples" class="pr-btn pr-btn-ghost">See Examples</a>
+      </div>
+    </div>
+    <div class="pr-hero-img-wrap">
+      <img src="assets/sample-forward-web.jpg" data-full="assets/sample-forward-full.jpg" alt="Sample player report">
+    </div>
+  </div>
+</div>
+
+<div class="pr-section" id="pr-examples">
+  <div class="pr-section-label">Real Examples</div>
+  <h2 class="pr-h2">See what you get</h2>
+  <p class="pr-p">Two real reports we've built — names and identifying details blurred for privacy. Click either one to view full size.</p>
+  <div class="pr-examples">
+    <div class="pr-example-card">
+      <img src="assets/sample-forward-web.jpg" data-full="assets/sample-forward-full.jpg" alt="Forward sample report">
+      <div class="pr-example-caption">Forward — <strong>43 goals</strong>, full offensive zone breakdown</div>
+    </div>
+    <div class="pr-example-card">
+      <img src="assets/sample-defenseman-web.jpg" data-full="assets/sample-defenseman-full.jpg" alt="Defenseman sample report">
+      <div class="pr-example-caption">Defenseman — <strong>NHL veteran</strong>, full defensive zone breakdown</div>
+    </div>
+  </div>
+  <div class="pr-privacy-note">Player identities are blurred on all public examples out of respect for client privacy. Your report is yours — never shared without permission.</div>
+</div>
+
+<div class="pr-section" style="padding-top:0;">
+  <div class="pr-section-label">What's Included</div>
+  <h2 class="pr-h2">Every angle of your game, in one report</h2>
+  <div class="pr-value-grid">
+    <div class="pr-value-box">
+      <div class="pr-value-icon">🎯</div>
+      <div class="pr-value-title">Shot & Zone Maps</div>
+      <div class="pr-value-desc">Every shot, scoring chance, and zone entry plotted and broken down by location and outcome.</div>
+    </div>
+    <div class="pr-value-box">
+      <div class="pr-value-icon">📊</div>
+      <div class="pr-value-title">Percentile Rankings</div>
+      <div class="pr-value-desc">Every stat compared against teammates at your position — see exactly where you stand, strength by strength.</div>
+    </div>
+    <div class="pr-value-box">
+      <div class="pr-value-icon">📝</div>
+      <div class="pr-value-title">Written Season Summary</div>
+      <div class="pr-value-desc">A real, honest breakdown of your strengths and development areas — not just numbers, context on what they mean.</div>
+    </div>
+  </div>
+</div>
+
+<div class="pr-section" style="padding-top:0;">
+  <div class="pr-section-label">How It Works</div>
+  <h2 class="pr-h2">From request to report</h2>
+  <div class="pr-steps">
+    <div class="pr-step">
+      <div class="pr-step-num"></div>
+      <div>
+        <div class="pr-step-title">Submit your request</div>
+        <div class="pr-step-desc">Tell us who the report is for and what league/level they play in — takes two minutes.</div>
+      </div>
+    </div>
+    <div class="pr-step">
+      <div class="pr-step-num"></div>
+      <div>
+        <div class="pr-step-title">We confirm scope and quote</div>
+        <div class="pr-step-desc">We'll follow up by email with pricing and turnaround based on your specific request.</div>
+      </div>
+    </div>
+    <div class="pr-step">
+      <div class="pr-step-num"></div>
+      <div>
+        <div class="pr-step-title">We build your report</div>
+        <div class="pr-step-desc">Every shift is tracked and charted, then compiled into your personalized report.</div>
+      </div>
+    </div>
+    <div class="pr-step">
+      <div class="pr-step-num"></div>
+      <div>
+        <div class="pr-step-title">Delivered straight to you</div>
+        <div class="pr-step-desc">A polished, print-ready report, delivered digitally — yours to keep, share, or send to coaches and scouts.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="pr-section" style="padding-top:0;">
+  <div class="pr-section-label">Reading Your Report</div>
+  <h2 class="pr-h2">Every stat, explained</h2>
+  <p class="pr-p">Every report comes with a full glossary so nothing on the page is a mystery — what each stat means, how percentiles are calculated, and how to read the color coding at a glance.</p>
+  <div class="pr-guide-row">
+    <img src="assets/card-guide-web.jpg" data-full="assets/card-guide-full.jpg" alt="Analytics card guide">
+    <p class="pr-p" style="margin:0;">From basic stats to zone entries, puck battles, and expected goals — the guide breaks down exactly what you're looking at, stat by stat, so you can read your report the same way we do.</p>
+  </div>
+</div>
+
+<div class="pr-section pr-quote-section" id="pr-quote">
+  <div class="pr-section-label">Get Started</div>
+  <h2 class="pr-h2">Request a quote</h2>
+  <p class="pr-p">Tell us a bit about who the report is for, and we'll follow up by email with pricing and next steps.</p>
+
+  <form class="pr-form" id="pr-quote-form" action="https://formspree.io/f/xdenjobo" method="POST">
+    <div class="pr-form-row">
+      <div>
+        <label class="pr-label" for="pr-name">Your Name</label>
+        <input class="pr-input" type="text" id="pr-name" name="name" required>
+      </div>
+      <div>
+        <label class="pr-label" for="pr-email">Email</label>
+        <input class="pr-input" type="email" id="pr-email" name="email" required>
+      </div>
+    </div>
+    <div class="pr-form-row">
+      <div>
+        <label class="pr-label" for="pr-player">Player Name</label>
+        <input class="pr-input" type="text" id="pr-player" name="player_name" required>
+      </div>
+      <div>
+        <label class="pr-label" for="pr-team">Team</label>
+        <input class="pr-input" type="text" id="pr-team" name="team" placeholder="Current team/club name">
+      </div>
+      <div>
+        <label class="pr-label" for="pr-level">League / Level</label>
+        <input class="pr-input" type="text" id="pr-level" name="league_level" placeholder="e.g. U13, U15, U18, Junior, College, Pro" required>
+      </div>
+    </div>
+    <div>
+      <label class="pr-label" for="pr-details">Anything else we should know?</label>
+      <textarea class="pr-textarea" id="pr-details" name="details" placeholder="Timeline, specific games/season, or anything else useful for a quote"></textarea>
+    </div>
+    <button type="submit" class="pr-btn pr-btn-primary pr-submit">Request Quote</button>
+    <div class="pr-form-note">We'll get back to you by email, typically within 1-2 business days.</div>
+    <div class="pr-success" id="pr-success">Thanks — your request is in. We'll follow up by email shortly.</div>
+  </form>
+</div>
+
+<div class="bp-footer">
+  <strong>Blueprint Hockey</strong> &middot; blueprinthockeyanalytics.com
+</div>
+
+<div class="pr-lightbox" id="pr-lightbox">
+  <span class="pr-lightbox-close">&times;</span>
+  <img id="pr-lightbox-img" src="" alt="">
+</div>
+
+<script src="nav-search.js?v=2"></script>
+<script>
+fetch('nav.html').then(r => r.text()).then(html => {
+  document.getElementById('nav-placeholder').innerHTML = html;
+  document.querySelector('[data-nav="player-reports"]')?.classList.add('active');
+  bpInitNavSearch();
+});
+
+// Lightbox
+const lightbox = document.getElementById('pr-lightbox');
+const lightboxImg = document.getElementById('pr-lightbox-img');
+document.querySelectorAll('img[data-full]').forEach(img => {
+  img.addEventListener('click', () => {
+    lightboxImg.src = img.getAttribute('data-full');
+    lightbox.classList.add('open');
+  });
+});
+lightbox.addEventListener('click', () => lightbox.classList.remove('open'));
+
+// Form submit via fetch so we can show an inline success message instead of
+// a redirect (Formspree supports this via the Accept: application/json header)
+const form = document.getElementById('pr-quote-form');
+form.addEventListener('submit', function(e) {
+  e.preventDefault();
+  const data = new FormData(form);
+  fetch(form.action, {
+    method: 'POST',
+    body: data,
+    headers: { 'Accept': 'application/json' }
+  }).then(response => {
+    if (response.ok) {
+      form.style.display = 'none';
+      document.getElementById('pr-success').style.display = 'block';
+    } else {
+      alert('Something went wrong submitting your request — please try again or email us directly.');
+    }
+  }).catch(() => {
+    alert('Something went wrong submitting your request — please try again or email us directly.');
+  });
+});
+</script>
+</body>
+</html>

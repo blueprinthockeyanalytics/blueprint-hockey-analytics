@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compare Players — Blueprint Hockey</title>
+<link rel="stylesheet" href="shared.css?v=2">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+.bp-page-header { background: var(--navy); padding: 28px 24px 0; }
+.bp-page-header-inner { max-width: 1000px; margin: 0 auto; }
+.bp-page-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 34px; color: var(--white); letter-spacing: -0.5px; text-transform: uppercase; }
+.bp-page-sub { font-size: 13px; color: var(--muted-dk); margin-top: 2px; font-weight: 500; padding-bottom: 20px; }
+
+.picker-row { max-width: 1000px; margin: 0 auto; padding: 20px 24px; display: flex; gap: 16px; flex-wrap: wrap; }
+.picker-slot { flex: 1; min-width: 280px; background: #fff; border-radius: 12px; box-shadow: var(--shadow); padding: 14px 16px; position: relative; }
+.picker-label { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.picker-search-input { width: 100%; padding: 9px 12px; border-radius: 7px; border: 1px solid var(--border); font-size: 14px; font-family: 'Inter', sans-serif; }
+.picker-results { position: absolute; left: 16px; right: 16px; top: 100%; background: #fff; border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); margin-top: 4px; max-height: 280px; overflow-y: auto; z-index: 20; display: none; }
+.picker-results.open { display: block; }
+.picker-result-row { padding: 8px 12px; cursor: pointer; font-size: 13px; display: flex; justify-content: space-between; }
+.picker-result-row:hover { background: var(--ice-dim); }
+.mode-toggle { display: flex; gap: 6px; margin-top: 10px; }
+.mode-btn { flex: 1; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; padding: 7px 0; border-radius: 6px; border: 1px solid var(--border); background: #fff; cursor: pointer; color: var(--muted); }
+.mode-btn.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+.picker-current { margin-top: 10px; font-size: 13px; font-weight: 700; color: var(--navy); min-height: 18px; }
+
+.cmp-cards-output { max-width: 1000px; margin: 0 auto; padding: 0 24px 40px; }
+.cmp-cards-empty { text-align: center; color: var(--muted); padding: 60px 24px; font-size: 14px; }
+
+/* ── Ported card styling (matches nhl_generate_card.py) ─────────────────── */
+.cmp-card-pair, .cmp-card-pair * { box-sizing: border-box; }
+.cmp-card-pair { display: flex; gap: 16px; align-items: flex-start; width: 100%; }
+.cmp-card-column { flex: 1; min-width: 0; }
+.cmp-card-toolbar {
+  display: flex; justify-content: center; gap: 10px; margin-top: 12px;
+}
+.cmp-toolbar-btn {
+  font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700;
+  padding: 9px 18px; border-radius: 24px; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 7px;
+  border: 1.5px solid transparent;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+.cmp-toolbar-btn svg { display: block; }
+.cmp-toolbar-btn.primary { background: #041E42; color: #fff; box-shadow: 0 2px 8px rgba(4,30,66,0.22); }
+.cmp-toolbar-btn.primary:hover { background: #0a2e5c; box-shadow: 0 4px 14px rgba(4,30,66,0.32); transform: translateY(-1px); }
+.cmp-toolbar-btn.primary:active { transform: translateY(0); box-shadow: 0 2px 6px rgba(4,30,66,0.25); }
+.cmp-toolbar-btn.secondary { background: #fff; color: #041E42; border-color: #dde1e7; }
+.cmp-toolbar-btn.secondary:hover { background: #f5f6f8; border-color: #041E42; transform: translateY(-1px); }
+.cmp-toolbar-btn.secondary:active { transform: translateY(0); background: #eef0f3; }
+.pcard { width: 100%; background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 16px rgba(0,0,0,0.10); font-family: 'Inter', sans-serif; box-sizing: border-box; }
+.pcard-badge { text-align: center; font-size: 14px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; padding: 7px 0; }
+.pcard-header { position: relative; overflow: hidden; }
+.pcard-header::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 5px; z-index: 2; }
+.pcard-header-inner { display: flex; align-items: stretch; position: relative; z-index: 1; }
+.pcard-headshot-wrap { flex-shrink: 0; width: 80px; height: 86px; position: relative; overflow: hidden; background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; margin: 10px 0 10px 12px; }
+.pcard-headshot-wrap img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: top 5%; display: block; }
+.pcard-header-info { flex: 1; min-width: 0; padding: 14px 10px 8px; }
+.pcard-name-row { display: flex; align-items: center; gap: 7px; flex-wrap: nowrap; min-width: 0; }
+.pcard-name { font-size: 21px; font-weight: 800; color: #fff; letter-spacing: -0.3px; line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pcard-jersey { font-size: 14px; font-weight: 700; color: #fff; white-space: nowrap; }
+.pcard-flag { width: 26px; height: 18px; border-radius: 2px; object-fit: cover; display: block; flex-shrink: 0; }
+.pcard-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+.pcard-tag { font-size: 13px; font-weight: 600; padding: 3px 9px; border-radius: 20px; background: rgba(255,255,255,0.08); color: #fff; }
+.pcard-physical { display: flex; align-items: center; gap: 7px; margin-top: 7px; }
+.pcard-physical-text { font-size: 13px; font-weight: 500; color: #fff; }
+.pcard-war-box { flex-shrink: 0; margin: 10px 10px 10px 0; padding: 8px 10px; text-align: center; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.35); border-radius: 10px; display: flex; flex-direction: column; justify-content: center; min-width: 78px; }
+.pcard-war-label { font-size: 13px; font-weight: 700; letter-spacing: 2px; color: #fff; text-transform: uppercase; }
+.pcard-war-value { font-size: 32px; font-weight: 900; color: #fff; letter-spacing: -1.5px; line-height: 1; margin-top: 1px; }
+.pcard-war-gar { font-size: 13px; font-weight: 600; color: #fff; margin-top: 2px; }
+.pcard-body { padding: 0 12px 12px; position: relative; }
+.pcard-body-logo { position: absolute; top: 38%; left: 50%; transform: translate(-50%, -50%); width: 525px; height: 525px; object-fit: contain; opacity: 0.09; pointer-events: none; z-index: 0; filter: grayscale(1) contrast(1.5) brightness(0.55); }
+.pcard-body > *:not(.pcard-body-logo) { position: relative; z-index: 1; }
+.pcard-section-label { font-size: 9px; font-weight: 700; letter-spacing: 2px; color: #aaa; text-transform: uppercase; margin: 10px 0 6px; }
+.pcard-stat-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+.pcard-stat-box { background: #f5f6f8; border-radius: 7px; padding: 6px 4px; text-align: center; }
+.pcard-stat-val { font-size: 17px; font-weight: 800; color: #041E42; letter-spacing: -0.5px; line-height: 1; }
+.pcard-stat-lbl { font-size: 8px; font-weight: 600; color: #aaa; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 2px; }
+.pcard-components { display: flex; flex-direction: column; gap: 5px; }
+.pcard-comp-row { display: flex; align-items: center; gap: 8px; }
+.pcard-comp-name { font-size: 11px; font-weight: 700; width: 30px; flex-shrink: 0; }
+.pcard-comp-name.good { color: #1a7a3c; } .pcard-comp-name.bad { color: #c0392b; } .pcard-comp-name.mid { color: #F5C518; } .pcard-comp-name.na { color: #aaa; }
+.pcard-bar-track { flex: 1; height: 8px; background: #eef0f3; border-radius: 4px; overflow: hidden; }
+.pcard-bar-fill { height: 100%; border-radius: 4px; }
+.pcard-bar-fill.green { background: #1a7a3c; } .pcard-bar-fill.red { background: #c0392b; } .pcard-bar-fill.amber { background: #F5C518; }
+.pcard-pct-badge { font-size: 13px; font-weight: 800; padding: 3px 9px; border-radius: 5px; min-width: 46px; text-align: center; flex-shrink: 0; }
+.pcard-pct-badge.green { background: #e8f5ee; color: #1a7a3c; }
+.pcard-pct-badge.red   { background: #fdecea; color: #c0392b; }
+.pcard-pct-badge.amber { background: #FFFBEA; color: #F5C518; }
+.pcard-pct-badge.na    { background: #f0f0f0; color: #aaa; font-weight: 600; }
+.pcard-chart-wrap { position: relative; height: 96px; margin-top: 2px; }
+.pcard-contract-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.pcard-contract-box { background: #f5f6f8; border-radius: 7px; padding: 7px 8px; text-align: center; }
+.pcard-contract-val { font-size: 15px; font-weight: 800; color: #041E42; letter-spacing: -0.4px; line-height: 1; }
+.pcard-contract-lbl { font-size: 8px; font-weight: 600; color: #aaa; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 2px; }
+.pcard-value-row { margin-top: 6px; background: #e8f5ee; border-radius: 7px; padding: 7px 12px; display: flex; align-items: center; justify-content: space-between; }
+.pcard-value-row.over { background: #fdecea; }
+.pcard-value-delta { font-size: 18px; font-weight: 900; color: #1a7a3c; letter-spacing: -0.5px; }
+.pcard-value-row.over .pcard-value-delta { color: #c0392b; }
+.pcard-value-desc { font-size: 11px; font-weight: 600; color: #1a7a3c; }
+.pcard-value-row.over .pcard-value-desc { color: #c0392b; }
+.pcard-value-meta { font-size: 10px; color: #888; font-weight: 500; text-align: right; }
+.pcard-brand-footer { margin-top: 8px; padding-top: 8px; border-top: 1px solid #f0f0f0; text-align: right; }
+.pcard-brand-name { font-size: 10px; font-weight: 800; color: #041E42; letter-spacing: 1.5px; text-transform: uppercase; }
+.pcard-brand-url { font-size: 9px; color: #bbb; font-weight: 500; }
+
+@media (max-width: 960px) {
+  .cmp-card-pair { flex-direction: column; }
+}
+@media (max-width: 720px) {
+  .pcard-header-inner { flex-wrap: wrap; }
+  .pcard-headshot-wrap { width: 64px; height: 70px; margin: 8px 0 8px 10px; }
+  .pcard-header-info { padding: 10px 8px 6px; min-width: 0; }
+  .pcard-name { font-size: 18px; }
+  .pcard-war-box { margin: 8px 8px 8px 0; min-width: 66px; padding: 6px 8px; }
+  .pcard-war-value { font-size: 26px; }
+  .pcard-stat-grid { gap: 4px; }
+  .pcard-stat-box { padding: 5px 3px; }
+  .pcard-stat-val { font-size: 15px; }
+  .pcard-stat-lbl { font-size: 7px; }
+  .pcard-body { padding: 0 10px 10px; }
+  .pcard-contract-grid { gap: 5px; }
+  .cmp-card-toolbar { gap: 8px; }
+  .cmp-toolbar-btn { padding: 8px 14px; font-size: 12px; }
+  .picker-row { padding: 16px 14px; }
+}
+</style>
+</head>
+<body>
+
+<div id="nav-placeholder"></div>
+
+<div class="bp-page-header">
+  <div class="bp-page-header-inner">
+    <div class="bp-page-title">Compare Players</div>
+    <div class="bp-page-sub">Pick any two players — any timeframe — and see them side by side</div>
+  </div>
+</div>
+
+<div class="picker-row">
+  <div class="picker-slot">
+    <div class="picker-label">Player A</div>
+    <input type="text" class="picker-search-input" id="search-a" placeholder="Search a player...">
+    <div class="picker-results" id="results-a"></div>
+    <div class="picker-current" id="current-a"></div>
+    <div class="mode-toggle" id="mode-a">
+      <button class="mode-btn active" data-mode="season">This Season</button>
+      <button class="mode-btn" data-mode="career">3-Yr Weighted</button>
+    </div>
+  </div>
+  <div class="picker-slot">
+    <div class="picker-label">Player B</div>
+    <input type="text" class="picker-search-input" id="search-b" placeholder="Search a player...">
+    <div class="picker-results" id="results-b"></div>
+    <div class="picker-current" id="current-b"></div>
+    <div class="mode-toggle" id="mode-b">
+      <button class="mode-btn active" data-mode="season">This Season</button>
+      <button class="mode-btn" data-mode="career">3-Yr Weighted</button>
+    </div>
+  </div>
+</div>
+
+<div class="cmp-cards-output" id="cmp-cards-output">
+  <div class="cmp-cards-empty">Pick two players above to compare them.</div>
+</div>
+
+<div class="bp-footer">
+  <strong>Blueprint Hockey</strong> &middot; blueprinthockeyanalytics.com &middot; Model v12 &middot; Data: NHL API, The Stanley Cap (contracts)
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.0.1/chartjs-plugin-annotation.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="nav-search.js?v=2"></script>
+<script>
+fetch('nav.html').then(r => r.text()).then(html => {
+  document.getElementById('nav-placeholder').innerHTML = html;
+  document.querySelector('[data-nav="compare"]')?.classList.add('active');
+  bpInitNavSearch();
+});
+
+// ── Ported from nhl_generate_card.py — must stay in sync with the Python
+// dicts/helpers of the same name if either one changes team colors, flag
+// codes, or the percentile-bucket thresholds. ──────────────────────────────
+const TEAM_COLOURS = {
+  ANA:"#F47A38", ARI:"#8C2633", UTA:"#71AFE5", BOS:"#FFB81C", BUF:"#FFB81C",
+  CGY:"#FAAF19", CAR:"#CE0000", CHI:"#CF0A2C", COL:"#236192", CBJ:"#CE1126",
+  DAL:"#000000", DET:"#CE1126", EDM:"#FF4C00", FLA:"#C8102E", LAK:"#A2AAAD",
+  MIN:"#A6192E", MTL:"#001E62", NSH:"#FFB81C", NJD:"#CE1126", NYI:"#F47D30",
+  NYR:"#CE1126", OTT:"#000000", PHI:"#F74902", PIT:"#FCB514", SJS:"#000000",
+  SEA:"#99D9D9", STL:"#FCB514", TBL:"#002868", TOR:"#003E7E", VAN:"#00843D",
+  VGK:"#B4975A", WSH:"#C8102E", WPG:"#004C97", NHL:"#A2AAAD"
+};
+const TEAM_BG = {
+  ANA:"#111111", ARI:"#000000", UTA:"#001F4B", BOS:"#000000", BUF:"#003087",
+  CGY:"#CE1126", CAR:"#000000", CHI:"#CE0000", COL:"#6F263D", CBJ:"#002654",
+  DAL:"#006847", DET:"#000000", EDM:"#041E42", FLA:"#041E42", LAK:"#111111",
+  MIN:"#154734", MTL:"#AF1E2D", NSH:"#041E42", NJD:"#000000", NYI:"#003087",
+  NYR:"#0038A8", OTT:"#C52032", PHI:"#000000", PIT:"#041E42", SJS:"#006D75",
+  SEA:"#001B2B", STL:"#002F87", TBL:"#000000", TOR:"#00205B", VAN:"#00205B",
+  VGK:"#000000", WSH:"#041E42", WPG:"#041E42", NHL:"#041E42"
+};
+const COUNTRY_FLAG = {
+  CAN:"ca", USA:"us", SWE:"se", FIN:"fi", RUS:"ru", CZE:"cz", SVK:"sk",
+  CHE:"ch", DEU:"de", AUT:"at", DNK:"dk", NOR:"no", LVA:"lv", BLR:"by",
+  UKR:"ua", FRA:"fr", AUS:"au", GBR:"gb", NLD:"nl", POL:"pl", KAZ:"kz",
+  SVN:"si", HUN:"hu", ITA:"it"
+};
+
+function ordinal(n) {
+  n = Math.round(n);
+  if (n % 100 >= 11 && n % 100 <= 13) return n + 'th';
+  return n + (['th','st','nd','rd','th'][Math.min(n % 10, 4)]);
+}
+function badgeClass(pct) { return pct >= 70 ? 'green' : pct >= 40 ? 'amber' : 'red'; }
+function compClass(pct) { return pct >= 70 ? 'good' : pct >= 40 ? 'mid' : 'bad'; }
+function formatAav(val) { return (!val || isNaN(val)) ? 'N/A' : '$' + val.toFixed(1) + 'M'; }
+function inchesToFeet(inches) {
+  if (!inches || isNaN(inches)) return '';
+  inches = Math.round(inches);
+  return Math.floor(inches / 12) + "'" + (inches % 12) + '"';
+}
+
+// ── Data store, loaded once ──────────────────────────────────────────────
+let SEASON_ROWS = [], RATINGS_ROWS = [], CAREER_ROWS = [], CONTRACTS_ROWS = [], PLAYERS_ROWS = [];
+let CURR_SEASON = 0;
+
+async function loadAllData() {
+  const [seasonText, ratingsText, careerText, contractsText, playersText] = await Promise.all([
+    fetch('data/master_season.csv').then(r => r.text()),
+    fetch('data/master_ratings.csv').then(r => r.text()),
+    fetch('data/master_career.csv').then(r => r.text()),
+    fetch('data/master_contracts.csv').then(r => r.text()),
+    fetch('data/players.csv').then(r => r.text()),
+  ]);
+  SEASON_ROWS = bpParseCSVNum(seasonText);
+  RATINGS_ROWS = bpParseCSVNum(ratingsText);
+  CAREER_ROWS = bpParseCSVNum(careerText);
+  CONTRACTS_ROWS = bpParseCSVNum(contractsText);
+  PLAYERS_ROWS = bpParseCSVNum(playersText);
+  CURR_SEASON = Math.max(...SEASON_ROWS.map(r => r.season));
+}
+
+function bpParseCSVNum(text) {
+  const rows = bpParseCSV(text);
+  return rows.map(r => {
+    const obj = {};
+    for (const k in r) {
+      const v = r[k];
+      obj[k] = (v !== '' && !isNaN(v)) ? Number(v) : v;
+    }
+    return obj;
+  });
+}
+
+// ── Percentiles — mirrors compute_percentiles / compute_percentiles_multiyear
+const COMP_COLS = [['WAR_evo','EVO'],['WAR_evd','EVD'],['WAR_pp','PP'],['WAR_pk','PK'],['WAR_pen','PEN'],['WAR_shoot','SH']];
+
+function computePercentiles(rows, playerRow, posGroup) {
+  const group = rows.filter(r => r.pos_group === posGroup);
+  const pcts = {};
+  COMP_COLS.forEach(([col]) => {
+    const val = playerRow[col] || 0;
+    pcts[col] = group.length ? Math.round(group.filter(r => (r[col]||0) < val).length / group.length * 100) : 50;
+  });
+  return pcts;
+}
+
+function compute82gpPace(playerId, nSeasons) {
+  const hist = CAREER_ROWS.filter(r => r.playerId === playerId).sort((a,b) => a.season - b.season).slice(-nSeasons);
+  const totalGp = hist.reduce((s,r) => s + (r.gp||0), 0);
+  if (!hist.length || totalGp === 0) return null;
+  const pace = (col) => (hist.reduce((s,r) => s + (r[col]||0), 0) / totalGp) * 82;
+  const toiPgSec = (hist.reduce((s,r) => s + (r.toi_ev_hr||0), 0) * 3600) / totalGp;
+  return {
+    seasonLabels: hist.map(r => r.season_label),
+    nSeasons: hist.length,
+    totalGp, goals: pace('goals'), assists: pace('assists'), points: pace('points'), toiPgSec
+  };
+}
+
+function fmtToi(sec) {
+  if (!sec || sec <= 0) return '\u2013';
+  return String(Math.floor(sec/60)).padStart(2,'0') + ':' + String(Math.round(sec%60)).padStart(2,'0');
+}
+
+function calcAge(birthDate) {
+  if (!birthDate) return '';
+  const bd = new Date(birthDate);
+  const today = new Date();
+  let age = today.getFullYear() - bd.getFullYear();
+  if (today.getMonth() < bd.getMonth() || (today.getMonth() === bd.getMonth() && today.getDate() < bd.getDate())) age--;
+  return String(age);
+}
+
+// ── Build all the data a card needs, for one player + one mode ──────────────
+function getCardData(playerId, mode) {
+  const seasonRow = SEASON_ROWS.find(r => r.playerId === playerId && r.season === CURR_SEASON);
+  const ratingsRow = RATINGS_ROWS.find(r => r.playerId === playerId);
+  const playerBio = PLAYERS_ROWS.find(r => r.playerId === playerId);
+  const contractRow = CONTRACTS_ROWS.find(r => r.playerId === playerId);
+  if (!seasonRow) return null;
+
+  const posGroup = seasonRow.pos_group;
+  const team = seasonRow.team;
+  const name = seasonRow.display_name || seasonRow.name;
+
+  const pctsSeason = computePercentiles(SEASON_ROWS.filter(r => r.season === CURR_SEASON), seasonRow, posGroup);
+  const pctsCareer = ratingsRow ? computePercentiles(RATINGS_ROWS, ratingsRow, posGroup) : pctsSeason;
+  const pace = compute82gpPace(playerId, 3);
+
+  const arc = CAREER_ROWS.filter(r => r.playerId === playerId).sort((a,b) => a.season - b.season);
+  const isPeakIdx = arc.length ? arc.reduce((best,r,i,a) => r.WAR > a[best].WAR ? i : best, 0) : -1;
+
+  const aav = contractRow ? Number(contractRow.aav) : 0;
+  const yearsLeft = contractRow && !isNaN(contractRow.years_remaining) ? Math.round(contractRow.years_remaining) : 0;
+  const surplus = contractRow ? Number(contractRow.savings_m) || 0 : 0;
+  const marketVal = aav + surplus;
+
+  const spanLabel = pace && pace.seasonLabels.length
+    ? (pace.nSeasons > 1 ? `${pace.seasonLabels[0]} to ${pace.seasonLabels[pace.seasonLabels.length-1]}` : pace.seasonLabels[0])
+    : seasonRow.season_label;
+
+  // Previous team, for the headshot fallback chain — mirrors the same
+  // logic used by the individually-generated player cards, so a player
+  // who was traded doesn't just fail on the one hardcoded season/team.
+  const priorTeamRows = CAREER_ROWS.filter(r => r.playerId === playerId && r.season < CURR_SEASON)
+    .sort((a, b) => b.season - a.season);
+  const prevTeam = priorTeamRows.length ? (priorTeamRows[0].team || team) : team;
+
+  return {
+    playerId, mode, name, team, posGroup,
+    position: playerBio ? playerBio.position : seasonRow.position,
+    jersey: playerBio ? playerBio.jersey : '',
+    nationality: playerBio ? playerBio.nationality : 'CAN',
+    heightIn: playerBio ? playerBio.height_in : null,
+    weightLbs: playerBio ? playerBio.weight_lbs : null,
+    age: playerBio ? calcAge(playerBio.birth_date) : '',
+    seasonLabel: seasonRow.season_label,
+    spanLabel,
+    war: mode === 'season' ? Number(seasonRow.WAR) : (ratingsRow ? Number(ratingsRow.WAR) : Number(seasonRow.WAR)),
+    gar: mode === 'season' ? Number(seasonRow.GAR) : (ratingsRow ? Number(ratingsRow.GAR) : Number(seasonRow.GAR)),
+    gp: mode === 'season' ? seasonRow.gp : (pace ? pace.totalGp : seasonRow.gp),
+    goals: mode === 'season' ? seasonRow.goals : (pace ? Math.round(pace.goals) : seasonRow.goals),
+    assists: mode === 'season' ? seasonRow.assists : (pace ? Math.round(pace.assists) : seasonRow.assists),
+    points: mode === 'season' ? seasonRow.points : (pace ? Math.round(pace.points) : seasonRow.points),
+    toiPg: mode === 'season'
+      ? fmtToi(seasonRow.gp > 0 ? (seasonRow.toi_5v5_hr*3600/seasonRow.gp) : 0)
+      : (pace ? fmtToi(pace.toiPgSec) : '\u2013'),
+    pcts: mode === 'season' ? pctsSeason : pctsCareer,
+    rawRow: mode === 'season' ? seasonRow : (ratingsRow || seasonRow),
+    arcLabels: arc.map(r => `${String(r.season).slice(-2)}-${String(r.season+1).slice(-2)}`),
+    arcData: arc.map(r => Math.round(r.WAR*100)/100),
+    arcIsPeak: arc.map((r,i) => i === isPeakIdx),
+    aav, yearsLeft, surplus, marketVal,
+    logoUrl: `https://assets.nhle.com/logos/nhl/svg/${team}_dark.svg`,
+    // Local headshot first (same-origin, always exportable) — only fall
+    // back to NHL's CDN, across several seasons/teams, if no local file
+    // exists. Previously this only ever tried one hardcoded season/team
+    // on the CDN with no fallback at all, so any player whose mug wasn't
+    // at that exact URL (e.g. a mid-season trade) simply failed.
+    headshotUrl: `cards/headshots/${playerId}.png`,
+    headshotFallbacks: [
+      `https://assets.nhle.com/mugs/nhl/20242025/${prevTeam}/${playerId}.png`,
+      `https://assets.nhle.com/mugs/nhl/20232024/${prevTeam}/${playerId}.png`,
+      `https://assets.nhle.com/mugs/nhl/20222023/${prevTeam}/${playerId}.png`,
+      `https://assets.nhle.com/mugs/nhl/20232024/${team}/${playerId}.png`,
+      `https://assets.nhle.com/mugs/nhl/20212022/${prevTeam}/${playerId}.png`,
+      `https://assets.nhle.com/mugs/nhl/20202021/${prevTeam}/${playerId}.png`,
+      `https://assets.nhle.com/mugs/nhl/20192020/${prevTeam}/${playerId}.png`,
+    ],
+  };
+}
+
+function posLabel(position) {
+  return {C:'C', L:'LW', R:'RW', D:'D'}[position] || position;
+}
+
+// ── Render one full card's HTML ──────────────────────────────────────────
+function renderCard(d, slot) {
+  const stripeColour = TEAM_COLOURS[d.team] || TEAM_COLOURS.NHL;
+  const headerBg = TEAM_BG[d.team] || TEAM_BG.NHL;
+  const flagCode = COUNTRY_FLAG[d.nationality] || 'ca';
+  const physical = [inchesToFeet(d.heightIn), d.weightLbs ? Math.round(d.weightLbs) + ' lbs' : ''].filter(Boolean).join(' \u00b7 ');
+  const badgeLabel = d.mode === 'season' ? `${d.seasonLabel} Season` : `3-Year Weighted \u00b7 ${d.spanLabel}`;
+  const statLabel = d.mode === 'season' ? `${d.seasonLabel} Season` : `82-GP Pace \u00b7 Last 3 Seasons`;
+  const compLabel = d.mode === 'season' ? `Impact by Component \u00b7 ${d.seasonLabel}` : `3-Yr Weighted Percentiles \u00b7 ${d.spanLabel}`;
+  const gpLabel = d.mode === 'season' ? 'GP' : 'GP';
+  const goalsLabel = d.mode === 'season' ? 'G' : 'G/82';
+  const assistsLabel = d.mode === 'season' ? 'A' : 'A/82';
+  const ptsLabel = d.mode === 'season' ? 'PTS' : 'P/82';
+
+  const compRows = COMP_COLS.map(([col, label]) => {
+    const pct = d.pcts[col] ?? 50;
+    const raw = Number(d.rawRow[col] || 0);
+    if ((label === 'PP' || label === 'PK') && raw === 0) {
+      return `<div class="pcard-comp-row">
+        <span class="pcard-comp-name na">${label}</span>
+        <div class="pcard-bar-track"><div class="pcard-bar-fill" style="width:0%"></div></div>
+        <span class="pcard-pct-badge na">N/A</span>
+      </div>`;
+    }
+    const bc = badgeClass(pct), cc = compClass(pct);
+    return `<div class="pcard-comp-row">
+      <span class="pcard-comp-name ${cc}">${label}</span>
+      <div class="pcard-bar-track"><div class="pcard-bar-fill ${bc}" style="width:${pct}%"></div></div>
+      <span class="pcard-pct-badge ${bc}">${ordinal(pct)}</span>
+    </div>`;
+  }).join('');
+
+  const valueClass = d.surplus >= 0 ? '' : ' over';
+  const deltaStr = (d.surplus >= 0 ? '+' : '-') + '$' + Math.abs(d.surplus).toFixed(1) + 'M';
+  const deltaDesc = d.surplus >= 0 ? 'Under market value' : 'Over market value';
+  const deltaMeta = (d.surplus >= 0 ? 'Saving' : 'Costing') + ' $' + Math.abs(d.surplus).toFixed(1) + 'M/yr vs fair market';
+
+  const cardId = `pcard-${slot}`;
+  const chartId = `pchart-${slot}`;
+
+  return `
+<div class="cmp-card-column">
+  <div class="pcard" id="${cardId}">
+    <div class="pcard-badge" style="background:${headerBg}; color:#ffffff;">${badgeLabel}</div>
+    <div class="pcard-header" style="background:${headerBg};">
+      <div class="pcard-header-inner">
+        <div class="pcard-headshot-wrap">
+          <img src="${d.headshotUrl}" alt="${d.name}" data-fallbacks='${JSON.stringify(d.headshotFallbacks)}'
+          onerror="(function(img){
+            var tries = JSON.parse(img.dataset.fallbacks || '[]');
+            var idx = parseInt(img.dataset.try || 0);
+            img.dataset.try = idx + 1;
+            if (idx < tries.length) { img.src = tries[idx]; }
+            else { img.style.opacity = 0.3; }
+          })(this)">
+        </div>
+        <div class="pcard-header-info">
+          <div class="pcard-name-row">
+            <div class="pcard-name">${d.name}</div>
+            <span class="pcard-jersey">${d.jersey ? '#'+d.jersey : ''}</span>
+            <img class="pcard-flag" src="https://flagcdn.com/w40/${flagCode}.png" alt="${d.nationality}">
+          </div>
+          <div class="pcard-tags">
+            <span class="pcard-tag">${d.team}</span>
+            <span class="pcard-tag">${posLabel(d.position)}</span>
+            ${d.age ? `<span class="pcard-tag">Age ${d.age}</span>` : ''}
+          </div>
+          <div class="pcard-physical"><span class="pcard-physical-text">${physical}</span></div>
+        </div>
+        <div class="pcard-war-box">
+          <div class="pcard-war-label">WAR</div>
+          <div class="pcard-war-value">${d.war >= 0 ? '+' : ''}${d.war.toFixed(2)}</div>
+          <div class="pcard-war-gar">${d.gar.toFixed(1)} GAR</div>
+        </div>
+      </div>
+      <div style="position:absolute; bottom:0; left:0; right:0; height:5px; background:${stripeColour}; z-index:2;"></div>
+    </div>
+    <div class="pcard-body">
+      <img class="pcard-body-logo" src="${d.logoUrl}" alt="">
+      <div class="pcard-section-label">${statLabel}</div>
+      <div class="pcard-stat-grid">
+        <div class="pcard-stat-box"><div class="pcard-stat-val">${d.gp}</div><div class="pcard-stat-lbl">${gpLabel}</div></div>
+        <div class="pcard-stat-box"><div class="pcard-stat-val">${d.goals}</div><div class="pcard-stat-lbl">${goalsLabel}</div></div>
+        <div class="pcard-stat-box"><div class="pcard-stat-val">${d.assists}</div><div class="pcard-stat-lbl">${assistsLabel}</div></div>
+        <div class="pcard-stat-box"><div class="pcard-stat-val">${d.points}</div><div class="pcard-stat-lbl">${ptsLabel}</div></div>
+        <div class="pcard-stat-box"><div class="pcard-stat-val">${d.toiPg}</div><div class="pcard-stat-lbl">TOI/G</div></div>
+      </div>
+      <div class="pcard-section-label">${compLabel}</div>
+      <div class="pcard-components">${compRows}</div>
+      <div class="pcard-section-label">Career Arc</div>
+      <div class="pcard-chart-wrap"><canvas id="${chartId}"></canvas></div>
+      <div class="pcard-section-label">Contract</div>
+      <div class="pcard-contract-grid">
+        <div class="pcard-contract-box"><div class="pcard-contract-val">${formatAav(d.aav)}</div><div class="pcard-contract-lbl">AAV</div></div>
+        <div class="pcard-contract-box"><div class="pcard-contract-val">${d.yearsLeft}</div><div class="pcard-contract-lbl">Years Left</div></div>
+        <div class="pcard-contract-box"><div class="pcard-contract-val">${d.marketVal ? formatAav(d.marketVal) : 'N/A'}</div><div class="pcard-contract-lbl">Market Value</div></div>
+      </div>
+      <div class="pcard-value-row${valueClass}">
+        <div><div class="pcard-value-delta">${deltaStr}</div><div class="pcard-value-desc">${deltaDesc}</div></div>
+        <div class="pcard-value-meta">${deltaMeta}</div>
+      </div>
+      <div class="pcard-brand-footer">
+        <div class="pcard-brand-name">Blueprint Hockey</div>
+        <div class="pcard-brand-url">blueprinthockeyanalytics.com</div>
+      </div>
+    </div>
+  </div>
+  <div class="cmp-card-toolbar">
+    <button class="cmp-toolbar-btn primary" onclick="shareCard('${cardId}', '${d.name.replace(/\s/g,'_')}_${d.mode}')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a2 2 0 002 2h12a2 2 0 002-2v-7"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+      Share
+    </button>
+    <button class="cmp-toolbar-btn secondary" onclick="saveCard('${cardId}', '${d.name.replace(/\s/g,'_')}_${d.mode}')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+      Save
+    </button>
+  </div>
+</div>`;
+}
+
+function renderChart(d, slot) {
+  const peakColors = d.arcIsPeak.map(p => p ? '#F5C518' : '#041E42');
+  const peakRadii = d.arcIsPeak.map(p => p ? 6 : 4);
+  const dataMin = d.arcData.length ? Math.min(...d.arcData) : 0;
+  const dataMax = d.arcData.length ? Math.max(...d.arcData) : 5;
+  const arcMin = Math.floor((dataMin - 0.5) * 2) / 2;
+  const arcMax = Math.ceil((dataMax + 0.5) * 2) / 2;
+  const ctx = document.getElementById(`pchart-${slot}`).getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: { labels: d.arcLabels, datasets: [{
+      data: d.arcData, borderColor: '#041E42', borderWidth: 2.5,
+      pointBackgroundColor: peakColors, pointBorderColor: '#041E42', pointBorderWidth: 2,
+      pointRadius: peakRadii, pointHoverRadius: 7, fill: true,
+      backgroundColor: (c) => {
+        const g = c.chart.ctx.createLinearGradient(0,0,0,96);
+        g.addColorStop(0,'rgba(4,30,66,0.12)'); g.addColorStop(1,'rgba(4,30,66,0)');
+        return g;
+      },
+      tension: 0.35
+    }]},
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        annotation: { annotations: { zero: { type: 'line', yMin: 0, yMax: 0, borderColor: 'rgba(0,0,0,0.15)', borderWidth: 1, borderDash: [4,3] } } },
+        tooltip: {
+          backgroundColor: '#041E42', titleColor: '#7AAAD8', bodyColor: '#fff', padding: 8,
+          callbacks: { label: (c) => d.arcIsPeak[c.dataIndex] ? ` ${c.raw} WAR \u00b7 Career Best` : ` ${c.raw} WAR` }
+        }
+      },
+      scales: {
+        x: { grid: { display: false }, border: { display: false }, ticks: { font: { size: 10, weight: '600' }, color: '#aaa' } },
+        y: { min: arcMin, max: arcMax, grid: { color: '#f0f0f3' }, border: { display: false }, ticks: { font: { size: 10 }, color: '#bbb', stepSize: 0.5 } }
+      }
+    }
+  });
+}
+
+// ── Share / Save (identical approach to nhl_generate_card.py) ────────────
+async function captureCard(cardId) {
+  const card = document.getElementById(cardId);
+  return await html2canvas(card, { scale: 2, backgroundColor: '#ffffff', useCORS: true });
+}
+function downloadBlob(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+async function shareCard(cardId, filenameBase) {
+  try {
+    const canvas = await captureCard(cardId);
+    canvas.toBlob(async (blob) => {
+      const file = new File([blob], filenameBase + '.png', { type: 'image/png' });
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        try { await navigator.share({ files: [file], title: 'Blueprint Hockey' }); return; }
+        catch (e) { if (e.name === 'AbortError') return; }
+      }
+      downloadBlob(blob, filenameBase + '.png');
+    }, 'image/png');
+  } catch (e) { console.error(e); alert('Could not generate image for sharing.'); }
+}
+async function saveCard(cardId, filenameBase) {
+  try {
+    const canvas = await captureCard(cardId);
+    canvas.toBlob((blob) => downloadBlob(blob, filenameBase + '.png'), 'image/png');
+  } catch (e) { console.error(e); alert('Could not generate image.'); }
+}
+
+// ── Slot state + rendering ────────────────────────────────────────────────
+const SLOT = {
+  a: { playerId: null, mode: 'season' },
+  b: { playerId: null, mode: 'season' },
+};
+
+function renderOutput() {
+  const output = document.getElementById('cmp-cards-output');
+  if (!SLOT.a.playerId || !SLOT.b.playerId) {
+    output.innerHTML = '<div class="cmp-cards-empty">Pick two players above to compare them.</div>';
+    return;
+  }
+  const dataA = getCardData(SLOT.a.playerId, SLOT.a.mode);
+  const dataB = getCardData(SLOT.b.playerId, SLOT.b.mode);
+  if (!dataA || !dataB) {
+    output.innerHTML = '<div class="cmp-cards-empty">Could not find data for one of these players.</div>';
+    return;
+  }
+  output.innerHTML = `<div class="cmp-card-pair">${renderCard(dataA, 'a')}${renderCard(dataB, 'b')}</div>`;
+  renderChart(dataA, 'a');
+  renderChart(dataB, 'b');
+}
+
+function setupSlot(slotKey) {
+  const input = document.getElementById(`search-${slotKey}`);
+  const results = document.getElementById(`results-${slotKey}`);
+  const current = document.getElementById(`current-${slotKey}`);
+  const modeGroup = document.getElementById(`mode-${slotKey}`);
+
+  input.addEventListener('input', () => {
+    const q = input.value.toLowerCase();
+    if (!q) { results.classList.remove('open'); return; }
+    const matches = BP_PLAYER_INDEX
+      .filter(p => p.fullName.toLowerCase().includes(q))
+      .sort((a,b) => b.WAR - a.WAR)
+      .slice(0, 8);
+    results.innerHTML = matches.map(p => `
+      <div class="picker-result-row" onclick="selectSlotPlayer('${slotKey}', ${p.playerId}, '${p.fullName.replace(/'/g,"")}')">
+        <span>${p.fullName}</span><span>${p.team}</span>
+      </div>`).join('') || '<div class="picker-result-row">No players found</div>';
+    results.classList.add('open');
+  });
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest(`#search-${slotKey}`) && !e.target.closest(`#results-${slotKey}`)) {
+      results.classList.remove('open');
+    }
+  });
+  modeGroup.addEventListener('click', (e) => {
+    const btn = e.target.closest('.mode-btn');
+    if (!btn) return;
+    modeGroup.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    SLOT[slotKey].mode = btn.dataset.mode;
+    renderOutput();
+  });
+}
+
+function selectSlotPlayer(slotKey, playerId, fullName) {
+  SLOT[slotKey].playerId = playerId;
+  document.getElementById(`current-${slotKey}`).textContent = fullName;
+  document.getElementById(`search-${slotKey}`).value = '';
+  document.getElementById(`results-${slotKey}`).classList.remove('open');
+  renderOutput();
+}
+
+(async function init() {
+  await bpLoadPlayerIndex();
+  await loadAllData();
+  setupSlot('a');
+  setupSlot('b');
+})();
+</script>
+</body>
+</html>

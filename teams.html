@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teams — Blueprint Hockey</title>
+<link rel="stylesheet" href="shared.css?v=2">
+<style>
+.bp-page-header { background: var(--navy); padding: 28px 24px 32px; }
+.bp-page-header-inner { max-width: 1280px; margin: 0 auto; }
+.bp-page-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 34px; color: var(--white); letter-spacing: -0.5px; text-transform: uppercase; }
+.bp-page-sub { font-size: 13px; color: var(--muted-dk); margin-top: 2px; font-weight: 500; }
+
+.bp-sort-bar {
+  max-width: 1280px; margin: 0 auto; padding: 16px 24px 0;
+  display: flex; align-items: center; gap: 8px;
+}
+.bp-sort-label { font-size: 11px; font-weight: 700; letter-spacing: 1px; color: var(--muted); text-transform: uppercase; margin-right: 4px; }
+.bp-sort-btn {
+  font-size: 12px; font-weight: 700; color: var(--muted); background: var(--white);
+  border: 1px solid var(--border); border-radius: 20px; padding: 6px 14px;
+  cursor: pointer; transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.bp-sort-btn:hover { border-color: var(--ice); color: var(--navy); }
+.bp-sort-btn.active { background: var(--navy); color: var(--white); border-color: var(--navy); }
+
+.bp-team-grid {
+  max-width: 1280px; margin: 0 auto; padding: 12px 24px 48px;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px;
+}
+.bp-team-card {
+  background: var(--white); border-radius: 12px; box-shadow: var(--shadow);
+  padding: 20px 16px; display: flex; flex-direction: column; align-items: center; gap: 10px;
+  cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;
+  border: 1px solid var(--border);
+}
+.bp-team-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--ice); }
+.bp-team-card img { width: 56px; height: 56px; object-fit: contain; }
+.bp-team-card img[data-team="TBL"] { filter: brightness(0) saturate(100%) invert(10%) sepia(60%) saturate(2000%) hue-rotate(190deg); }
+.bp-team-name { font-size: 13px; font-weight: 700; color: var(--text); text-align: center; }
+.bp-team-war {
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 20px;
+  color: var(--navy); letter-spacing: -0.3px;
+}
+.bp-team-war-label { font-size: 9px; color: var(--muted); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+
+@media (max-width: 720px) {
+  .bp-page-title { font-size: 26px; }
+  .bp-sort-bar { padding: 12px 16px 0; flex-wrap: wrap; }
+  .bp-team-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; padding: 10px 16px 40px; }
+  .bp-team-card { padding: 16px 10px; }
+  .bp-team-card img { width: 44px; height: 44px; }
+}
+</style>
+</head>
+<body>
+
+<div id="nav-placeholder"></div>
+
+<div class="bp-page-header">
+  <div class="bp-page-header-inner">
+    <div class="bp-page-title">Teams</div>
+    <div class="bp-page-sub">Select a team to compare player WAR and roster value</div>
+  </div>
+</div>
+
+<div class="bp-sort-bar">
+  <span class="bp-sort-label">Sort</span>
+  <button class="bp-sort-btn active" id="sort-az" onclick="setSort('az')">A&ndash;Z</button>
+  <button class="bp-sort-btn" id="sort-war" onclick="setSort('war')">Best WAR</button>
+</div>
+
+<div class="bp-team-grid" id="team-grid"></div>
+
+<div class="bp-footer">
+  <strong>Blueprint Hockey</strong> &middot; blueprinthockeyanalytics.com &middot; Model v12
+</div>
+
+<script src="nav-search.js?v=2"></script>
+<script>
+fetch('nav.html').then(r => r.text()).then(html => {
+  document.getElementById('nav-placeholder').innerHTML = html;
+  document.querySelector('[data-nav="teams"]')?.classList.add('active');
+  bpInitNavSearch();
+});
+
+const TEAM_NAMES = {
+  ANA:'Anaheim Ducks',UTA:'Utah Hockey Club',BOS:'Boston Bruins',
+  BUF:'Buffalo Sabres',CGY:'Calgary Flames',CAR:'Carolina Hurricanes',CHI:'Chicago Blackhawks',
+  COL:'Colorado Avalanche',CBJ:'Columbus Blue Jackets',DAL:'Dallas Stars',DET:'Detroit Red Wings',
+  EDM:'Edmonton Oilers',FLA:'Florida Panthers',LAK:'Los Angeles Kings',MIN:'Minnesota Wild',
+  MTL:'Montreal Canadiens',NSH:'Nashville Predators',NJD:'New Jersey Devils',NYI:'New York Islanders',
+  NYR:'New York Rangers',OTT:'Ottawa Senators',PHI:'Philadelphia Flyers',PIT:'Pittsburgh Penguins',
+  SJS:'San Jose Sharks',SEA:'Seattle Kraken',STL:'St. Louis Blues',TBL:'Tampa Bay Lightning',
+  TOR:'Toronto Maple Leafs',VAN:'Vancouver Canucks',VGK:'Vegas Golden Knights',WSH:'Washington Capitals',
+  WPG:'Winnipeg Jets'
+};
+
+let CURRENT_SORT = 'az';
+let TEAM_WAR = {};
+
+function renderTeams() {
+  const grid = document.getElementById('team-grid');
+  const teams = Object.keys(TEAM_NAMES).sort((a, b) => {
+    if (CURRENT_SORT === 'war') {
+      return (TEAM_WAR[b] ?? -Infinity) - (TEAM_WAR[a] ?? -Infinity);
+    }
+    return TEAM_NAMES[a].localeCompare(TEAM_NAMES[b]);
+  });
+  grid.innerHTML = teams.map(t => `
+    <div class="bp-team-card" onclick="window.location.href='team.html?team=${t}'">
+      <img src="${bpLogoUrl(t)}" data-team="${t}" alt="${t}" onerror="this.style.opacity=0.2">
+      <div class="bp-team-name">${TEAM_NAMES[t]}</div>
+      <div>
+        <div class="bp-team-war">${TEAM_WAR[t] !== undefined ? (TEAM_WAR[t]>=0?'+':'')+TEAM_WAR[t].toFixed(1) : '\u2014'}</div>
+        <div class="bp-team-war-label">Team WAR</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function setSort(mode) {
+  CURRENT_SORT = mode;
+  document.getElementById('sort-az').classList.toggle('active', mode === 'az');
+  document.getElementById('sort-war').classList.toggle('active', mode === 'war');
+  renderTeams();
+}
+
+async function loadTeams() {
+  let data = [];
+  try {
+    const res = await fetch('data/master_season.csv');
+    const text = await res.text();
+    const rows = bpParseCSV(text).map(r => ({ ...r, WAR: Number(r.WAR), season: Number(r.season) }));
+    const maxSeason = Math.max(...rows.map(r => r.season));
+    data = rows.filter(r => r.season === maxSeason);
+  } catch (e) {
+    data = [];
+  }
+
+  data.forEach(r => {
+    if (!TEAM_WAR[r.team]) TEAM_WAR[r.team] = 0;
+    TEAM_WAR[r.team] += r.WAR || 0;
+  });
+
+  renderTeams();
+}
+
+loadTeams();
+</script>
+</body>
+</html>

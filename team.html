@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team — Blueprint Hockey</title>
+<link rel="stylesheet" href="shared.css?v=2">
+<style>
+.team-hero { padding: 28px 24px; position: relative; overflow: hidden; }
+.team-hero-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; gap: 20px; position: relative; z-index: 1; }
+.team-hero-logo { width: 72px; height: 72px; object-fit: contain; flex-shrink: 0; }
+.team-hero-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 32px; color: var(--white); letter-spacing: -0.5px; text-transform: uppercase; line-height: 1; }
+.team-hero-sub { font-size: 13px; color: var(--muted-dk); margin-top: 4px; font-weight: 500; }
+.team-hero-stats { display: flex; gap: 24px; margin-left: auto; }
+.team-stat { text-align: right; }
+.team-stat-num { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 30px; color: var(--white); letter-spacing: -0.5px; line-height: 1; }
+.team-stat-label { font-size: 9px; color: var(--muted-dk); font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 2px; }
+
+.bp-back { font-size: 12px; color: var(--muted-dk); margin-bottom: 12px; display: inline-flex; align-items: center; gap: 4px; font-weight: 600; }
+.bp-back:hover { color: var(--white); }
+
+.team-body { max-width: 1280px; margin: 0 auto; padding: 24px; }
+.compare-chart-card { background: var(--white); border-radius: 12px; box-shadow: var(--shadow); padding: 20px; margin-bottom: 20px; }
+.compare-title { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; color: var(--muted); text-transform: uppercase; margin-bottom: 14px; }
+.bar-row { display: flex; align-items: center; gap: 10px; padding: 5px 0; }
+.bar-name { font-size: 12px; font-weight: 700; width: 130px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bar-track { flex: 1; height: 18px; background: var(--off); border-radius: 4px; position: relative; overflow: visible; }
+.bar-fill { height: 100%; border-radius: 4px; background: var(--navy); }
+.bar-fill.neg { background: var(--red); }
+.bar-val { font-size: 12px; font-weight: 700; font-family: 'Barlow Condensed', sans-serif; width: 50px; text-align: right; flex-shrink: 0; }
+
+.roster-table-wrap { background: var(--white); border-radius: 12px; box-shadow: var(--shadow); overflow: hidden; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+thead { background: var(--navy); }
+th { padding: 10px 12px; text-align: left; font-size: 10px; font-weight: 700; letter-spacing: 1px; color: var(--muted-dk); text-transform: uppercase; white-space: nowrap; }
+th.num { text-align: right; }
+tbody tr { border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.1s; }
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: var(--ice-dim); }
+td { padding: 9px 12px; white-space: nowrap; vertical-align: middle; }
+td.num { text-align: right; font-variant-numeric: tabular-nums; }
+.player-cell { display: flex; align-items: center; gap: 8px; }
+.player-name { font-weight: 700; font-size: 13px; }
+.player-pos { font-size: 10px; color: var(--muted); font-weight: 500; }
+
+@media (max-width: 720px) {
+  .team-hero { padding: 20px 16px; }
+  .bp-back { position: static !important; margin-bottom: 10px; }
+  .team-hero-inner { flex-wrap: wrap; gap: 12px; }
+  .team-hero-logo { width: 52px; height: 52px; }
+  .team-hero-name { font-size: 24px; }
+  .team-hero-stats { margin-left: 0; gap: 16px; }
+  .team-stat-num { font-size: 22px; }
+  .team-body { padding: 16px; }
+  .compare-chart-card { padding: 14px; margin-bottom: 14px; }
+  .bar-name { width: 90px; font-size: 11px; }
+  .bar-val { width: 40px; font-size: 11px; }
+  .roster-table-wrap { overflow-x: auto; }
+  table { min-width: 640px; font-size: 12px; }
+  th, td { padding: 7px 8px; }
+}
+</style>
+</head>
+<body>
+
+<div id="nav-placeholder"></div>
+
+<div class="team-hero" id="team-hero" style="background: var(--navy);">
+  <div class="team-hero-inner">
+    <a href="teams.html" class="bp-back" style="position:absolute; top:-16px; left:0;">&larr; All teams</a>
+    <img class="team-hero-logo" id="team-logo-img" src="" alt="">
+    <div>
+      <div class="team-hero-name" id="team-name">Loading&hellip;</div>
+      <div class="team-hero-sub" id="team-sub">2025&ndash;26 Season</div>
+    </div>
+    <div class="team-hero-stats">
+      <div class="team-stat">
+        <div class="team-stat-num" id="team-war-total">&mdash;</div>
+        <div class="team-stat-label">Team WAR</div>
+      </div>
+      <div class="team-stat">
+        <div class="team-stat-num" id="team-players">&mdash;</div>
+        <div class="team-stat-label">Rated Players</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="team-body">
+  <div class="compare-chart-card">
+    <div class="compare-title">WAR Comparison &mdash; Top Contributors</div>
+    <div id="compare-chart"></div>
+  </div>
+
+  <div class="roster-table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:36px">#</th>
+          <th>Player</th>
+          <th class="num">GP</th>
+          <th class="num">PTS</th>
+          <th class="num">WAR</th>
+          <th class="num">EVO</th>
+          <th class="num">EVD</th>
+          <th class="num">PP</th>
+          <th class="num">PK</th>
+          <th class="num">PEN</th>
+          <th class="num">SH</th>
+        </tr>
+      </thead>
+      <tbody id="roster-body">
+        <tr><td colspan="9" style="padding:40px; text-align:center; color:var(--muted);">Loading roster&hellip;</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="bp-footer">
+  <strong>Blueprint Hockey</strong> &middot; blueprinthockeyanalytics.com &middot; Model v12
+</div>
+
+<script src="nav-search.js?v=2"></script>
+<script>
+fetch('nav.html').then(r => r.text()).then(html => {
+  document.getElementById('nav-placeholder').innerHTML = html;
+  bpInitNavSearch();
+});
+
+const TEAM_NAMES = {
+  ANA:'Anaheim Ducks',UTA:'Utah Hockey Club',BOS:'Boston Bruins',
+  BUF:'Buffalo Sabres',CGY:'Calgary Flames',CAR:'Carolina Hurricanes',CHI:'Chicago Blackhawks',
+  COL:'Colorado Avalanche',CBJ:'Columbus Blue Jackets',DAL:'Dallas Stars',DET:'Detroit Red Wings',
+  EDM:'Edmonton Oilers',FLA:'Florida Panthers',LAK:'Los Angeles Kings',MIN:'Minnesota Wild',
+  MTL:'Montreal Canadiens',NSH:'Nashville Predators',NJD:'New Jersey Devils',NYI:'New York Islanders',
+  NYR:'New York Rangers',OTT:'Ottawa Senators',PHI:'Philadelphia Flyers',PIT:'Pittsburgh Penguins',
+  SJS:'San Jose Sharks',SEA:'Seattle Kraken',STL:'St. Louis Blues',TBL:'Tampa Bay Lightning',
+  TOR:'Toronto Maple Leafs',VAN:'Vancouver Canucks',VGK:'Vegas Golden Knights',WSH:'Washington Capitals',
+  WPG:'Winnipeg Jets'
+};
+const TEAM_BG = {
+  EDM:'#041E42', TOR:'#00205B', MTL:'#1A0308', COL:'#1A0008', BOS:'#1A0F00',
+  TBL:'#00112B', NYR:'#001060', VGK:'#1A1300', CAR:'#1A0000', DAL:'#001F15',
+};
+
+function getParam(name) {
+  return new URLSearchParams(window.location.search).get(name);
+}
+
+function fmtComp(val, isNA) {
+  if (isNA || val === null || val === undefined || isNaN(val)) return '<span class="comp na">N/A</span>';
+  const cls = val >= 0.12 ? 'high' : val >= 0.04 ? 'mid' : val >= -0.02 ? 'neu' : 'low';
+  const sign = val >= 0 ? '+' : '';
+  return `<span class="comp ${cls}">${sign}${val.toFixed(2)}</span>`;
+}
+
+async function loadTeamPage() {
+  const team = getParam('team') || 'EDM';
+  document.getElementById('team-name').textContent = TEAM_NAMES[team] || team;
+  document.getElementById('team-logo-img').src = bpLogoUrl(team);
+  document.getElementById('team-hero').style.background = TEAM_BG[team] || '#041E42';
+
+  let roster = [];
+  try {
+    const res = await fetch('data/master_season.csv');
+    const text = await res.text();
+    const rows = bpParseCSV(text).map(r => ({
+      ...r, WAR: Number(r.WAR), season: Number(r.season),
+      WAR_evo: Number(r.WAR_evo), WAR_evd: Number(r.WAR_evd),
+      WAR_pp: Number(r.WAR_pp), WAR_pk: Number(r.WAR_pk),
+      WAR_pen: Number(r.WAR_pen), WAR_shoot: Number(r.WAR_shoot),
+      gp: Number(r.gp), points: Number(r.points),
+    }));
+    const maxSeason = Math.max(...rows.map(r => r.season));
+    roster = rows.filter(r => r.season === maxSeason && r.team === team)
+                 .sort((a, b) => b.WAR - a.WAR);
+  } catch (e) {
+    roster = [];
+  }
+
+  const totalWAR = roster.reduce((s, r) => s + (r.WAR || 0), 0);
+  document.getElementById('team-war-total').textContent = (totalWAR >= 0 ? '+' : '') + totalWAR.toFixed(1);
+  document.getElementById('team-players').textContent = roster.length;
+
+  // Comparison bar chart — top 10 by |WAR|
+  const top10 = roster.slice(0, 10);
+  const maxAbs = Math.max(...top10.map(r => Math.abs(r.WAR)), 1);
+  document.getElementById('compare-chart').innerHTML = top10.map(r => {
+    const pct = Math.abs(r.WAR) / maxAbs * 100;
+    const neg = r.WAR < 0;
+    return `<div class="bar-row">
+      <div class="bar-name">${r.display_name || r.name}</div>
+      <div class="bar-track"><div class="bar-fill ${neg?'neg':''}" style="width:${pct}%"></div></div>
+      <div class="bar-val">${r.WAR>=0?'+':''}${r.WAR.toFixed(2)}</div>
+    </div>`;
+  }).join('');
+
+  // Roster table
+  const tbody = document.getElementById('roster-body');
+  if (!roster.length) {
+    tbody.innerHTML = '<tr><td colspan="9" style="padding:40px; text-align:center; color:var(--muted);">No roster data found</td></tr>';
+    return;
+  }
+  tbody.innerHTML = roster.map((r, i) => {
+    const ppNA = r.WAR_pp === 0 && (r.pp_toi_hr || 0) < 0.38;
+    const pkNA = r.WAR_pk === 0 && (r.pk_toi_hr || 0) < 0.38;
+    return `<tr onclick="window.location.href='player.html?id=${r.playerId}'">
+      <td style="color:var(--muted); font-weight:600;">${i+1}</td>
+      <td>
+        <div class="player-cell">
+          <div>
+            <div class="player-name">${r.display_name || r.name}</div>
+            <div class="player-pos">${r.position}</div>
+          </div>
+        </div>
+      </td>
+      <td class="num">${r.gp || '\u2014'}</td>
+      <td class="num">${r.points ?? '\u2014'}</td>
+      <td class="num"><span class="war-val ${r.WAR>=0?'pos':'neg'}">${r.WAR>=0?'+':''}${r.WAR.toFixed(2)}</span></td>
+      <td class="num">${fmtComp(r.WAR_evo)}</td>
+      <td class="num">${fmtComp(r.WAR_evd)}</td>
+      <td class="num">${fmtComp(ppNA?null:r.WAR_pp, ppNA)}</td>
+      <td class="num">${fmtComp(pkNA?null:r.WAR_pk, pkNA)}</td>
+      <td class="num">${fmtComp(r.WAR_pen)}</td>
+      <td class="num">${fmtComp(r.WAR_shoot)}</td>
+    </tr>`;
+  }).join('');
+}
+
+loadTeamPage();
+</script>
+</body>
+</html>

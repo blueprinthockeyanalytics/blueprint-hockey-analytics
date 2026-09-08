@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Methodology — Blueprint Hockey</title>
+<link rel="stylesheet" href="shared.css?v=2">
+<style>
+.bp-page-header { background: var(--navy); padding: 28px 24px; }
+.bp-page-header-inner { max-width: 820px; margin: 0 auto; }
+.bp-page-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 34px; color: var(--white); letter-spacing: -0.5px; text-transform: uppercase; }
+.bp-page-sub { font-size: 13px; color: var(--muted-dk); margin-top: 2px; font-weight: 500; }
+.content { max-width: 820px; margin: 0 auto; padding: 32px 24px 60px; }
+.content h2 { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 20px; color: var(--navy); margin: 28px 0 10px; text-transform: uppercase; letter-spacing: -0.2px; }
+.content h2:first-child { margin-top: 0; }
+.content p { font-size: 14px; line-height: 1.7; color: var(--text); margin-bottom: 12px; }
+.content .label { font-size: 11px; font-weight: 700; color: var(--ice-light); background: var(--navy); padding: 2px 8px; border-radius: 4px; display: inline-block; }
+
+@media (max-width: 720px) {
+  .bp-page-title { font-size: 26px; }
+  .content { padding: 24px 18px 48px; }
+  .content h2 { font-size: 17px; }
+  .content p { font-size: 13.5px; }
+}
+</style>
+</head>
+<body>
+
+<div id="nav-placeholder"></div>
+
+<div class="bp-page-header">
+  <div class="bp-page-header-inner">
+    <div class="bp-page-title">Methodology</div>
+    <div class="bp-page-sub">How Blueprint Hockey calculates WAR</div>
+  </div>
+</div>
+
+<div class="content">
+  <h2>Overview</h2>
+  <p>Blueprint Hockey's WAR model (v12) measures every skater's value through six independent components: even-strength offense (EVO), even-strength defense (EVD), power play (PP), penalty kill (PK), penalty differential (PEN), and shooting talent (SH). Each component is measured in goals above replacement, summed into Goals Above Replacement (GAR), then converted to Wins Above Replacement (WAR) by dividing by goals per win.</p>
+  <p>The model covers skaters only. Goaltending is a fundamentally different evaluation problem and is not part of the current model.</p>
+
+  <h2>Even-strength offense and defense</h2>
+  <p>EVO and EVD use a true &plusmn;1 shift-level regularized adjusted plus-minus (RAPM) model. Every 5-on-5 shift in our database places the home team's skaters at +1 and the away team's skaters at &minus;1 in the same regression row, with the shift's expected goals as the target. This lets the model separate a player's individual impact from both their own teammates and the specific opponents they faced &mdash; unlike teammate-only models, a player who faces top competition every shift is not penalized for their opponents' quality.</p>
+  <p>The model is trained on 16 seasons and roughly 4.9 million shifts, with more recent seasons weighted more heavily.</p>
+
+  <h2>Expected goals model</h2>
+  <p>Every shot is scored by a gradient-boosted classifier trained on 16 seasons and 880,000+ shot events, using distance, angle, shot type, rebound status, score state, and zone context as features. The model achieves an AUC of approximately 0.77, in line with public industry benchmarks.</p>
+
+  <h2>Power play and penalty kill</h2>
+  <p>Special teams components use the same RAPM framework applied to shift-level power play and penalty kill data, isolating individual contribution to the unit's shot generation and suppression.</p>
+
+  <h2>Replacement level</h2>
+  <p>Replacement level is defined empirically from the bottom quartile of qualifying ice time within each component, rather than a fixed assumption.</p>
+
+  <h2>Player Reports</h2>
+  <p>The WAR model on this page is built specifically for NHL play &mdash; it depends on NHL play-by-play and shift data, so it isn't used to grade amateur or non-NHL players. Custom <a href="player-reports.html" style="color:var(--navy); font-weight:700; text-decoration:underline;">Player Reports</a> use a separate evaluation approach built for that player's own level, combining relevant analytics with direct video review using tools such as InStat and FloHockey.</p>
+</div>
+
+<div class="bp-footer">
+  <strong>Blueprint Hockey</strong> &middot; blueprinthockeyanalytics.com &middot; Model v12
+</div>
+
+<script src="nav-search.js?v=2"></script>
+<script>
+fetch('nav.html').then(r => r.text()).then(html => {
+  document.getElementById('nav-placeholder').innerHTML = html;
+  document.querySelector('[data-nav="methodology"]')?.classList.add('active');
+  bpInitNavSearch();
+});
+</script>
+</body>
+</html>

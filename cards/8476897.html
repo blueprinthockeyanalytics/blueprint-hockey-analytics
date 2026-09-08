@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oskar Sundqvist — Blueprint Hockey</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #ffffff;
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  min-height: 100vh;
+}
+.card {
+  background: #fff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 760px;
+  overflow: hidden;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.10);
+}
+.header { background: #002F87; position: relative; overflow: hidden; }
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, #FCB514 0%, #FCB514 100%);
+  z-index: 2;
+}
+.header-inner { display: flex; align-items: stretch; position: relative; z-index: 1; }
+.headshot-wrap {
+  flex-shrink: 0; width: 80px; height: 86px;
+  position: relative; overflow: hidden;
+  background: rgba(0,0,0,0.35); rgba(255,255,255,0);
+  border: 1px solid rgba(255,255,255,0.12); 
+  border-radius: 10px;
+  margin: 2px 0 8px 12px;
+}
+.headshot-wrap img {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: top 5%; display: block;
+}
+.header-info { flex: 1; min-width: 0; padding: 2px 10px 5px; }
+.player-name-row { display: flex; align-items: center; gap: 7px; flex-wrap: nowrap; min-width: 0; }
+.player-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; color: #fff; letter-spacing: -0.2px; line-height: 1.05; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.jersey-number { font-size: 14px; font-weight: 700; color: #fff; white-space: nowrap; }
+.flag-img { width: 26px; height: 18px; border-radius: 2px; object-fit: cover; display: block; flex-shrink: 0; }
+.header-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; margin-top: 6px; }
+.tag { font-size: 13px; font-weight: 600; padding: 3px 9px; border-radius: 20px; background: rgba(255,255,255,0.08); color: #fff; }
+.header-physical { display: flex; align-items: center; gap: 7px; margin-top: 7px; }
+.physical-text { font-size: 13px; font-weight: 500; color: #fff; }
+.war-box {
+  flex-shrink: 0; margin: 2px 10px 8px 0; padding: 2px 10px 8px;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.35);rgba(255,255,255,0);
+  border-radius: 10px;
+  display: flex; flex-direction: column; justify-content: flex-start; min-width: 78px;
+}
+.war-box-label { font-size: 13px; font-weight: 700; letter-spacing: 2px; color: #fff; text-transform: uppercase; }
+.war-box-value { font-family: 'Barlow Condensed', sans-serif; font-size: 34px; font-weight: 900; color: #fff; letter-spacing: -1px; line-height: 1; margin-top: 1px; }
+.war-box-gar { font-size: 13px; font-weight: 600; color: #fff; margin-top: 2px; }
+.body { padding: 0 12px 12px; position: relative; }
+.body-logo {
+  position: absolute; top: 38%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 525px; height: 525px;
+  object-fit: contain; opacity: 0.09;
+  pointer-events: none; z-index: 0;
+  filter: grayscale(1) contrast(1.5) brightness(0.55);
+}
+.body > *:not(.body-logo) { position: relative; z-index: 1; }
+.section-label { font-size: 9px; font-weight: 700; letter-spacing: 2px; color: #aaa; text-transform: uppercase; margin: 10px 0 6px; }
+.stat-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+.stat-box { background: #f5f6f8; border-radius: 7px; padding: 6px 4px; text-align: center; }
+.stat-val { font-family: 'Barlow Condensed', sans-serif; font-size: 19px; font-weight: 800; color: #041E42; letter-spacing: -0.3px; line-height: 1; }
+.stat-lbl { font-size: 8px; font-weight: 600; color: #aaa; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 2px; }
+.components { display: flex; flex-direction: column; gap: 5px; }
+.comp-row { display: flex; align-items: center; gap: 8px; }
+.comp-name { font-size: 11px; font-weight: 700; width: 30px; flex-shrink: 0; }
+.comp-name.good { color: #1a7a3c; } .comp-name.bad { color: #c0392b; } .comp-name.mid { color: #F5C518; } .comp-name.na { color: #aaa; }
+.bar-track { flex: 1; height: 8px; background: #eef0f3; border-radius: 4px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 4px; transition: width 0.4s ease; }
+.bar-fill.green { background: #1a7a3c; } .bar-fill.red { background: #c0392b; } .bar-fill.amber { background: #F5C518; }
+.pct-badge { font-size: 13px; font-weight: 800; padding: 3px 9px; border-radius: 5px; min-width: 46px; text-align: center; flex-shrink: 0; }
+.pct-badge.green { background: #e8f5ee; color: #1a7a3c; }
+.pct-badge.red   { background: #fdecea; color: #c0392b; }
+.pct-badge.amber { background: #FFFBEA; color: #F5C518; }
+.pct-badge.na    { background: #f0f0f0; color: #aaa; font-weight: 600; }
+.chart-wrap { position: relative; height: 96px; margin-top: 2px; }
+canvas#careerChart { width: 100% !important; }
+.contract-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.contract-box { background: #f5f6f8; border-radius: 7px; padding: 7px 8px; text-align: center; }
+.contract-val { font-size: 15px; font-weight: 800; color: #041E42; letter-spacing: -0.4px; line-height: 1; }
+.contract-lbl { font-size: 8px; font-weight: 600; color: #aaa; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 2px; }
+.value-row { margin-top: 6px; background: #e8f5ee; border-radius: 7px; padding: 7px 12px; display: flex; align-items: center; justify-content: space-between; }
+.value-row.over { background: #fdecea; }
+.value-delta { font-size: 18px; font-weight: 900; color: #1a7a3c; letter-spacing: -0.5px; }
+.value-row.over .value-delta { color: #c0392b; }
+.value-desc { font-size: 11px; font-weight: 600; color: #1a7a3c; }
+.value-row.over .value-desc { color: #c0392b; }
+.value-meta { font-size: 10px; color: #888; font-weight: 500; text-align: right; }
+.brand-footer { margin-top: 8px; padding-top: 8px; border-top: 1px solid #f0f0f0; text-align: right; }
+.brand-name { font-size: 10px; font-weight: 800; color: #041E42; letter-spacing: 1.5px; text-transform: uppercase; }
+.brand-url { font-size: 9px; color: #bbb; font-weight: 500; }
+
+/* ── Two complete cards, side by side ──────────────────────────────────── */
+.card-pair { display: flex; gap: 16px; max-width: 940px; width: 100%; align-items: flex-start; }
+.card-column { flex: 1; min-width: 0; max-width: 460px; }
+.card-column .card { max-width: none; }
+.card-toolbar { display: flex; justify-content: center; gap: 10px; margin-top: 12px; }
+.toolbar-btn {
+  font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700;
+  padding: 9px 18px; border-radius: 24px; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 7px;
+  border: 1.5px solid transparent;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+.toolbar-btn svg { display: block; }
+.toolbar-btn.primary { background: #041E42; color: #fff; box-shadow: 0 2px 8px rgba(4,30,66,0.22); }
+.toolbar-btn.primary:hover { background: #0a2e5c; box-shadow: 0 4px 14px rgba(4,30,66,0.32); transform: translateY(-1px); }
+.toolbar-btn.primary:active { transform: translateY(0); box-shadow: 0 2px 6px rgba(4,30,66,0.25); }
+.toolbar-btn.secondary { background: #fff; color: #041E42; border-color: #dde1e7; }
+.toolbar-btn.secondary:hover { background: #f5f6f8; border-color: #041E42; transform: translateY(-1px); }
+.toolbar-btn.secondary:active { transform: translateY(0); background: #eef0f3; }
+.pr-callout {
+  max-width: 940px; margin: 18px auto 0; padding: 14px 20px;
+  background: #f5f6f8; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  flex-wrap: wrap; text-align: center;
+}
+.pr-callout span { font-size: 12.5px; color: #4A5568; font-weight: 500; }
+.pr-callout a { font-size: 12.5px; font-weight: 700; color: #041E42; text-decoration: underline; }
+.card-column .card { margin: 0; }
+.card-badge {
+  background: #002F87; color: #ffffff; text-align: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase;
+  padding: 7px 0;
+}
+
+@media (max-width: 720px) {
+  .card-pair { flex-direction: column; max-width: 460px; }
+  .card-column { max-width: 100%; }
+  .header-inner { flex-wrap: wrap; }
+  .headshot-wrap { width: 64px; height: 70px; margin: 8px 0 8px 10px; }
+  .header-info { padding: 10px 8px 6px; min-width: 0; }
+  .name { font-size: 18px; }
+  .war-box { margin: 8px 8px 8px 0; min-width: 66px; padding: 6px 8px; }
+  .war-value { font-size: 26px; }
+  .stat-grid { gap: 4px; }
+  .stat-box { padding: 5px 3px; }
+  .stat-val { font-size: 15px; }
+  .stat-lbl { font-size: 7px; }
+  .body { padding: 0 10px 10px; }
+  .contract-grid { gap: 5px; }
+  .card-toolbar { gap: 8px; }
+  .toolbar-btn { padding: 8px 14px; font-size: 12px; }
+  .pr-callout { padding: 12px 16px; margin-top: 14px; }
+}
+</style>
+</head>
+<body>
+
+<div class="card-pair">
+
+<div class="card-column">
+<div class="card card-season" id="card-season">
+  <div class="card-badge">2025&ndash;26 Season</div>
+  <div class="header">
+    <div class="header-inner">
+      <div class="headshot-wrap">
+        <img src="headshots/8476897.png" alt="Oskar Sundqvist"
+        onerror="(function(img){
+          var tries=[
+            'https://assets.nhle.com/mugs/nhl/20242025/STL/8476897.png',
+            'https://assets.nhle.com/mugs/nhl/20232024/STL/8476897.png',
+            'https://assets.nhle.com/mugs/nhl/20222023/STL/8476897.png',
+            'https://assets.nhle.com/mugs/nhl/20232024/STL/8476897.png',
+            'https://assets.nhle.com/mugs/nhl/20212022/STL/8476897.png',
+            'https://assets.nhle.com/mugs/nhl/20202021/STL/8476897.png',
+            'https://assets.nhle.com/mugs/nhl/20192020/STL/8476897.png',
+          ];
+          var idx=parseInt(img.dataset.try||0);
+          img.dataset.try=idx+1;
+          if(idx<tries.length){img.src=tries[idx];}
+          else{img.style.background='#0E2A5A';img.style.opacity='0.5';}
+        })(this)">
+      </div>
+      <div class="header-info">
+        <div class="player-name-row">
+          <div class="player-name" style="font-size:21px">Oskar Sundqvist</div>
+          <span class="jersey-number">#70</span>
+        </div>
+        <div class="header-tags">
+          <span class="tag">STL</span>
+          <span class="tag">C</span>
+          <span class='tag'>Age 32</span>
+          <img class="flag-img" src="https://flagcdn.com/w40/se.png" alt="SWE" style="flex-shrink:0;width:26px;height:18px;border-radius:2px;object-fit:cover;display:block;">
+        </div>
+        <div class="header-physical">
+          <span class="physical-text">6'3" · 210 lbs</span>
+        </div>
+      </div>
+      <div class="war-box">
+        <div class="war-box-label">WAR</div>
+        <div class="war-box-value">-0.21</div>
+        <div class="war-box-gar">-1.3 GAR</div>
+      </div>
+    </div>
+  </div>
+  <div class="body">
+    <img class="body-logo" src="https://assets.nhle.com/logos/nhl/svg/STL_dark.svg" alt="">
+
+    <div class="section-label">2025-26 Season</div>
+    <div class="stat-grid">
+      <div class="stat-box"><div class="stat-val">52</div><div class="stat-lbl">GP</div></div>
+      <div class="stat-box"><div class="stat-val">5</div><div class="stat-lbl">G</div></div>
+      <div class="stat-box"><div class="stat-val">12</div><div class="stat-lbl">A</div></div>
+      <div class="stat-box"><div class="stat-val">17</div><div class="stat-lbl">PTS</div></div>
+      <div class="stat-box"><div class="stat-val">10:12</div><div class="stat-lbl">TOI/G</div></div>
+    </div>
+
+    <div class="section-label">Impact by Component &middot; 2025-26</div>
+    <div class="components">
+      <div class="comp-row">
+        <span class="comp-name bad">EVO</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:18%"></div></div>
+        <span class="pct-badge red">18th</span>
+      </div>
+      <div class="comp-row">
+        <span class="comp-name bad">EVD</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:6%"></div></div>
+        <span class="pct-badge red">6th</span>
+      </div>
+      <div class="comp-row">
+        <span class="comp-name good">PP</span>
+        <div class="bar-track"><div class="bar-fill green" style="width:73%"></div></div>
+        <span class="pct-badge green">73rd</span>
+      </div>
+      <div class="comp-row">
+        <span class="comp-name bad">PK</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:7%"></div></div>
+        <span class="pct-badge red">7th</span>
+      </div>
+      <div class="comp-row">
+        <span class="comp-name bad">PEN</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:20%"></div></div>
+        <span class="pct-badge red">20th</span>
+      </div>
+      <div class="comp-row">
+        <span class="comp-name bad">SH</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:30%"></div></div>
+        <span class="pct-badge red">30th</span>
+      </div>
+    </div>
+
+    <div class="section-label">Career Arc</div>
+    <div class="chart-wrap">
+      <canvas id="careerChart-season"></canvas>
+    </div>
+
+    <div class="section-label">Contract</div>
+    <div class="contract-grid">
+      <div class="contract-box">
+        <div class="contract-val">$0.8M</div>
+        <div class="contract-lbl">AAV</div>
+      </div>
+      <div class="contract-box">
+        <div class="contract-val">2</div>
+        <div class="contract-lbl">Years Left</div>
+      </div>
+      <div class="contract-box">
+        <div class="contract-val">$-0.0M</div>
+        <div class="contract-lbl">Market Value</div>
+      </div>
+    </div>
+    <div class="value-row over">
+      <div>
+        <div class="value-delta">-$0.9M</div>
+        <div class="value-desc">Over market value</div>
+      </div>
+      <div class="value-meta">Costing $0.9M/yr vs fair market</div>
+    </div>
+
+    <div class="brand-footer">
+      <div class="brand-name">Blueprint Hockey</div>
+      <div class="brand-url">blueprinthockeyanalytics.com</div>
+    </div>
+  </div>
+</div>
+  <div class="card-toolbar">
+    <button class="toolbar-btn primary" onclick="shareCard('card-season', 'Oskar_Sundqvist_2025-26_Season')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a2 2 0 002 2h12a2 2 0 002-2v-7"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+      Share
+    </button>
+    <button class="toolbar-btn secondary" onclick="saveCard('card-season', 'Oskar_Sundqvist_2025-26_Season')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+      Save
+    </button>
+  </div>
+</div>
+
+<div class="card-column">
+<div class="card card-career" id="card-career">
+  <div class="card-badge">3-Year Weighted &middot; 2023-24 to 2025-26</div>
+  <div class="header">
+    <div class="header-inner">
+      <div class="headshot-wrap">
+        <img src="headshots/8476897.png" alt="Oskar Sundqvist"
+        onerror="(function(img){
+          var tries=[
+            'https://assets.nhle.com/mugs/nhl/20242025/STL/8476897.png',
+            'https://assets.nhle.com/mugs/nhl/20232024/STL/8476897.png',
+            'https://assets.nhle.com/mugs/nhl/20222023/STL/8476897.png',
+            'https://assets.nhle.com/mugs/nhl/20232024/STL/8476897.png',
+            'https://assets.nhle.com/mugs/nhl/20212022/STL/8476897.png',
+            'https://assets.nhle.com/mugs/nhl/20202021/STL/8476897.png',
+            'https://assets.nhle.com/mugs/nhl/20192020/STL/8476897.png',
+          ];
+          var idx=parseInt(img.dataset.try||0);
+          img.dataset.try=idx+1;
+          if(idx<tries.length){img.src=tries[idx];}
+          else{img.style.background='#0E2A5A';img.style.opacity='0.5';}
+        })(this)">
+      </div>
+      <div class="header-info">
+        <div class="player-name-row">
+          <div class="player-name" style="font-size:21px">Oskar Sundqvist</div>
+          <span class="jersey-number">#70</span>
+        </div>
+        <div class="header-tags">
+          <span class="tag">STL</span>
+          <span class="tag">C</span>
+          <span class='tag'>Age 32</span>
+          <img class="flag-img" src="https://flagcdn.com/w40/se.png" alt="SWE" style="flex-shrink:0;width:26px;height:18px;border-radius:2px;object-fit:cover;display:block;">
+        </div>
+        <div class="header-physical">
+          <span class="physical-text">6'3" · 210 lbs</span>
+        </div>
+      </div>
+      <div class="war-box">
+        <div class="war-box-label">WAR</div>
+        <div class="war-box-value">-0.14</div>
+        <div class="war-box-gar">-0.8 GAR</div>
+      </div>
+    </div>
+  </div>
+  <div class="body">
+    <img class="body-logo" src="https://assets.nhle.com/logos/nhl/svg/STL_dark.svg" alt="">
+
+    <div class="section-label">82-GP Pace &middot; Last 3 Seasons</div>
+    <div class="stat-grid">
+      <div class="stat-box"><div class="stat-val">190</div><div class="stat-lbl">GP</div></div>
+      <div class="stat-box"><div class="stat-val">7</div><div class="stat-lbl">G/82</div></div>
+      <div class="stat-box"><div class="stat-val">18</div><div class="stat-lbl">A/82</div></div>
+      <div class="stat-box"><div class="stat-val">25</div><div class="stat-lbl">P/82</div></div>
+      <div class="stat-box"><div class="stat-val">10:28</div><div class="stat-lbl">TOI/G</div></div>
+    </div>
+
+    <div class="section-label">3-Yr Weighted Percentiles &middot; 2023-24 to 2025-26</div>
+    <div class="components">
+      <div class="comp-row">
+        <span class="comp-name bad">EVO</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:19%"></div></div>
+        <span class="pct-badge red">19th</span>
+      </div>
+      <div class="comp-row">
+        <span class="comp-name bad">EVD</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:4%"></div></div>
+        <span class="pct-badge red">4th</span>
+      </div>
+      <div class="comp-row">
+        <span class="comp-name good">PP</span>
+        <div class="bar-track"><div class="bar-fill green" style="width:85%"></div></div>
+        <span class="pct-badge green">85th</span>
+      </div>
+      <div class="comp-row">
+        <span class="comp-name bad">PK</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:8%"></div></div>
+        <span class="pct-badge red">8th</span>
+      </div>
+      <div class="comp-row">
+        <span class="comp-name good">PEN</span>
+        <div class="bar-track"><div class="bar-fill green" style="width:74%"></div></div>
+        <span class="pct-badge green">74th</span>
+      </div>
+      <div class="comp-row">
+        <span class="comp-name bad">SH</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:14%"></div></div>
+        <span class="pct-badge red">14th</span>
+      </div>
+    </div>
+
+    <div class="section-label">Career Arc</div>
+    <div class="chart-wrap">
+      <canvas id="careerChart-career"></canvas>
+    </div>
+
+    <div class="section-label">Contract</div>
+    <div class="contract-grid">
+      <div class="contract-box">
+        <div class="contract-val">$0.8M</div>
+        <div class="contract-lbl">AAV</div>
+      </div>
+      <div class="contract-box">
+        <div class="contract-val">2</div>
+        <div class="contract-lbl">Years Left</div>
+      </div>
+      <div class="contract-box">
+        <div class="contract-val">$-0.0M</div>
+        <div class="contract-lbl">Market Value</div>
+      </div>
+    </div>
+    <div class="value-row over">
+      <div>
+        <div class="value-delta">-$0.9M</div>
+        <div class="value-desc">Over market value</div>
+      </div>
+      <div class="value-meta">Costing $0.9M/yr vs fair market</div>
+    </div>
+
+    <div class="brand-footer">
+      <div class="brand-name">Blueprint Hockey</div>
+      <div class="brand-url">blueprinthockeyanalytics.com</div>
+    </div>
+  </div>
+</div>
+  <div class="card-toolbar">
+    <button class="toolbar-btn primary" onclick="shareCard('card-career', 'Oskar_Sundqvist_3yr_weighted')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a2 2 0 002 2h12a2 2 0 002-2v-7"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+      Share
+    </button>
+    <button class="toolbar-btn secondary" onclick="saveCard('card-career', 'Oskar_Sundqvist_3yr_weighted')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+      Save
+    </button>
+  </div>
+</div>
+
+</div>
+
+<div class="pr-callout">
+  <span>Want a report like this built for your own player?</span>
+  <a href="../player-reports.html" target="_top">Get a Quote &rarr;</a>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.0.1/chartjs-plugin-annotation.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+function makeCareerChart(canvasId) {
+  const ctx = document.getElementById(canvasId).getContext('2d');
+  new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: ['15-16', '16-17', '17-18', '18-19', '19-20', '20-21', '21-22', '22-23', '23-24', '24-25', '25-26'],
+    datasets: [{
+      data: [0.0, -0.02, -0.03, 0.1, 0.33, -0.06, -0.28, -0.21, -0.35, -0.15, -0.22],
+      borderColor: '#041E42',
+      borderWidth: 2.5,
+      pointBackgroundColor: ['#041E42', '#041E42', '#041E42', '#041E42', '#F5C518', '#041E42', '#041E42', '#041E42', '#041E42', '#041E42', '#041E42'],
+      pointBorderColor: '#041E42',
+      pointBorderWidth: 2,
+      pointRadius: [4, 4, 4, 4, 6, 4, 4, 4, 4, 4, 4],
+      pointHoverRadius: 7,
+      fill: true,
+      backgroundColor: (ctx) => {
+        const g = ctx.chart.ctx.createLinearGradient(0,0,0,96);
+        g.addColorStop(0,'rgba(4,30,66,0.12)');
+        g.addColorStop(1,'rgba(4,30,66,0)');
+        return g;
+      },
+      tension: 0.35
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      annotation: {
+        annotations: {
+          zero: {
+            type: 'line',
+            yMin: 0, yMax: 0,
+            borderColor: 'rgba(0,0,0,0.15)',
+            borderWidth: 1,
+            borderDash: [4,3],
+          }
+        }
+      },
+      tooltip: {
+        backgroundColor: '#041E42',
+        titleColor: '#7AAAD8',
+        bodyColor: '#fff',
+        padding: 8,
+        callbacks: {
+          label: (c) => [False, False, False, False, True, False, False, False, False, False, False][c.dataIndex] ? ` ${c.raw} WAR · Career Best` : ` ${c.raw} WAR`
+        }
+      }
+    },
+    scales: {
+      x: {
+        grid: { display: false },
+        border: { display: false },
+        ticks: { font: { size: 10, weight: '600' }, color: '#aaa' }
+      },
+      y: {
+        min: -1.0,
+        max: 1.0,
+        grid: { color: '#f0f0f3' },
+        border: { display: false },
+        ticks: { font: { size: 10 }, color: '#bbb', stepSize: 0.5 }
+      }
+    }
+  }
+  });
+}
+makeCareerChart('careerChart-season');
+makeCareerChart('careerChart-career');
+
+// Report real height to the parent page (player.html listens for this but
+// nothing was ever sending it — the iframe was just using a fixed guess).
+// Small delay so charts/fonts/images finish affecting layout first.
+function reportHeight() {
+  if (window.parent && window.parent !== window) {
+    window.parent.postMessage({height: document.body.scrollHeight}, '*');
+  }
+}
+window.addEventListener('load', () => setTimeout(reportHeight, 300));
+setTimeout(reportHeight, 800);</script>
+<script>
+// ── Share / Save — captures just the one card div (toolbar lives outside
+// it, so the buttons never end up in the image itself). Share uses the
+// device's native share sheet (Instagram, X, Messages, Save to Photos,
+// etc all show up there on mobile) — that's the realistic way to get a
+// card into those apps from a website; there's no way to bypass that
+// sheet and post directly without each platform's own developer/OAuth
+// approval, which is a different scope entirely. Save always just
+// downloads the PNG directly, which lands in Photos/gallery on most
+// phones automatically.
+async function captureCard(cardId) {
+  const original = document.getElementById(cardId);
+  // Clone into an offscreen, padded wrapper before capturing. This gives
+  // the exported PNG a small white border (so the rounded corners/shadow
+  // don't look clipped) and captures a clean copy without disturbing the
+  // page layout while the screenshot is taken.
+  const wrapper = document.createElement('div');
+  wrapper.style.cssText = 'position:fixed; top:-9999px; left:-9999px; padding:20px; background:#ffffff; display:inline-block;';
+  const clone = original.cloneNode(true);
+
+  // cloneNode() copies <canvas> elements but not their rendered pixels —
+  // chart content lives outside the DOM, so the clone starts blank. Copy
+  // each canvas's actual bitmap over manually before capturing, or the
+  // Career Arc chart (and anything else drawn on canvas) exports empty.
+  const originalCanvases = original.querySelectorAll('canvas');
+  const cloneCanvases = clone.querySelectorAll('canvas');
+  originalCanvases.forEach((srcCanvas, i) => {
+    const dstCanvas = cloneCanvases[i];
+    if (!dstCanvas) return;
+    dstCanvas.width = srcCanvas.width;
+    dstCanvas.height = srcCanvas.height;
+    dstCanvas.getContext('2d').drawImage(srcCanvas, 0, 0);
+  });
+
+  wrapper.appendChild(clone);
+  document.body.appendChild(wrapper);
+
+  // The cloned <img> elements (headshot, flag, team logo) need to finish
+  // resolving again even though they're the same src as the original —
+  // cloneNode() doesn't guarantee they're already "loaded" in the new DOM
+  // position. Capturing before they're ready silently leaves them blank
+  // in the exported image, which is what was happening to the headshot.
+  const cloneImages = clone.querySelectorAll('img');
+  await Promise.all(Array.from(cloneImages).map(img => {
+    if (img.complete && img.naturalHeight !== 0) return Promise.resolve();
+    return new Promise(resolve => {
+      img.onload = resolve;
+      img.onerror = resolve;
+      setTimeout(resolve, 3000); // safety timeout, never hang the export
+    });
+  }));
+
+  // html2canvas has a known limitation rendering <img> elements that use
+  // CSS object-fit inside an absolutely-positioned wrapper (exactly how
+  // the headshot is built) — it displays fine on the real page, but can
+  // silently omit it from the captured canvas. Converting the headshot to
+  // a plain CSS background-image for the capture avoids that gap entirely.
+  clone.querySelectorAll('.headshot-wrap').forEach(wrap => {
+    const img = wrap.querySelector('img');
+    if (!img || !img.src) return;
+    wrap.style.backgroundImage = `url("${img.src}")`;
+    wrap.style.backgroundSize = 'cover';
+    wrap.style.backgroundPosition = 'top 5% center';
+    wrap.style.backgroundRepeat = 'no-repeat';
+    img.style.display = 'none';
+  });
+
+  try {
+    return await html2canvas(wrapper, { scale: 2, backgroundColor: '#ffffff', useCORS: true });
+  } finally {
+    document.body.removeChild(wrapper);
+  }
+}
+
+function downloadBlob(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+async function shareCard(cardId, filenameBase) {
+  try {
+    const canvas = await captureCard(cardId);
+    canvas.toBlob(async (blob) => {
+      const file = new File([blob], filenameBase + '.png', { type: 'image/png' });
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        try {
+          await navigator.share({ files: [file], title: 'Blueprint Hockey' });
+          return;
+        } catch (shareErr) {
+          if (shareErr.name === 'AbortError') return; // user cancelled, not an error
+        }
+      }
+      // Fallback — Web Share API with files isn't supported here (mostly
+      // desktop browsers), so just download the image instead.
+      downloadBlob(blob, filenameBase + '.png');
+    }, 'image/png');
+  } catch (e) {
+    console.error('Share failed', e);
+    alert('Could not generate image for sharing.');
+  }
+}
+
+async function saveCard(cardId, filenameBase) {
+  try {
+    const canvas = await captureCard(cardId);
+    canvas.toBlob((blob) => downloadBlob(blob, filenameBase + '.png'), 'image/png');
+  } catch (e) {
+    console.error('Save failed', e);
+    alert('Could not generate image.');
+  }
+}
+</script>
+</body>
+</html>

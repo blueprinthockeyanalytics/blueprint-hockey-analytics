@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blueprint Hockey Analytics</title>
+<link rel="stylesheet" href="shared.css?v=2">
+<style>
+/* ── HERO ── */
+.hero {
+  background: var(--navy);
+  position: relative;
+  overflow: hidden;
+  min-height: 520px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Blueprint grid lines — fade through entire hero */
+.hero-grid {
+  position: absolute; inset: 0; z-index: 1;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
+  background-size: 36px 36px;
+  pointer-events: none;
+}
+
+/* Crosby image - centered, full image visible, edges fading into navy */
+.hero-crosby {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  height: 100%;
+  width: auto;
+  z-index: 2;
+  mask-image: radial-gradient(ellipse 65% 80% at 50% 50%, black 40%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 65% 80% at 50% 50%, black 40%, transparent 100%);
+  opacity: 0.45;
+  pointer-events: none;
+  object-fit: contain;
+}
+
+/* Grid lines show on TOP of the image */
+.hero-grid-overlay {
+  position: absolute; inset: 0; z-index: 3;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 36px 36px;
+  pointer-events: none;
+}
+
+.hero-inner {
+  max-width: 1280px; margin: 0 auto; width: 100%;
+  padding: 60px 24px 0;
+  position: relative; z-index: 4;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  flex: 1;
+}
+.hero-left { flex: 1; min-width: 320px; max-width: 580px; }
+.eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 3px; color: var(--ice); text-transform: uppercase; margin-bottom: 14px; }
+.hero-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 68px; line-height: 0.92; text-transform: uppercase; color: var(--white); letter-spacing: -1px; margin-bottom: 18px; }
+.hero-title em { -webkit-text-stroke: 2px var(--ice); color: transparent; font-style: normal; }
+.hero-sub { font-size: 15px; color: rgba(255,255,255,0.5); line-height: 1.6; max-width: 440px; margin-bottom: 28px; }
+.hero-cta { display: flex; gap: 12px; }
+.btn-primary { background: var(--ice); color: var(--navy); font-size: 13px; font-weight: 700; padding: 12px 26px; border-radius: 6px; border: none; cursor: pointer; letter-spacing: 0.3px; }
+.btn-ghost { background: transparent; color: rgba(255,255,255,0.6); font-size: 13px; font-weight: 600; padding: 12px 26px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.18); cursor: pointer; }
+
+.hero-right { display: flex; gap: 12px; flex-shrink: 0; align-items: center; }
+.war-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 16px 20px; text-align: center; min-width: 120px; backdrop-filter: blur(4px); }
+.war-label { font-size: 9px; font-weight: 700; letter-spacing: 2px; color: rgba(255,255,255,0.4); text-transform: uppercase; }
+.war-num { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 40px; color: var(--white); letter-spacing: -1.5px; line-height: 1; margin: 4px 0; }
+.war-player { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.4); }
+
+.stats {
+  display: flex; border-top: 1px solid rgba(255,255,255,0.08);
+  margin-top: 48px;
+  max-width: 1280px; margin-left: auto; margin-right: auto; width: 100%;
+  position: relative; z-index: 4; padding: 0 24px;
+}
+.stat { flex: 1; padding: 20px 0; border-right: 1px solid rgba(255,255,255,0.08); padding-right: 24px; padding-left: 24px; }
+.stat:first-child { padding-left: 0; }
+.stat:last-child { border-right: none; }
+.stat-num { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 34px; color: var(--white); letter-spacing: -1px; line-height: 1; }
+.stat-label { font-size: 10px; color: rgba(255,255,255,0.35); margin-top: 4px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+.accent-line { height: 3px; background: linear-gradient(90deg, var(--ice), var(--ice-light) 40%, transparent); position: relative; z-index: 4; }
+
+/* ── BODY SECTIONS ── */
+.section { max-width: 1280px; margin: 0 auto; padding: 48px 24px; }
+.section-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 26px; color: var(--navy); text-transform: uppercase; letter-spacing: -0.3px; margin-bottom: 6px; }
+.section-sub { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+.preview-table-wrap { background: var(--white); border-radius: 12px; box-shadow: var(--shadow); overflow: hidden; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+thead { background: var(--navy); }
+th { padding: 10px 12px; text-align: left; font-size: 10px; font-weight: 700; letter-spacing: 1px; color: var(--muted-dk); text-transform: uppercase; }
+th.num { text-align: right; }
+tbody tr { border-bottom: 1px solid var(--border); cursor: pointer; }
+tbody tr:hover { background: var(--ice-dim); }
+tbody tr:last-child { border-bottom: none; }
+td { padding: 10px 12px; }
+td.num { text-align: right; }
+.player-cell { display: flex; align-items: center; gap: 8px; }
+.team-logo { width: 22px; height: 22px; object-fit: contain; }
+.team-logo[data-team="TBL"] { filter: brightness(0) saturate(100%) invert(10%) sepia(60%) saturate(2000%) hue-rotate(190deg); }
+.player-name { font-weight: 700; font-size: 13px; }
+.player-meta { font-size: 10px; color: var(--muted); }
+.see-more { text-align: center; margin-top: 16px; }
+.see-more a { font-size: 13px; font-weight: 700; color: var(--navy); }
+.feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 16px; }
+.feature-card { background: var(--white); border-radius: 12px; box-shadow: var(--shadow); padding: 20px; }
+.feature-title { font-weight: 800; font-size: 15px; color: var(--navy); margin-bottom: 6px; }
+.feature-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+/* ── PLAYER REPORTS PROMO SECTION ── */
+.pr-promo { background: var(--off); }
+.pr-promo-inner { max-width: 1280px; margin: 0 auto; padding: 48px 24px; display: flex; align-items: center; gap: 40px; }
+.pr-promo-img { flex-shrink: 0; }
+.pr-promo-img img { width: 180px; border-radius: 10px; box-shadow: 0 12px 32px rgba(4,30,66,0.16); transform: rotate(-2deg); display: block; }
+.pr-promo-text { flex: 1; min-width: 280px; }
+.pr-promo-kicker { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--navy); text-transform: uppercase; margin-bottom: 8px; opacity: 0.6; }
+.pr-promo-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 26px; color: var(--navy); letter-spacing: -0.3px; margin-bottom: 8px; }
+.pr-promo-desc { font-size: 14px; color: var(--muted); line-height: 1.6; max-width: 480px; margin-bottom: 18px; }
+.pr-promo-btn { display: inline-block; background: var(--navy); color: var(--white); font-size: 13px; font-weight: 700; padding: 11px 24px; border-radius: 6px; }
+
+@media (max-width: 720px) {
+  .hero { min-height: unset; }
+  .hero-inner { padding: 32px 18px 0; gap: 24px; }
+  .hero-title { font-size: 38px; }
+  .hero-sub { font-size: 14px; }
+  .hero-cta { flex-wrap: wrap; }
+  .btn-primary, .btn-ghost { padding: 11px 20px; font-size: 12.5px; }
+  .hero-right { width: 100%; justify-content: flex-start; flex-wrap: wrap; }
+  .war-card { min-width: 130px; flex: 1; }
+
+  .stats { flex-wrap: wrap; margin-top: 28px; }
+  .stat { flex: 1 1 50%; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); padding: 14px 0; }
+  .stat:nth-child(odd) { padding-right: 14px; }
+  .stat:nth-child(even) { padding-left: 14px; }
+  .stat-num { font-size: 26px; }
+
+  .section { padding: 32px 18px; }
+  .section-title { font-size: 21px; }
+  table { font-size: 12px; }
+  th, td { padding: 8px 8px; }
+  .player-meta { display: none; }
+  .team-logo { width: 18px; height: 18px; }
+
+  .pr-promo-inner { flex-direction: column; text-align: center; gap: 20px; padding: 36px 18px; }
+  .pr-promo-title { font-size: 21px; }
+}
+</style>
+</head>
+<body>
+
+<div id="nav-placeholder"></div>
+
+<div class="hero">
+  <div class="hero-grid"></div>
+  <img class="hero-crosby" src="assets/BlueprintLogo87.png" alt="">
+  <div class="hero-grid-overlay"></div>
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="eyebrow">NHL Analytics &middot; Model v12</div>
+      <h1 class="hero-title">The <em>blueprint</em><br>for hockey<br>intelligence</h1>
+      <p class="hero-sub">Shift-level RAPM. True opponent-adjusted WAR. The most rigorous public model for valuing NHL players.</p>
+      <div class="hero-cta">
+        <button class="btn-primary" onclick="window.location.href='leaderboard.html'">View leaderboard</button>
+        <button class="btn-ghost" onclick="window.location.href='methodology.html'">Read methodology</button>
+      </div>
+    </div>
+    <div class="hero-right" id="hero-leaders"></div>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="stat-num">16</div><div class="stat-label">Seasons modeled</div></div>
+    <div class="stat"><div class="stat-num">4.9M</div><div class="stat-label">Shifts analyzed</div></div>
+    <div class="stat"><div class="stat-num">1,227</div><div class="stat-label">Players rated</div></div>
+    <div class="stat"><div class="stat-num">0.77</div><div class="stat-label">xG model AUC</div></div>
+  </div>
+  <div class="accent-line"></div>
+</div>
+
+<div class="pr-promo">
+  <div class="pr-promo-inner">
+    <div class="pr-promo-img">
+      <img src="assets/sample-forward-web.jpg" alt="Sample player report">
+    </div>
+    <div class="pr-promo-text">
+      <div class="pr-promo-kicker">Custom Player Reports</div>
+      <div class="pr-promo-title">Get this level of breakdown for your own player</div>
+      <div class="pr-promo-desc">Everything on this site is built from the same rigorous analytics — shot maps, zone entries, percentile rankings, and a real written breakdown, custom-built for your player's own season.</div>
+      <a href="player-reports.html" class="pr-promo-btn">Get a Quote</a>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Top WAR &mdash; 2025&ndash;26</div>
+  <div class="section-sub">Current season leaders by Wins Above Replacement</div>
+  <div class="preview-table-wrap">
+    <table>
+      <thead><tr><th style="width:36px">#</th><th>Player</th><th class="num">PTS</th><th class="num">WAR</th></tr></thead>
+      <tbody id="home-leaders-table"></tbody>
+    </table>
+  </div>
+  <div class="see-more"><a href="leaderboard.html">View full leaderboard &rarr;</a></div>
+</div>
+
+<div class="section">
+  <div class="section-title">What makes Blueprint different</div>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="feature-title">True opponent adjustment</div>
+      <div class="feature-desc">Shift-level &plusmn;1 RAPM separates a player's impact from both their teammates and the competition they face &mdash; not just teammates-only regression.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-title">Trained expected goals model</div>
+      <div class="feature-desc">Gradient boosted xG model trained on 16 seasons and 880,000+ shots, with AUC matching public industry benchmarks.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-title">Full season and career view</div>
+      <div class="feature-desc">Compare a player's current season impact against their 3-year blended talent level and full career arc.</div>
+    </div>
+  </div>
+</div>
+
+<div class="bp-footer">
+  <strong>Blueprint Hockey</strong> &middot; blueprinthockeyanalytics.com &middot; Model v12 &middot; Data: NHL API, The Stanley Cap (contracts)
+</div>
+
+<script src="nav-search.js?v=2"></script>
+<script>
+fetch('nav.html').then(r => r.text()).then(html => {
+  document.getElementById('nav-placeholder').innerHTML = html;
+  bpInitNavSearch();
+});
+
+async function loadHome() {
+  let rows = [];
+  try {
+    const res = await fetch('data/master_season.csv');
+    const text = await res.text();
+    rows = bpParseCSV(text).map(r => ({ ...r, WAR: Number(r.WAR), season: Number(r.season), points: Number(r.points) }));
+    const maxSeason = Math.max(...rows.map(r => r.season));
+    rows = rows.filter(r => r.season === maxSeason);
+  } catch (e) { rows = []; }
+
+  if (!rows.length) {
+    rows = [
+      {playerId:'8478402',name:'Connor McDavid',display_name:'McDavid',team:'EDM',position:'C',points:138,WAR:4.02},
+      {playerId:'8477492',name:'Nathan MacKinnon',display_name:'MacKinnon',team:'COL',position:'C',points:127,WAR:3.41},
+      {playerId:'8480801',name:'Evan Bouchard',display_name:'Bouchard',team:'EDM',position:'D',points:95,WAR:3.02},
+    ];
+  }
+
+  const topF = rows.filter(r => r.pos_group === 'F' || r.position !== 'D').sort((a,b) => b.WAR - a.WAR)[0];
+  const topD = rows.filter(r => r.pos_group === 'D' || r.position === 'D').sort((a,b) => b.WAR - a.WAR)[0];
+  const sorted = rows.sort((a,b) => b.WAR - a.WAR).slice(0, 8);
+
+  document.getElementById('hero-leaders').innerHTML = [topF, topD].filter(Boolean).map(r => `
+    <div class="war-card">
+      <div class="war-label">${r.position === 'D' ? 'Top Defenseman' : 'Top Forward'}</div>
+      <div class="war-num">${r.WAR>=0?'+':''}${r.WAR.toFixed(2)}</div>
+      <div class="war-player">${(r.display_name||r.name)} &middot; ${r.team}</div>
+    </div>
+  `).join('');
+
+  document.getElementById('home-leaders-table').innerHTML = sorted.map((r,i) => `
+    <tr onclick="window.location.href='player.html?id=${r.playerId}'">
+      <td style="color:var(--muted); font-weight:700;">${i+1}</td>
+      <td><div class="player-cell">
+        <img class="team-logo" data-team="${r.team}" src="${bpLogoUrl(r.team)}" onerror="this.style.opacity=0.15">
+        <div><div class="player-name">${r.display_name||r.name}</div><div class="player-meta">${r.team} &middot; ${r.position}</div></div>
+      </div></td>
+      <td class="num">${r.points ?? '\u2014'}</td>
+      <td class="num"><span class="war-val pos">${r.WAR>=0?'+':''}${r.WAR.toFixed(2)}</span></td>
+    </tr>
+  `).join('');
+}
+
+loadHome();
+</script>
+</body>
+</html>
