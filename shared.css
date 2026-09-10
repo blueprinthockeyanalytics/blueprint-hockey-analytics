@@ -333,7 +333,7 @@ a { color: inherit; text-decoration: none; }
     background: rgba(255,255,255,0.06);
   }
   .bp-nav-links a[data-nav="player-reports"] {
-    margin: 4px 16px;
+    margin: 6px 24px;
     text-align: center;
     width: auto;
   }
