@@ -238,8 +238,8 @@ canvas#careerChart { width: 100% !important; }
       </div>
       <div class="comp-row">
         <span class="comp-name mid">EVD</span>
-        <div class="bar-track"><div class="bar-fill amber" style="width:48%"></div></div>
-        <span class="pct-badge amber">48th</span>
+        <div class="bar-track"><div class="bar-fill amber" style="width:47%"></div></div>
+        <span class="pct-badge amber">47th</span>
       </div>
       <div class="comp-row">
         <span class="comp-name bad">PP</span>
@@ -279,16 +279,16 @@ canvas#careerChart { width: 100% !important; }
         <div class="contract-lbl">Years Left</div>
       </div>
       <div class="contract-box">
-        <div class="contract-val">$3.8M</div>
+        <div class="contract-val">$0.6M</div>
         <div class="contract-lbl">Market Value</div>
       </div>
     </div>
-    <div class="value-row">
+    <div class="value-row over">
       <div>
-        <div class="value-delta">+$1.1M</div>
-        <div class="value-desc">Under market value</div>
+        <div class="value-delta">-$2.2M</div>
+        <div class="value-desc">Over market value</div>
       </div>
-      <div class="value-meta">Saving $1.1M/yr vs fair market</div>
+      <div class="value-meta">Costing $2.2M/yr vs fair market</div>
     </div>
 
     <div class="brand-footer">
@@ -416,16 +416,16 @@ canvas#careerChart { width: 100% !important; }
         <div class="contract-lbl">Years Left</div>
       </div>
       <div class="contract-box">
-        <div class="contract-val">$3.8M</div>
+        <div class="contract-val">$0.6M</div>
         <div class="contract-lbl">Market Value</div>
       </div>
     </div>
-    <div class="value-row">
+    <div class="value-row over">
       <div>
-        <div class="value-delta">+$1.1M</div>
-        <div class="value-desc">Under market value</div>
+        <div class="value-delta">-$2.2M</div>
+        <div class="value-desc">Over market value</div>
       </div>
-      <div class="value-meta">Saving $1.1M/yr vs fair market</div>
+      <div class="value-meta">Costing $2.2M/yr vs fair market</div>
     </div>
 
     <div class="brand-footer">
@@ -464,7 +464,7 @@ function makeCareerChart(canvasId) {
   data: {
     labels: ['21-22', '23-24', '24-25', '25-26'],
     datasets: [{
-      data: [-0.01, 0.08, 0.0, 0.0],
+      data: [-0.01, 0.08, 0.0, -0.0],
       borderColor: '#041E42',
       borderWidth: 2.5,
       pointBackgroundColor: ['#041E42', '#F5C518', '#041E42', '#041E42'],
