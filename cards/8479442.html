@@ -147,6 +147,7 @@ canvas#careerChart { width: 100% !important; }
 }
 
 @media (max-width: 720px) {
+  body { padding: 14px 10px; }
   .card-pair { flex-direction: column; max-width: 460px; }
   .card-column { max-width: 100%; }
   .header-inner { flex-wrap: wrap; }
@@ -211,8 +212,8 @@ canvas#careerChart { width: 100% !important; }
       </div>
       <div class="war-box">
         <div class="war-box-label">WAR</div>
-        <div class="war-box-value">-0.32</div>
-        <div class="war-box-gar">-1.9 GAR</div>
+        <div class="war-box-value">-0.42</div>
+        <div class="war-box-gar">-2.5 GAR</div>
       </div>
     </div>
   </div>
@@ -232,13 +233,13 @@ canvas#careerChart { width: 100% !important; }
     <div class="components">
       <div class="comp-row">
         <span class="comp-name bad">EVO</span>
-        <div class="bar-track"><div class="bar-fill red" style="width:23%"></div></div>
-        <span class="pct-badge red">23rd</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:27%"></div></div>
+        <span class="pct-badge red">27th</span>
       </div>
       <div class="comp-row">
         <span class="comp-name bad">EVD</span>
-        <div class="bar-track"><div class="bar-fill red" style="width:7%"></div></div>
-        <span class="pct-badge red">7th</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:3%"></div></div>
+        <span class="pct-badge red">3rd</span>
       </div>
       <div class="comp-row">
         <span class="comp-name na">PP</span>
@@ -247,8 +248,8 @@ canvas#careerChart { width: 100% !important; }
       </div>
       <div class="comp-row">
         <span class="comp-name bad">PK</span>
-        <div class="bar-track"><div class="bar-fill red" style="width:17%"></div></div>
-        <span class="pct-badge red">17th</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:27%"></div></div>
+        <span class="pct-badge red">27th</span>
       </div>
       <div class="comp-row">
         <span class="comp-name bad">PEN</span>
@@ -274,20 +275,20 @@ canvas#careerChart { width: 100% !important; }
         <div class="contract-lbl">AAV</div>
       </div>
       <div class="contract-box">
-        <div class="contract-val">3</div>
+        <div class="contract-val">1</div>
         <div class="contract-lbl">Years Left</div>
       </div>
       <div class="contract-box">
-        <div class="contract-val">N/A</div>
+        <div class="contract-val">$3.1M</div>
         <div class="contract-lbl">Market Value</div>
       </div>
     </div>
-    <div class="value-row over">
+    <div class="value-row">
       <div>
-        <div class="value-delta">-$1.4M</div>
-        <div class="value-desc">Over market value</div>
+        <div class="value-delta">+$1.7M</div>
+        <div class="value-desc">Under market value</div>
       </div>
-      <div class="value-meta">Costing $1.4M/yr vs fair market</div>
+      <div class="value-meta">Saving $1.7M/yr vs fair market</div>
     </div>
 
     <div class="brand-footer">
@@ -369,13 +370,13 @@ canvas#careerChart { width: 100% !important; }
     <div class="components">
       <div class="comp-row">
         <span class="comp-name bad">EVO</span>
-        <div class="bar-track"><div class="bar-fill red" style="width:20%"></div></div>
-        <span class="pct-badge red">20th</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:27%"></div></div>
+        <span class="pct-badge red">27th</span>
       </div>
       <div class="comp-row">
         <span class="comp-name bad">EVD</span>
-        <div class="bar-track"><div class="bar-fill red" style="width:6%"></div></div>
-        <span class="pct-badge red">6th</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:2%"></div></div>
+        <span class="pct-badge red">2nd</span>
       </div>
       <div class="comp-row">
         <span class="comp-name na">PP</span>
@@ -384,8 +385,8 @@ canvas#careerChart { width: 100% !important; }
       </div>
       <div class="comp-row">
         <span class="comp-name bad">PK</span>
-        <div class="bar-track"><div class="bar-fill red" style="width:17%"></div></div>
-        <span class="pct-badge red">17th</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:27%"></div></div>
+        <span class="pct-badge red">27th</span>
       </div>
       <div class="comp-row">
         <span class="comp-name bad">PEN</span>
@@ -411,20 +412,20 @@ canvas#careerChart { width: 100% !important; }
         <div class="contract-lbl">AAV</div>
       </div>
       <div class="contract-box">
-        <div class="contract-val">3</div>
+        <div class="contract-val">1</div>
         <div class="contract-lbl">Years Left</div>
       </div>
       <div class="contract-box">
-        <div class="contract-val">N/A</div>
+        <div class="contract-val">$3.1M</div>
         <div class="contract-lbl">Market Value</div>
       </div>
     </div>
-    <div class="value-row over">
+    <div class="value-row">
       <div>
-        <div class="value-delta">-$1.4M</div>
-        <div class="value-desc">Over market value</div>
+        <div class="value-delta">+$1.7M</div>
+        <div class="value-desc">Under market value</div>
       </div>
-      <div class="value-meta">Costing $1.4M/yr vs fair market</div>
+      <div class="value-meta">Saving $1.7M/yr vs fair market</div>
     </div>
 
     <div class="brand-footer">
@@ -463,13 +464,13 @@ function makeCareerChart(canvasId) {
   data: {
     labels: ['16-17', '17-18', '18-19', '19-20', '20-21', '21-22', '22-23', '23-24', '24-25', '25-26'],
     datasets: [{
-      data: [-0.23, -0.32, -0.29, -0.04, -0.25, -0.04, -0.46, -0.1, -0.34, -0.01],
+      data: [-0.3, -0.35, -0.27, -0.18, -0.18, -0.19, -0.41, -0.4, -0.38, -0.41],
       borderColor: '#041E42',
       borderWidth: 2.5,
-      pointBackgroundColor: ['#041E42', '#041E42', '#041E42', '#041E42', '#041E42', '#041E42', '#041E42', '#041E42', '#041E42', '#F5C518'],
+      pointBackgroundColor: ['#041E42', '#041E42', '#041E42', '#F5C518', '#041E42', '#041E42', '#041E42', '#041E42', '#041E42', '#041E42'],
       pointBorderColor: '#041E42',
       pointBorderWidth: 2,
-      pointRadius: [4, 4, 4, 4, 4, 4, 4, 4, 4, 6],
+      pointRadius: [4, 4, 4, 6, 4, 4, 4, 4, 4, 4],
       pointHoverRadius: 7,
       fill: true,
       backgroundColor: (ctx) => {
@@ -503,7 +504,7 @@ function makeCareerChart(canvasId) {
         bodyColor: '#fff',
         padding: 8,
         callbacks: {
-          label: (c) => [False, False, False, False, False, False, False, False, False, True][c.dataIndex] ? ` ${c.raw} WAR · Career Best` : ` ${c.raw} WAR`
+          label: (c) => [False, False, False, True, False, False, False, False, False, False][c.dataIndex] ? ` ${c.raw} WAR · Career Best` : ` ${c.raw} WAR`
         }
       }
     },

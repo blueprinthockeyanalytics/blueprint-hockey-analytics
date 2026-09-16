@@ -147,6 +147,7 @@ canvas#careerChart { width: 100% !important; }
 }
 
 @media (max-width: 720px) {
+  body { padding: 14px 10px; }
   .card-pair { flex-direction: column; max-width: 460px; }
   .card-column { max-width: 100%; }
   .header-inner { flex-wrap: wrap; }
@@ -211,8 +212,8 @@ canvas#careerChart { width: 100% !important; }
       </div>
       <div class="war-box">
         <div class="war-box-label">WAR</div>
-        <div class="war-box-value">+0.94</div>
-        <div class="war-box-gar">5.6 GAR</div>
+        <div class="war-box-value">+0.88</div>
+        <div class="war-box-gar">5.2 GAR</div>
       </div>
     </div>
   </div>
@@ -232,18 +233,18 @@ canvas#careerChart { width: 100% !important; }
     <div class="components">
       <div class="comp-row">
         <span class="comp-name good">EVO</span>
-        <div class="bar-track"><div class="bar-fill green" style="width:91%"></div></div>
-        <span class="pct-badge green">91st</span>
+        <div class="bar-track"><div class="bar-fill green" style="width:90%"></div></div>
+        <span class="pct-badge green">90th</span>
       </div>
       <div class="comp-row">
         <span class="comp-name good">EVD</span>
-        <div class="bar-track"><div class="bar-fill green" style="width:93%"></div></div>
-        <span class="pct-badge green">93rd</span>
+        <div class="bar-track"><div class="bar-fill green" style="width:92%"></div></div>
+        <span class="pct-badge green">92nd</span>
       </div>
       <div class="comp-row">
         <span class="comp-name good">PP</span>
-        <div class="bar-track"><div class="bar-fill green" style="width:86%"></div></div>
-        <span class="pct-badge green">86th</span>
+        <div class="bar-track"><div class="bar-fill green" style="width:85%"></div></div>
+        <span class="pct-badge green">85th</span>
       </div>
       <div class="comp-row">
         <span class="comp-name na">PK</span>
@@ -274,20 +275,20 @@ canvas#careerChart { width: 100% !important; }
         <div class="contract-lbl">AAV</div>
       </div>
       <div class="contract-box">
-        <div class="contract-val">9</div>
+        <div class="contract-val">1</div>
         <div class="contract-lbl">Years Left</div>
       </div>
       <div class="contract-box">
-        <div class="contract-val">$7.5M</div>
+        <div class="contract-val">$6.0M</div>
         <div class="contract-lbl">Market Value</div>
       </div>
     </div>
     <div class="value-row">
       <div>
-        <div class="value-delta">+$1.9M</div>
+        <div class="value-delta">+$0.4M</div>
         <div class="value-desc">Under market value</div>
       </div>
-      <div class="value-meta">Saving $1.9M/yr vs fair market</div>
+      <div class="value-meta">Saving $0.4M/yr vs fair market</div>
     </div>
 
     <div class="brand-footer">
@@ -348,8 +349,8 @@ canvas#careerChart { width: 100% !important; }
       </div>
       <div class="war-box">
         <div class="war-box-label">WAR</div>
-        <div class="war-box-value">+0.96</div>
-        <div class="war-box-gar">5.7 GAR</div>
+        <div class="war-box-value">+0.74</div>
+        <div class="war-box-gar">4.5 GAR</div>
       </div>
     </div>
   </div>
@@ -369,18 +370,18 @@ canvas#careerChart { width: 100% !important; }
     <div class="components">
       <div class="comp-row">
         <span class="comp-name good">EVO</span>
+        <div class="bar-track"><div class="bar-fill green" style="width:93%"></div></div>
+        <span class="pct-badge green">93rd</span>
+      </div>
+      <div class="comp-row">
+        <span class="comp-name good">EVD</span>
         <div class="bar-track"><div class="bar-fill green" style="width:94%"></div></div>
         <span class="pct-badge green">94th</span>
       </div>
       <div class="comp-row">
-        <span class="comp-name good">EVD</span>
-        <div class="bar-track"><div class="bar-fill green" style="width:95%"></div></div>
-        <span class="pct-badge green">95th</span>
-      </div>
-      <div class="comp-row">
         <span class="comp-name good">PP</span>
-        <div class="bar-track"><div class="bar-fill green" style="width:91%"></div></div>
-        <span class="pct-badge green">91st</span>
+        <div class="bar-track"><div class="bar-fill green" style="width:87%"></div></div>
+        <span class="pct-badge green">87th</span>
       </div>
       <div class="comp-row">
         <span class="comp-name na">PK</span>
@@ -411,20 +412,20 @@ canvas#careerChart { width: 100% !important; }
         <div class="contract-lbl">AAV</div>
       </div>
       <div class="contract-box">
-        <div class="contract-val">9</div>
+        <div class="contract-val">1</div>
         <div class="contract-lbl">Years Left</div>
       </div>
       <div class="contract-box">
-        <div class="contract-val">$7.5M</div>
+        <div class="contract-val">$6.0M</div>
         <div class="contract-lbl">Market Value</div>
       </div>
     </div>
     <div class="value-row">
       <div>
-        <div class="value-delta">+$1.9M</div>
+        <div class="value-delta">+$0.4M</div>
         <div class="value-desc">Under market value</div>
       </div>
-      <div class="value-meta">Saving $1.9M/yr vs fair market</div>
+      <div class="value-meta">Saving $0.4M/yr vs fair market</div>
     </div>
 
     <div class="brand-footer">
@@ -463,7 +464,7 @@ function makeCareerChart(canvasId) {
   data: {
     labels: ['24-25', '25-26'],
     datasets: [{
-      data: [0.62, 0.82],
+      data: [0.88, 0.89],
       borderColor: '#041E42',
       borderWidth: 2.5,
       pointBackgroundColor: ['#041E42', '#F5C518'],
