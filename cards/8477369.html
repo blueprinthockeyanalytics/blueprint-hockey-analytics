@@ -25,13 +25,13 @@ body {
   overflow: hidden;
   box-shadow: 0 2px 16px rgba(0,0,0,0.10);
 }
-.header { background: #003087; position: relative; overflow: hidden; }
+.header { background: #002654; position: relative; overflow: hidden; }
 .header::after {
   content: '';
   position: absolute;
   bottom: 0; left: 0; right: 0;
   height: 6px;
-  background: linear-gradient(90deg, #F47D30 0%, #F47D30 100%);
+  background: linear-gradient(90deg, #CE1126 0%, #CE1126 100%);
   z-index: 2;
 }
 .header-inner { display: flex; align-items: stretch; position: relative; z-index: 1; }
@@ -156,7 +156,7 @@ canvas#careerChart { width: 100% !important; }
 .pr-callout a { font-size: 12.5px; font-weight: 700; color: #041E42; text-decoration: underline; }
 .card-column .card { margin: 0; }
 .card-badge {
-  background: #003087; color: #ffffff; text-align: center;
+  background: #002654; color: #ffffff; text-align: center;
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 16px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase;
   padding: 7px 0;
@@ -188,9 +188,26 @@ canvas#careerChart { width: 100% !important; }
 }
 /* Export-only layout (Save / Share images): bigger headshot; for X the card
    body is laid out in two columns so it fills a 16:9 frame. */
-.exporting .headshot-wrap { width: 118px; height: 126px; margin: 0 0 8px 12px; }
-.exporting .header-info { padding-top: 0; }
-.exporting .war-box { margin-top: 0; }
+/* photo + WAR box rise into the season bar, so the dark header is shorter */
+.exporting .header { overflow: visible; }
+.exporting .header-inner { z-index: 3; }
+.exporting .headshot-wrap { width: 108px; height: 116px; margin: -26px 0 8px 12px; }
+.exporting .header-info { padding: 4px 12px 12px; }
+.exporting .jersey-number { font-size: 18px; }
+.exporting .flag-img { width: 28px; height: 19px; }
+.exporting .header-tags { gap: 6px; margin-top: 8px; }
+.exporting .tag { font-size: 16px; padding: 4px 11px; }
+.exporting .header-physical { margin-top: 9px; }
+.exporting .physical-text { font-size: 16px; }
+.exporting .war-box { margin: -26px 12px 8px 0; min-width: 96px; padding: 4px 12px 10px; }
+.exporting .war-box-label { font-size: 15px; }
+.exporting .war-box-value { font-size: 42px; }
+.exporting .war-box-gar { font-size: 15px; }
+/* team-logo watermark: kept inside the white body; bigger on Instagram,
+   smaller on the short X layout so it doesn't run into the header */
+.exporting .body { overflow: hidden; }
+.export-ig .body-logo { width: 700px; height: 700px; top: 46%; }
+.export-x .body-logo { width: 430px; height: 430px; top: 50%; }
 .export-x .body { display: grid; grid-template-columns: 1fr 1fr; column-gap: 22px; align-items: start; }
 .export-x .body > .xcol { min-width: 0; }
 
@@ -225,7 +242,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
 <div class="card-pair">
 
 <div class="card-column col-season">
-<div class="card card-season" id="card-season" data-name="Carson Soucy" data-sub="NYI · D · Age 32" data-war="-0.34" data-label="2025–26 Season" data-accent="#F47D30">
+<div class="card card-season" id="card-season" data-name="Carson Soucy" data-sub="CBJ · D · Age 32" data-war="-0.34" data-label="2025–26 Season" data-accent="#CE1126">
   <div class="card-badge">2025&ndash;26 Season</div>
   <div class="header">
     <div class="header-inner">
@@ -236,7 +253,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
             'https://assets.nhle.com/mugs/nhl/20242025/NYR/8477369.png',
             'https://assets.nhle.com/mugs/nhl/20232024/NYR/8477369.png',
             'https://assets.nhle.com/mugs/nhl/20222023/NYR/8477369.png',
-            'https://assets.nhle.com/mugs/nhl/20232024/NYI/8477369.png',
+            'https://assets.nhle.com/mugs/nhl/20232024/CBJ/8477369.png',
             'https://assets.nhle.com/mugs/nhl/20212022/NYR/8477369.png',
             'https://assets.nhle.com/mugs/nhl/20202021/NYR/8477369.png',
             'https://assets.nhle.com/mugs/nhl/20192020/NYR/8477369.png',
@@ -254,7 +271,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
           <img class="flag-img" src="https://flagcdn.com/w40/ca.png" alt="CAN">
         </div>
         <div class="header-tags">
-          <span class="tag">NYI</span>
+          <span class="tag">CBJ</span>
           <span class="tag">D</span>
           <span class='tag'>Age 32</span>
         </div>
@@ -270,7 +287,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
     </div>
   </div>
   <div class="body">
-    <img class="body-logo" src="../assets/logos/NYI_dark.svg" alt="">
+    <img class="body-logo" src="../assets/logos/CBJ_dark.svg" alt="">
 
     <div class="section-label">Season Stats</div>
     <div class="stat-grid">
@@ -372,7 +389,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
 </div>
 
 <div class="card-column col-career">
-<div class="card card-career" id="card-career" data-name="Carson Soucy" data-sub="NYI · D · Age 32" data-war="-0.29" data-label="3-Year Weighted" data-accent="#F47D30">
+<div class="card card-career" id="card-career" data-name="Carson Soucy" data-sub="CBJ · D · Age 32" data-war="-0.29" data-label="3-Year Weighted" data-accent="#CE1126">
   <div class="card-badge">3-Year Weighted &middot; 2023-24 to 2025-26</div>
   <div class="header">
     <div class="header-inner">
@@ -383,7 +400,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
             'https://assets.nhle.com/mugs/nhl/20242025/NYR/8477369.png',
             'https://assets.nhle.com/mugs/nhl/20232024/NYR/8477369.png',
             'https://assets.nhle.com/mugs/nhl/20222023/NYR/8477369.png',
-            'https://assets.nhle.com/mugs/nhl/20232024/NYI/8477369.png',
+            'https://assets.nhle.com/mugs/nhl/20232024/CBJ/8477369.png',
             'https://assets.nhle.com/mugs/nhl/20212022/NYR/8477369.png',
             'https://assets.nhle.com/mugs/nhl/20202021/NYR/8477369.png',
             'https://assets.nhle.com/mugs/nhl/20192020/NYR/8477369.png',
@@ -401,7 +418,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
           <img class="flag-img" src="https://flagcdn.com/w40/ca.png" alt="CAN">
         </div>
         <div class="header-tags">
-          <span class="tag">NYI</span>
+          <span class="tag">CBJ</span>
           <span class="tag">D</span>
           <span class='tag'>Age 32</span>
         </div>
@@ -412,12 +429,12 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       <div class="war-box">
         <div class="war-box-label">WAR</div>
         <div class="war-box-value">-0.29</div>
-        <div class="war-box-gar">-1.8 GAR</div>
+        <div class="war-box-gar">-1.7 GAR</div>
       </div>
     </div>
   </div>
   <div class="body">
-    <img class="body-logo" src="../assets/logos/NYI_dark.svg" alt="">
+    <img class="body-logo" src="../assets/logos/CBJ_dark.svg" alt="">
 
     <div class="section-label">Per-82 Pace &middot; Last 3 Seasons</div>
     <div class="stat-grid">
@@ -432,8 +449,8 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
     <div class="components">
       <div class="comp-row">
         <span class="comp-name bad">EV Offense</span>
-        <div class="bar-track"><div class="bar-fill red" style="width:3%"></div></div>
-        <span class="pct-badge red">3rd</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:2%"></div></div>
+        <span class="pct-badge red">2nd</span>
       </div>
       <div class="comp-row">
         <span class="comp-name good">EV Defense</span>
@@ -457,8 +474,8 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="comp-row">
         <span class="comp-name good">Shooting</span>
-        <div class="bar-track"><div class="bar-fill green" style="width:72%"></div></div>
-        <span class="pct-badge green">72nd</span>
+        <div class="bar-track"><div class="bar-fill green" style="width:73%"></div></div>
+        <span class="pct-badge green">73rd</span>
       </div>
     </div>
 
@@ -682,7 +699,7 @@ async function captureCard(cardId, fmt) {
   const original = document.getElementById(cardId);
   const wrapper = document.createElement('div');
   // Instagram: 610px wide card ~= 4:5; X: 960px, two columns ~= 16:9
-  wrapper.className = 'exporting' + (fmt === 'x' ? ' export-x' : '');
+  wrapper.className = 'exporting ' + (fmt === 'x' ? 'export-x' : 'export-ig');
   wrapper.style.cssText = `position:fixed; top:0; left:-10000px; width:${fmt === 'x' ? 960 : 610}px; background:transparent;`;
   const clone = original.cloneNode(true);
   clone.style.boxShadow = 'none';
@@ -707,8 +724,13 @@ async function captureCard(cardId, fmt) {
     dst.width = src.width; dst.height = src.height;
     dst.getContext('2d').drawImage(src, 0, 0);
   });
-  // re-fit the name at the export width
-  clone.querySelectorAll('.player-name').forEach(fitName);
+  // name 30% bigger in the saved image, then fit it to the export width
+  clone.querySelectorAll('.player-name').forEach(el => {
+    const base = parseFloat(el.dataset.baseSize || el.style.fontSize);
+    el.dataset.baseSize = Math.round(base * 1.3);
+    el.style.fontSize = el.dataset.baseSize + 'px';
+    fitName(el);
+  });
   // Redraw the career arc at the export width (a copied bitmap would keep
   // the on-screen width and leave the chart short of the card's edge).
   const expCharts = [];
