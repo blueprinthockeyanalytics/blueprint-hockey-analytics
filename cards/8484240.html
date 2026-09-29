@@ -186,13 +186,34 @@ canvas#careerChart { width: 100% !important; }
   .brand-url { font-size: 9.5px; }
   .brand-date { font-size: 8.5px; }
 }
+/* Embed mode: compare.html shows one card per player with
+   cards/{id}.html#embed-season or #embed-career */
+html.embed body { min-height: 0; padding: 2px 2px 8px; }
+html.embed .pr-callout { display: none; }
+html.embed .card-pair { max-width: 460px; margin: 0 auto; }
+html.embed-season .col-career, html.embed-career .col-season { display: none; }
 </style>
+<script>
+(function() {
+  function applyEmbed() {
+    var m = (location.hash || '').match(/^#embed-(season|career)$/);
+    var c = document.documentElement.classList;
+    c.remove('embed', 'embed-season', 'embed-career');
+    if (m) c.add('embed', 'embed-' + m[1]);
+  }
+  applyEmbed();
+  window.addEventListener('hashchange', function() {
+    applyEmbed();
+    window.dispatchEvent(new Event('resize'));
+  });
+})();
+</script>
 </head>
 <body>
 
 <div class="card-pair">
 
-<div class="card-column">
+<div class="card-column col-season">
 <div class="card card-season" id="card-season" data-name="Tom Willander" data-sub="VAN · D · Age 21" data-war="-0.15" data-label="2025–26 Season" data-accent="#00843D">
   <div class="card-badge">2025&ndash;26 Season</div>
   <div class="header">
@@ -238,7 +259,7 @@ canvas#careerChart { width: 100% !important; }
     </div>
   </div>
   <div class="body">
-    <img class="body-logo" src="https://assets.nhle.com/logos/nhl/svg/VAN_dark.svg" alt="">
+    <img class="body-logo" src="../assets/logos/VAN_dark.svg" alt="">
 
     <div class="section-label">Season Stats</div>
     <div class="stat-grid">
@@ -339,7 +360,7 @@ canvas#careerChart { width: 100% !important; }
   </div>
 </div>
 
-<div class="card-column">
+<div class="card-column col-career">
 <div class="card card-career" id="card-career" data-name="Tom Willander" data-sub="VAN · D · Age 21" data-war="-0.15" data-label="3-Year Weighted" data-accent="#00843D">
   <div class="card-badge">3-Year Weighted &middot; 2025-26</div>
   <div class="header">
@@ -385,7 +406,7 @@ canvas#careerChart { width: 100% !important; }
     </div>
   </div>
   <div class="body">
-    <img class="body-logo" src="https://assets.nhle.com/logos/nhl/svg/VAN_dark.svg" alt="">
+    <img class="body-logo" src="../assets/logos/VAN_dark.svg" alt="">
 
     <div class="section-label">Per-82 Pace &middot; Last 1 Seasons</div>
     <div class="stat-grid">
@@ -590,7 +611,8 @@ function reportHeight() {
   }
 }
 window.addEventListener('load', () => setTimeout(reportHeight, 300));
-setTimeout(reportHeight, 800);</script>
+setTimeout(reportHeight, 800);
+if (window.ResizeObserver) new ResizeObserver(() => reportHeight()).observe(document.body);</script>
 <script>
 // Long names: shrink to fit on one line (down to 15px); if still too long,
 // give the name its own full-width line (number + flag drop below it) and
@@ -680,6 +702,10 @@ async function captureCard(cardId, fmt) {
     if (img.complete && img.naturalHeight !== 0) return Promise.resolve();
     return new Promise(res => { img.onload = res; img.onerror = res; setTimeout(res, 3000); });
   }));
+  // Team-logo watermark: html2canvas ignores CSS filters, so pre-draw the
+  // logo greyed out onto a canvas and swap that in for the capture.
+  const wm = clone.querySelector('.body-logo');
+  if (wm) await flattenWatermark(wm);
   // html2canvas drops object-fit <img> in absolutely positioned wrappers --
   // use a background-image for the headshot during capture.
   clone.querySelectorAll('.headshot-wrap').forEach(wrap => {
@@ -693,7 +719,7 @@ async function captureCard(cardId, fmt) {
   });
   let cardCanvas;
   try {
-    cardCanvas = await html2canvas(clone, { scale: 3, backgroundColor: null, useCORS: true });
+    cardCanvas = await html2canvas(clone, { scale: 4, backgroundColor: null, useCORS: true });
   } finally {
     expCharts.forEach(c => c && c.destroy());
     document.body.removeChild(wrapper);
@@ -745,11 +771,43 @@ function drawCard(g, cc, dx, dy, dw, dh) {
   g.drawImage(cc, dx, dy, dw, dh);
   g.restore();
 }
+// Exports are drawn at 2x (Instagram 2160x2700, X 3200x1800): same 4:5 and
+// 16:9 shapes, twice the detail. All layout below is in 1x units.
+const EXPORT_SCALE = 2;
 async function newCanvas(W, H) {
   const out = document.createElement('canvas');
-  out.width = W; out.height = H;
+  out.width = W * EXPORT_SCALE; out.height = H * EXPORT_SCALE;
+  out.getContext('2d').scale(EXPORT_SCALE, EXPORT_SCALE);
   if (document.fonts && document.fonts.ready) { try { await document.fonts.ready; } catch (e) {} }
   return out;
+}
+
+async function flattenWatermark(img) {
+  try {
+    const im = await loadImg(img.currentSrc || img.src);
+    if (!im) { img.remove(); return; }
+    const S = 1050, c = document.createElement('canvas');
+    c.width = S; c.height = S;
+    const g = c.getContext('2d');
+    const nw = im.naturalWidth || S, nh = im.naturalHeight || S;
+    const r = Math.min(S / nw, S / nh), w = nw * r, h = nh * r;
+    if ('filter' in g) g.filter = 'grayscale(1) contrast(1.5) brightness(0.55)';
+    g.drawImage(im, (S - w) / 2, (S - h) / 2, w, h);
+    const url = c.toDataURL('image/png');   // throws if the logo came from another site
+    await new Promise(res => { img.onload = res; img.onerror = res; img.src = url; setTimeout(res, 2000); });
+    img.style.filter = 'none';
+  } catch (e) {
+    img.remove();   // never let the watermark break an export
+  }
+}
+
+// PNG normally; if a 2x PNG would be over ~4.8 MB (X's photo limit is 5 MB),
+// fall back to a high-quality JPEG.
+function exportBlob(canvas) {
+  return new Promise(resolve => canvas.toBlob(png => {
+    if (png && png.size <= 4.8e6) return resolve({ blob: png, ext: '.png' });
+    canvas.toBlob(jpg => resolve({ blob: jpg || png, ext: jpg ? '.jpg' : '.png' }), 'image/jpeg', 0.95);
+  }, 'image/png'));
 }
 
 // Instagram: 1080x1350 (4:5) -- the tallest shape the feed shows uncropped.
@@ -842,20 +900,18 @@ async function shareCard(cardId, filenameBase) {
   filenameBase += fmt === 'x' ? '_X' : '_Instagram';
   try {
     const canvas = await captureCard(cardId, fmt);
-    canvas.toBlob(async (blob) => {
-      const file = new File([blob], filenameBase + '.png', { type: 'image/png' });
-      if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        try {
-          await navigator.share({ files: [file], title: 'Blueprint Hockey' });
-          return;
-        } catch (shareErr) {
-          if (shareErr.name === 'AbortError') return; // user cancelled, not an error
-        }
+    const { blob, ext } = await exportBlob(canvas);
+    const file = new File([blob], filenameBase + ext, { type: blob.type });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({ files: [file], title: 'Blueprint Hockey' });
+        return;
+      } catch (shareErr) {
+        if (shareErr.name === 'AbortError') return; // user cancelled, not an error
       }
-      // Fallback — Web Share API with files isn't supported here (mostly
-      // desktop browsers), so just download the image instead.
-      downloadBlob(blob, filenameBase + '.png');
-    }, 'image/png');
+    }
+    // Web Share with files isn't supported here (mostly desktop) -- download instead
+    downloadBlob(blob, filenameBase + ext);
   } catch (e) {
     console.error('Share failed', e);
     alert('Could not generate image for sharing.');
@@ -867,7 +923,8 @@ async function saveCard(cardId, filenameBase) {
   filenameBase += fmt === 'x' ? '_X' : '_Instagram';
   try {
     const canvas = await captureCard(cardId, fmt);
-    canvas.toBlob((blob) => downloadBlob(blob, filenameBase + '.png'), 'image/png');
+    const { blob, ext } = await exportBlob(canvas);
+    downloadBlob(blob, filenameBase + ext);
   } catch (e) {
     console.error('Save failed', e);
     alert('Could not generate image.');
