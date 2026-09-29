@@ -150,7 +150,7 @@ function setupSlot(slotKey) {
     const q = input.value.toLowerCase();
     if (!q) { results.classList.remove('open'); return; }
     const matches = BP_PLAYER_INDEX
-      .filter(p => p.fullName.toLowerCase().includes(q))
+      .filter(p => bpFold(p.fullName).includes(bpFold(q)))
       .sort((a,b) => b.WAR - a.WAR)
       .slice(0, 8);
     results.innerHTML = matches.map(p => `

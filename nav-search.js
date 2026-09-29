@@ -1,3 +1,9 @@
+// Accent-insensitive, lowercase form for search: "slafkovsky" finds
+// "Slafkovský", "stutzle" finds "Stützle".
+function bpFold(s) {
+  return String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+}
+
 /* ============================================================
    Blueprint Hockey — Shared Nav Search
    Loads player index once, powers the search dropdown in nav.
@@ -99,9 +105,9 @@ function bpInitNavSearch() {
 
   function renderResults(query) {
     if (!query) { results.classList.remove('open'); results.innerHTML = ''; return; }
-    const q = query.toLowerCase();
+    const q = bpFold(query);
     const matches = BP_PLAYER_INDEX
-      .filter(p => p.fullName.toLowerCase().includes(q) || p.team.toLowerCase().includes(q))
+      .filter(p => bpFold(p.fullName).includes(q) || bpFold(p.team).includes(q))
       .sort((a, b) => b.WAR - a.WAR)
       .slice(0, 8);
 
