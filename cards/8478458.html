@@ -163,29 +163,35 @@ canvas#careerChart { width: 100% !important; }
 }
 
 @media (max-width: 720px) {
-  body { padding: 14px 10px; }
-  .card-pair { flex-direction: column; max-width: 460px; }
-  .card-column { max-width: 100%; }
-  .header-inner { flex-wrap: wrap; }
-  .headshot-wrap { width: 64px; height: 70px; margin: 8px 0 8px 10px; }
-  .header-info { padding: 10px 8px 6px; min-width: 0; }
-  .name { font-size: 18px; }
-  .war-box { margin: 8px 8px 8px 0; min-width: 66px; padding: 6px 8px; }
-  .war-value { font-size: 26px; }
-  .stat-grid { gap: 4px; }
-  .stat-box { padding: 5px 3px; }
-  .stat-val { font-size: 15px; }
-  .stat-lbl { font-size: 7px; }
-  .body { padding: 0 10px 10px; }
-  .contract-grid { gap: 5px; }
-  .card-toolbar { gap: 8px; }
-  .toolbar-btn { padding: 8px 14px; font-size: 12px; }
-  .pr-callout { padding: 12px 16px; margin-top: 14px; }
-  .brand-logo { width: 20px; height: 20px; }
-  .brand-name { font-size: 13px; }
-  .brand-url { font-size: 9.5px; }
-  .brand-date { font-size: 8.5px; }
+  html:not(.embed-wide) body:not(.exporting *) { padding: 14px 10px; }
+  html:not(.embed-wide) .card-pair:not(.exporting *) { flex-direction: column; max-width: 460px; }
+  html:not(.embed-wide) .card-column:not(.exporting *) { max-width: 100%; }
+  html:not(.embed-wide) .header-inner:not(.exporting *) { flex-wrap: wrap; }
+  html:not(.embed-wide) .headshot-wrap:not(.exporting *) { width: 64px; height: 70px; margin: 8px 0 8px 10px; }
+  html:not(.embed-wide) .header-info:not(.exporting *) { padding: 10px 8px 6px; min-width: 0; }
+  html:not(.embed-wide) .name:not(.exporting *) { font-size: 18px; }
+  html:not(.embed-wide) .war-box:not(.exporting *) { margin: 8px 8px 8px 0; min-width: 66px; padding: 6px 8px; }
+  html:not(.embed-wide) .war-value:not(.exporting *) { font-size: 26px; }
+  html:not(.embed-wide) .stat-grid:not(.exporting *) { gap: 4px; }
+  html:not(.embed-wide) .stat-box:not(.exporting *) { padding: 5px 3px; }
+  html:not(.embed-wide) .stat-val:not(.exporting *) { font-size: 15px; }
+  html:not(.embed-wide) .stat-lbl:not(.exporting *) { font-size: 7px; }
+  html:not(.embed-wide) .body:not(.exporting *) { padding: 0 10px 10px; }
+  html:not(.embed-wide) .contract-grid:not(.exporting *) { gap: 5px; }
+  html:not(.embed-wide) .card-toolbar:not(.exporting *) { gap: 8px; }
+  html:not(.embed-wide) .toolbar-btn:not(.exporting *) { padding: 8px 14px; font-size: 12px; }
+  html:not(.embed-wide) .pr-callout:not(.exporting *) { padding: 12px 16px; margin-top: 14px; }
+  html:not(.embed-wide) .brand-logo:not(.exporting *) { width: 20px; height: 20px; }
+  html:not(.embed-wide) .brand-name:not(.exporting *) { font-size: 13px; }
+  html:not(.embed-wide) .brand-url:not(.exporting *) { font-size: 9.5px; }
+  html:not(.embed-wide) .brand-date:not(.exporting *) { font-size: 8.5px; }
 }
+/* Export-only layout (Save / Share images): bigger headshot; for X the card
+   body is laid out in two columns so it fills a 16:9 frame. */
+.exporting .headshot-wrap { width: 118px; height: 126px; }
+.export-x .body { display: grid; grid-template-columns: 1fr 1fr; column-gap: 22px; align-items: start; }
+.export-x .body > .xcol { min-width: 0; }
+
 /* Embed mode: compare.html shows one card per player with
    cards/{id}.html#embed-season or #embed-career */
 html.embed body { min-height: 0; padding: 2px 2px 8px; }
@@ -196,10 +202,13 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
 <script>
 (function() {
   function applyEmbed() {
-    var m = (location.hash || '').match(/^#embed-(season|career)$/);
+    // #embed-season / #embed-career, plus "-wide" when the compare page is
+    // on a laptop: the card's frame is narrower than 720px, but it should
+    // still use the desktop card layout, not the phone one.
+    var m = (location.hash || '').match(/^#embed-(season|career)(-wide)?$/);
     var c = document.documentElement.classList;
-    c.remove('embed', 'embed-season', 'embed-career');
-    if (m) c.add('embed', 'embed-' + m[1]);
+    c.remove('embed', 'embed-season', 'embed-career', 'embed-wide');
+    if (m) { c.add('embed', 'embed-' + m[1]); if (m[2]) c.add('embed-wide'); }
   }
   applyEmbed();
   window.addEventListener('hashchange', function() {
@@ -320,13 +329,13 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
         <div class="contract-lbl">Term Left</div>
       </div>
       <div class="contract-box">
-        <div class="contract-val">$5.2M</div>
+        <div class="contract-val">$5.5M</div>
         <div class="contract-lbl">Market Value</div>
       </div>
     </div>
     <div class="value-row">
       <div>
-        <div class="value-delta">+$1.2M/yr</div>
+        <div class="value-delta">+$1.5M/yr</div>
         <div class="value-desc">Under market value</div>
       </div>
       <div class="grade-chip b"><div class="grade-letter">B+</div><div class="grade-lbl">Grade</div></div>
@@ -467,13 +476,13 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
         <div class="contract-lbl">Term Left</div>
       </div>
       <div class="contract-box">
-        <div class="contract-val">$5.2M</div>
+        <div class="contract-val">$5.5M</div>
         <div class="contract-lbl">Market Value</div>
       </div>
     </div>
     <div class="value-row">
       <div>
-        <div class="value-delta">+$1.2M/yr</div>
+        <div class="value-delta">+$1.5M/yr</div>
         <div class="value-desc">Under market value</div>
       </div>
       <div class="grade-chip b"><div class="grade-letter">B+</div><div class="grade-lbl">Grade</div></div>
@@ -670,11 +679,24 @@ function loadImg(src) {
 async function captureCard(cardId, fmt) {
   const original = document.getElementById(cardId);
   const wrapper = document.createElement('div');
-  wrapper.style.cssText = 'position:fixed; top:0; left:-10000px; width:500px; background:transparent;';
+  // Instagram: 610px wide card ~= 4:5; X: 960px, two columns ~= 16:9
+  wrapper.className = 'exporting' + (fmt === 'x' ? ' export-x' : '');
+  wrapper.style.cssText = `position:fixed; top:0; left:-10000px; width:${fmt === 'x' ? 960 : 610}px; background:transparent;`;
   const clone = original.cloneNode(true);
   clone.style.boxShadow = 'none';
   wrapper.appendChild(clone);
   document.body.appendChild(wrapper);
+  if (fmt === 'x') {
+    // left column: stats + percentiles; right column: career arc + contract
+    const body = clone.querySelector('.body');
+    const kids = Array.from(body.children).filter(k => !k.classList.contains('body-logo'));
+    let cut = kids.findIndex(k => k.classList.contains('section-label') && /career/i.test(k.textContent));
+    if (cut < 0) cut = Math.ceil(kids.length / 2);
+    const L = document.createElement('div'), R = document.createElement('div');
+    L.className = R.className = 'xcol';
+    kids.forEach((k, i) => (i < cut ? L : R).appendChild(k));
+    body.appendChild(L); body.appendChild(R);
+  }
 
   // cloneNode() doesn't copy canvas pixels (the career arc) -- copy them.
   const srcC = original.querySelectorAll('canvas'), dstC = clone.querySelectorAll('canvas');
@@ -835,80 +857,41 @@ function exportBlob(canvas) {
   }, 'image/png'));
 }
 
-// Instagram: 1080x1350 (4:5) -- the tallest shape the feed shows uncropped.
+// Instagram: 1080x1350 (4:5). Slim brand bar on top, handle + site along
+// the bottom, the card fills everything else.
 async function composeIG(cc, meta) {
-  const W = 1080, H = 1350, M = 64, TOP = 150, BOT = 104;
+  const W = 1080, H = 1350, M = 36, TOP = 92, BOT = 66;
   const out = await newCanvas(W, H), g = out.getContext('2d');
   drawBackground(g, W, H);
-  drawWordmark(g, await loadImg(BRAND_LOGO_SRC), M, 40, 76);
-  g.font = "700 20px Inter, sans-serif"; g.fillStyle = '#7AAAD8';
-  g.textAlign = 'right'; g.fillText('HOCKEY ANALYTICS', W - M, 100); g.textAlign = 'left';
+  drawWordmark(g, await loadImg(BRAND_LOGO_SRC), M, 22, 54);
+  g.font = "700 19px Inter, sans-serif"; g.fillStyle = '#7AAAD8';
+  g.textAlign = 'right'; g.fillText('HOCKEY ANALYTICS', W - M, 62); g.textAlign = 'left';
   const availW = W - 2 * M, availH = H - TOP - BOT;
   const sc = Math.min(availW / cc.width, availH / cc.height);
   const dw = cc.width * sc, dh = cc.height * sc;
   drawCard(g, cc, (W - dw) / 2, TOP + (availH - dh) / 2, dw, dh);
-  g.font = "700 24px Inter, sans-serif"; g.fillStyle = '#FFFFFF';
-  g.fillText('blueprinthockeyanalytics.com', M, H - 44);
+  g.font = "700 22px Inter, sans-serif"; g.fillStyle = '#FFFFFF';
+  g.fillText('blueprinthockeyanalytics.com', M, H - 26);
   g.textAlign = 'right'; g.fillStyle = '#5BB5EE';
-  g.fillText(HANDLES.ig, W - M, H - 44); g.textAlign = 'left';
+  g.fillText(HANDLES.ig, W - M, H - 26); g.textAlign = 'left';
   return out;
 }
 
-// X: 1600x900 (16:9) -- fills the timeline uncropped on phone and desktop.
-// Card on the right; name, season and WAR large on the left so the post
-// reads at a glance before anyone taps into it.
+// X: 1600x900 (16:9). The card is rendered in a two-column landscape
+// layout so it fills the frame; slim brand bar on top, site underneath.
 async function composeX(cc, meta) {
-  const W = 1600, H = 900, PAD = 56, R = 72, L = 88;
+  const W = 1600, H = 900, M = 44, TOP = 92, BOT = 50;
   const out = await newCanvas(W, H), g = out.getContext('2d');
   drawBackground(g, W, H);
-
-  const sc = Math.min(760 / cc.width, (H - 2 * PAD) / cc.height);
+  drawWordmark(g, await loadImg(BRAND_LOGO_SRC), M, 20, 54);
+  g.font = "700 28px Inter, sans-serif"; g.fillStyle = '#5BB5EE';
+  g.textAlign = 'right'; g.fillText(HANDLES.x, W - M, 60); g.textAlign = 'left';
+  const availW = W - 2 * M, availH = H - TOP - BOT;
+  const sc = Math.min(availW / cc.width, availH / cc.height);
   const dw = cc.width * sc, dh = cc.height * sc;
-  const dx = W - R - dw, dy = (H - dh) / 2;
-  drawCard(g, cc, dx, dy, dw, dh);
-
-  const panelW = dx - L - 64;
-  drawWordmark(g, await loadImg(BRAND_LOGO_SRC), L, 64, 64);
-
-  // accent bar in the team colour + section label
-  g.fillStyle = meta.accent || '#5BB5EE'; g.fillRect(L, 272, 72, 6);
-  g.font = "700 26px Inter, sans-serif"; g.fillStyle = '#7AAAD8';
-  if ('letterSpacing' in g) g.letterSpacing = '3px';
-  g.fillText((meta.label || '').toUpperCase(), L, 330);
-  if ('letterSpacing' in g) g.letterSpacing = '0px';
-
-  // player name: shrink to fit the panel; two lines if it is very long
-  const name = (meta.name || '').toUpperCase();
-  let fs = 104, lines = [name];
-  g.font = `900 ${fs}px ${DISPLAY}`;
-  while (g.measureText(name).width > panelW && fs > 64) { fs -= 2; g.font = `900 ${fs}px ${DISPLAY}`; }
-  if (g.measureText(name).width > panelW && name.includes(' ')) {
-    const i = name.lastIndexOf(' ');
-    lines = [name.slice(0, i), name.slice(i + 1)];
-    fs = 88; g.font = `900 ${fs}px ${DISPLAY}`;
-    while (Math.max(...lines.map(t => g.measureText(t).width)) > panelW && fs > 48) { fs -= 2; g.font = `900 ${fs}px ${DISPLAY}`; }
-  }
-  g.fillStyle = '#FFFFFF';
-  let y = 330 + fs * 0.98;
-  lines.forEach((t, k) => { g.fillText(t, L, y + k * fs * 0.92); });
-  y += (lines.length - 1) * fs * 0.92;
-
-  g.font = "600 30px Inter, sans-serif"; g.fillStyle = '#CFE0F3';
-  g.fillText(meta.sub || '', L, y + 50);
-
-  // headline stat
-  g.font = `900 150px ${DISPLAY}`; g.fillStyle = '#5BB5EE';
-  const warTxt = meta.war || '';
-  g.fillText(warTxt, L - 4, 720);
-  const ww = g.measureText(warTxt).width;
-  g.font = `800 44px ${DISPLAY}`; g.fillStyle = '#FFFFFF';
-  g.fillText('WAR', L + ww + 14, 720);
-
-  // footer
-  g.font = "700 30px Inter, sans-serif"; g.fillStyle = '#5BB5EE';
-  g.fillText(HANDLES.x, L, H - 74);
-  g.font = "600 22px Inter, sans-serif"; g.fillStyle = 'rgba(255,255,255,0.8)';
-  g.fillText('blueprinthockeyanalytics.com', L, H - 40);
+  drawCard(g, cc, (W - dw) / 2, TOP + (availH - dh) / 2, dw, dh);
+  g.font = "600 20px Inter, sans-serif"; g.fillStyle = 'rgba(255,255,255,0.85)';
+  g.textAlign = 'center'; g.fillText('blueprinthockeyanalytics.com', W / 2, H - 18); g.textAlign = 'left';
   return out;
 }
 
