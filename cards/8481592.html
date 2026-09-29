@@ -50,7 +50,7 @@ body {
 }
 .header-info { flex: 1; min-width: 0; padding: 2px 10px 5px; }
 .player-name-row { display: flex; align-items: center; gap: 7px; flex-wrap: nowrap; min-width: 0; }
-.player-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; color: #fff; letter-spacing: -0.2px; line-height: 1.05; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.player-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; color: #fff; letter-spacing: -0.2px; line-height: 1.05; white-space: nowrap; overflow: hidden; flex: 0 1 auto; min-width: 0; }
 .jersey-number { font-size: 14px; font-weight: 700; color: #fff; white-space: nowrap; }
 .flag-img { width: 26px; height: 18px; border-radius: 2px; object-fit: cover; display: block; flex-shrink: 0; }
 .header-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; margin-top: 6px; }
@@ -212,8 +212,8 @@ canvas#careerChart { width: 100% !important; }
       </div>
       <div class="war-box">
         <div class="war-box-label">WAR</div>
-        <div class="war-box-value">-0.05</div>
-        <div class="war-box-gar">-0.3 GAR</div>
+        <div class="war-box-value">+0.01</div>
+        <div class="war-box-gar">0.1 GAR</div>
       </div>
     </div>
   </div>
@@ -233,13 +233,13 @@ canvas#careerChart { width: 100% !important; }
     <div class="components">
       <div class="comp-row">
         <span class="comp-name bad">EVO</span>
-        <div class="bar-track"><div class="bar-fill red" style="width:36%"></div></div>
-        <span class="pct-badge red">36th</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:28%"></div></div>
+        <span class="pct-badge red">28th</span>
       </div>
       <div class="comp-row">
-        <span class="comp-name bad">EVD</span>
-        <div class="bar-track"><div class="bar-fill red" style="width:22%"></div></div>
-        <span class="pct-badge red">22nd</span>
+        <span class="comp-name mid">EVD</span>
+        <div class="bar-track"><div class="bar-fill amber" style="width:61%"></div></div>
+        <span class="pct-badge amber">61st</span>
       </div>
       <div class="comp-row">
         <span class="comp-name na">PP</span>
@@ -252,9 +252,9 @@ canvas#careerChart { width: 100% !important; }
         <span class="pct-badge na">N/A</span>
       </div>
       <div class="comp-row">
-        <span class="comp-name mid">PEN</span>
-        <div class="bar-track"><div class="bar-fill amber" style="width:42%"></div></div>
-        <span class="pct-badge amber">42nd</span>
+        <span class="comp-name bad">PEN</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:37%"></div></div>
+        <span class="pct-badge red">37th</span>
       </div>
       <div class="comp-row">
         <span class="comp-name bad">SH</span>
@@ -271,7 +271,7 @@ canvas#careerChart { width: 100% !important; }
     <div class="section-label">Contract</div>
     <div class="contract-grid">
       <div class="contract-box">
-        <div class="contract-val">$0.8M</div>
+        <div class="contract-val">N/A</div>
         <div class="contract-lbl">AAV</div>
       </div>
       <div class="contract-box">
@@ -279,7 +279,7 @@ canvas#careerChart { width: 100% !important; }
         <div class="contract-lbl">Years Left</div>
       </div>
       <div class="contract-box">
-        <div class="contract-val">$0.8M</div>
+        <div class="contract-val">N/A</div>
         <div class="contract-lbl">Market Value</div>
       </div>
     </div>
@@ -349,8 +349,8 @@ canvas#careerChart { width: 100% !important; }
       </div>
       <div class="war-box">
         <div class="war-box-label">WAR</div>
-        <div class="war-box-value">-0.00</div>
-        <div class="war-box-gar">-0.0 GAR</div>
+        <div class="war-box-value">+0.10</div>
+        <div class="war-box-gar">0.6 GAR</div>
       </div>
     </div>
   </div>
@@ -370,33 +370,33 @@ canvas#careerChart { width: 100% !important; }
     <div class="components">
       <div class="comp-row">
         <span class="comp-name mid">EVO</span>
-        <div class="bar-track"><div class="bar-fill amber" style="width:59%"></div></div>
-        <span class="pct-badge amber">59th</span>
+        <div class="bar-track"><div class="bar-fill amber" style="width:43%"></div></div>
+        <span class="pct-badge amber">43rd</span>
       </div>
       <div class="comp-row">
-        <span class="comp-name bad">EVD</span>
-        <div class="bar-track"><div class="bar-fill red" style="width:34%"></div></div>
-        <span class="pct-badge red">34th</span>
+        <span class="comp-name mid">EVD</span>
+        <div class="bar-track"><div class="bar-fill amber" style="width:61%"></div></div>
+        <span class="pct-badge amber">61st</span>
       </div>
       <div class="comp-row">
-        <span class="comp-name bad">PP</span>
-        <div class="bar-track"><div class="bar-fill red" style="width:39%"></div></div>
-        <span class="pct-badge red">39th</span>
+        <span class="comp-name na">PP</span>
+        <div class="bar-track"><div class="bar-fill" style="width:0%"></div></div>
+        <span class="pct-badge na">N/A</span>
       </div>
       <div class="comp-row">
-        <span class="comp-name mid">PK</span>
-        <div class="bar-track"><div class="bar-fill amber" style="width:53%"></div></div>
-        <span class="pct-badge amber">53rd</span>
+        <span class="comp-name na">PK</span>
+        <div class="bar-track"><div class="bar-fill" style="width:0%"></div></div>
+        <span class="pct-badge na">N/A</span>
       </div>
       <div class="comp-row">
-        <span class="comp-name bad">PEN</span>
-        <div class="bar-track"><div class="bar-fill red" style="width:35%"></div></div>
-        <span class="pct-badge red">35th</span>
+        <span class="comp-name mid">PEN</span>
+        <div class="bar-track"><div class="bar-fill amber" style="width:44%"></div></div>
+        <span class="pct-badge amber">44th</span>
       </div>
       <div class="comp-row">
         <span class="comp-name bad">SH</span>
-        <div class="bar-track"><div class="bar-fill red" style="width:27%"></div></div>
-        <span class="pct-badge red">27th</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:34%"></div></div>
+        <span class="pct-badge red">34th</span>
       </div>
     </div>
 
@@ -408,7 +408,7 @@ canvas#careerChart { width: 100% !important; }
     <div class="section-label">Contract</div>
     <div class="contract-grid">
       <div class="contract-box">
-        <div class="contract-val">$0.8M</div>
+        <div class="contract-val">N/A</div>
         <div class="contract-lbl">AAV</div>
       </div>
       <div class="contract-box">
@@ -416,7 +416,7 @@ canvas#careerChart { width: 100% !important; }
         <div class="contract-lbl">Years Left</div>
       </div>
       <div class="contract-box">
-        <div class="contract-val">$0.8M</div>
+        <div class="contract-val">N/A</div>
         <div class="contract-lbl">Market Value</div>
       </div>
     </div>
@@ -464,7 +464,7 @@ function makeCareerChart(canvasId) {
   data: {
     labels: ['22-23', '23-24', '24-25', '25-26'],
     datasets: [{
-      data: [0.09, 0.03, 0.07, -0.05],
+      data: [0.34, 0.04, 0.26, 0.01],
       borderColor: '#041E42',
       borderWidth: 2.5,
       pointBackgroundColor: ['#F5C518', '#041E42', '#041E42', '#041E42'],
@@ -515,7 +515,7 @@ function makeCareerChart(canvasId) {
         ticks: { font: { size: 10, weight: '600' }, color: '#aaa' }
       },
       y: {
-        min: -1.0,
+        min: -0.5,
         max: 1.0,
         grid: { color: '#f0f0f3' },
         border: { display: false },
@@ -538,6 +538,29 @@ function reportHeight() {
 }
 window.addEventListener('load', () => setTimeout(reportHeight, 300));
 setTimeout(reportHeight, 800);</script>
+<script>
+// Long names: shrink the font until the full name fits its row (no "...").
+// Re-runs once web fonts load and on resize/rotate, since the space
+// available depends on screen width, the jersey number and the WAR box.
+(function() {
+  function fitNames() {
+    document.querySelectorAll('.player-name').forEach(function(el) {
+      var base = parseFloat(el.dataset.baseSize || el.style.fontSize || getComputedStyle(el).fontSize);
+      el.dataset.baseSize = base;
+      var size = base;
+      el.style.fontSize = size + 'px';
+      while (el.scrollWidth > el.clientWidth + 0.5 && size > 11) {
+        size -= 0.5;
+        el.style.fontSize = size + 'px';
+      }
+    });
+  }
+  fitNames();
+  window.addEventListener('load', fitNames);
+  window.addEventListener('resize', fitNames);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitNames);
+})();
+</script>
 <script>
 // ── Share / Save — captures just the one card div (toolbar lives outside
 // it, so the buttons never end up in the image itself). Share uses the
