@@ -114,11 +114,23 @@ const SLOT = {
   b: { playerId: null, mode: 'season' },
 };
 
-function frameHtml(slotKey) {
-  const { playerId, mode } = SLOT[slotKey];
-  return `<div class="cmp-card-column"><iframe class="cmp-frame" id="frame-${slotKey}"
-    src="cards/${playerId}.html#embed-${mode}" title="Player ${slotKey.toUpperCase()} card" loading="eager"></iframe></div>`;
+// "-wide" tells the card to keep its desktop layout: its frame is narrower
+// than the card's 720px phone breakpoint even on a laptop.
+function embedHash(slotKey) {
+  return `embed-${SLOT[slotKey].mode}${window.innerWidth > 720 ? '-wide' : ''}`;
 }
+
+function frameHtml(slotKey) {
+  const { playerId } = SLOT[slotKey];
+  return `<div class="cmp-card-column"><iframe class="cmp-frame" id="frame-${slotKey}"
+    src="cards/${playerId}.html#${embedHash(slotKey)}" title="Player ${slotKey.toUpperCase()} card" loading="eager"></iframe></div>`;
+}
+
+let _resizeTimer = null;
+window.addEventListener('resize', () => {
+  clearTimeout(_resizeTimer);
+  _resizeTimer = setTimeout(() => { if (SLOT.a.playerId && SLOT.b.playerId) renderOutput(); }, 200);
+});
 
 function renderOutput() {
   const output = document.getElementById('cmp-cards-output');
@@ -132,7 +144,7 @@ function renderOutput() {
   const want = { a: `cards/${SLOT.a.playerId}.html`, b: `cards/${SLOT.b.playerId}.html` };
   if (fa && fb && fa.src.split('#')[0].endsWith(want.a) && fb.src.split('#')[0].endsWith(want.b)) {
     [['a', fa], ['b', fb]].forEach(([k, f]) => {
-      const h = `embed-${SLOT[k].mode}`;
+      const h = embedHash(k);
       if (f.contentWindow && f.contentWindow.location.hash !== '#' + h) f.contentWindow.location.hash = h;
     });
     return;
