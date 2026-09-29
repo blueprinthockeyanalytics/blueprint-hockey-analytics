@@ -52,7 +52,7 @@ body {
 .player-name-row { display: flex; align-items: center; gap: 7px; flex-wrap: nowrap; min-width: 0; }
 .player-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; color: #fff; letter-spacing: -0.2px; line-height: 1.05; white-space: nowrap; overflow: hidden; flex: 0 1 auto; min-width: 0; }
 .jersey-number { font-size: 14px; font-weight: 700; color: #fff; white-space: nowrap; }
-.flag-img { width: 26px; height: 18px; border-radius: 2px; object-fit: cover; display: block; flex-shrink: 0; }
+.flag-img { width: 22px; height: 15px; border-radius: 2px; object-fit: cover; display: block; flex-shrink: 0; box-shadow: 0 0 0 1px rgba(255,255,255,0.25); }
 .header-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; margin-top: 6px; }
 .tag { font-size: 13px; font-weight: 600; padding: 3px 9px; border-radius: 20px; background: rgba(255,255,255,0.08); color: #fff; }
 .header-physical { display: flex; align-items: center; gap: 7px; margin-top: 7px; }
@@ -72,7 +72,7 @@ body {
   position: absolute; top: 38%; left: 50%;
   transform: translate(-50%, -50%);
   width: 525px; height: 525px;
-  object-fit: contain; opacity: 0.09;
+  object-fit: contain; opacity: 0.06;
   pointer-events: none; z-index: 0;
   filter: grayscale(1) contrast(1.5) brightness(0.55);
 }
@@ -84,17 +84,17 @@ body {
 .stat-lbl { font-size: 8px; font-weight: 600; color: #aaa; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 2px; }
 .components { display: flex; flex-direction: column; gap: 5px; }
 .comp-row { display: flex; align-items: center; gap: 8px; }
-.comp-name { font-size: 11px; font-weight: 700; width: 30px; flex-shrink: 0; }
-.comp-name.good { color: #1a7a3c; } .comp-name.bad { color: #c0392b; } .comp-name.mid { color: #F5C518; } .comp-name.na { color: #aaa; }
+.comp-name { font-size: 11.5px; font-weight: 700; width: 88px; flex-shrink: 0; color: #041E42; white-space: nowrap; }
+.comp-name.na { color: #aaa; font-weight: 600; }
 .bar-track { flex: 1; height: 8px; background: #eef0f3; border-radius: 4px; overflow: hidden; }
 .bar-fill { height: 100%; border-radius: 4px; transition: width 0.4s ease; }
-.bar-fill.green { background: #1a7a3c; } .bar-fill.red { background: #c0392b; } .bar-fill.amber { background: #F5C518; }
+.bar-fill.green { background: #1a7a3c; } .bar-fill.red { background: #c0392b; } .bar-fill.amber { background: #E0A800; }
 .pct-badge { font-size: 13px; font-weight: 800; padding: 3px 9px; border-radius: 5px; min-width: 46px; text-align: center; flex-shrink: 0; }
 .pct-badge.green { background: #e8f5ee; color: #1a7a3c; }
 .pct-badge.red   { background: #fdecea; color: #c0392b; }
-.pct-badge.amber { background: #FFFBEA; color: #F5C518; }
+.pct-badge.amber { background: #FFF4D1; color: #8A6100; }
 .pct-badge.na    { background: #f0f0f0; color: #aaa; font-weight: 600; }
-.chart-wrap { position: relative; height: 96px; margin-top: 2px; }
+.chart-wrap { position: relative; height: 112px; margin-top: 2px; }
 canvas#careerChart { width: 100% !important; }
 .contract-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
 .contract-box { background: #f5f6f8; border-radius: 7px; padding: 7px 8px; text-align: center; }
@@ -107,15 +107,31 @@ canvas#careerChart { width: 100% !important; }
 .value-desc { font-size: 11px; font-weight: 600; color: #1a7a3c; }
 .value-row.over .value-desc { color: #c0392b; }
 .value-meta { font-size: 10px; color: #888; font-weight: 500; text-align: right; }
-.brand-footer { margin-top: 8px; padding-top: 8px; border-top: 1px solid #f0f0f0; text-align: right; }
-.brand-name { font-size: 10px; font-weight: 800; color: #041E42; letter-spacing: 1.5px; text-transform: uppercase; }
-.brand-url { font-size: 9px; color: #bbb; font-weight: 500; }
+.grade-chip { display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 54px; padding: 3px 8px; border-radius: 7px; background: #fff; }
+.grade-letter { font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 900; line-height: 1; }
+.grade-lbl { font-size: 7.5px; font-weight: 700; letter-spacing: 1.2px; color: #999; text-transform: uppercase; margin-top: 1px; }
+.grade-chip.a .grade-letter { color: #1a7a3c; } .grade-chip.b .grade-letter { color: #2f855a; }
+.grade-chip.c .grade-letter { color: #8A6100; } .grade-chip.d .grade-letter, .grade-chip.f .grade-letter { color: #c0392b; }
+.brand-footer { margin-top: 10px; padding-top: 9px; border-top: 1px solid #eceef2; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.brand-left { display: flex; align-items: center; gap: 7px; }
+.brand-logo { width: 24px; height: 24px; border-radius: 5px; display: block; }
+.brand-name { font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 800; color: #041E42; letter-spacing: 0.6px; text-transform: uppercase; line-height: 1; white-space: nowrap; }
+.brand-name span { color: #3A9AD9; }
+.brand-right { text-align: right; white-space: nowrap; min-width: 0; }
+.brand-url { font-size: 10px; color: #041E42; font-weight: 700; }
+.brand-date { font-size: 9px; color: #999; font-weight: 500; margin-top: 1px; }
 
 /* ── Two complete cards, side by side ──────────────────────────────────── */
 .card-pair { display: flex; gap: 16px; max-width: 940px; width: 100%; align-items: flex-start; }
 .card-column { flex: 1; min-width: 0; max-width: 460px; }
 .card-column .card { max-width: none; }
-.card-toolbar { display: flex; justify-content: center; gap: 10px; margin-top: 12px; }
+.card-toolbar { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 12px; }
+.fmt-toggle { flex-basis: 100%; display: flex; justify-content: center; }
+.fmt-btn { font-family: 'Inter', sans-serif; font-size: 11.5px; font-weight: 700; color: #5a6b82; background: #f5f6f8; border: 1px solid #dde1e7; padding: 5px 12px; cursor: pointer; }
+.fmt-btn:first-child { border-radius: 20px 0 0 20px; }
+.fmt-btn:last-child { border-radius: 0 20px 20px 0; border-left: 0; }
+.fmt-btn.on { background: #041E42; border-color: #041E42; color: #fff; }
+.fmt-btn:focus-visible { outline: 2px solid #3A9AD9; outline-offset: 2px; }
 .toolbar-btn {
   font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700;
   padding: 9px 18px; border-radius: 24px; cursor: pointer;
@@ -165,6 +181,10 @@ canvas#careerChart { width: 100% !important; }
   .card-toolbar { gap: 8px; }
   .toolbar-btn { padding: 8px 14px; font-size: 12px; }
   .pr-callout { padding: 12px 16px; margin-top: 14px; }
+  .brand-logo { width: 20px; height: 20px; }
+  .brand-name { font-size: 13px; }
+  .brand-url { font-size: 9.5px; }
+  .brand-date { font-size: 8.5px; }
 }
 </style>
 </head>
@@ -173,7 +193,7 @@ canvas#careerChart { width: 100% !important; }
 <div class="card-pair">
 
 <div class="card-column">
-<div class="card card-season" id="card-season">
+<div class="card card-season" id="card-season" data-name="Jamie Oleksiak" data-sub="SEA · D · Age 33" data-war="+0.09" data-label="2025–26 Season" data-accent="#99D9D9">
   <div class="card-badge">2025&ndash;26 Season</div>
   <div class="header">
     <div class="header-inner">
@@ -199,12 +219,12 @@ canvas#careerChart { width: 100% !important; }
         <div class="player-name-row">
           <div class="player-name" style="font-size:21px">Jamie Oleksiak</div>
           <span class="jersey-number">#24</span>
+          <img class="flag-img" src="https://flagcdn.com/w40/ca.png" alt="CAN">
         </div>
         <div class="header-tags">
           <span class="tag">SEA</span>
           <span class="tag">D</span>
           <span class='tag'>Age 33</span>
-          <img class="flag-img" src="https://flagcdn.com/w40/ca.png" alt="CAN" style="flex-shrink:0;width:26px;height:18px;border-radius:2px;object-fit:cover;display:block;">
         </div>
         <div class="header-physical">
           <span class="physical-text">6'7" · 252 lbs</span>
@@ -220,50 +240,50 @@ canvas#careerChart { width: 100% !important; }
   <div class="body">
     <img class="body-logo" src="https://assets.nhle.com/logos/nhl/svg/SEA_dark.svg" alt="">
 
-    <div class="section-label">2025-26 Season</div>
+    <div class="section-label">Season Stats</div>
     <div class="stat-grid">
       <div class="stat-box"><div class="stat-val">78</div><div class="stat-lbl">GP</div></div>
       <div class="stat-box"><div class="stat-val">5</div><div class="stat-lbl">G</div></div>
       <div class="stat-box"><div class="stat-val">10</div><div class="stat-lbl">A</div></div>
       <div class="stat-box"><div class="stat-val">15</div><div class="stat-lbl">PTS</div></div>
-      <div class="stat-box"><div class="stat-val">15:05</div><div class="stat-lbl">TOI/G</div></div>
+      <div class="stat-box"><div class="stat-val">15:05</div><div class="stat-lbl">5v5 TOI</div></div>
     </div>
 
-    <div class="section-label">Impact by Component &middot; 2025-26</div>
+    <div class="section-label">Percentile vs. NHL Defensemen</div>
     <div class="components">
       <div class="comp-row">
-        <span class="comp-name bad">EVO</span>
+        <span class="comp-name bad">EV Offense</span>
         <div class="bar-track"><div class="bar-fill red" style="width:11%"></div></div>
         <span class="pct-badge red">11th</span>
       </div>
       <div class="comp-row">
-        <span class="comp-name good">EVD</span>
+        <span class="comp-name good">EV Defense</span>
         <div class="bar-track"><div class="bar-fill green" style="width:82%"></div></div>
         <span class="pct-badge green">82nd</span>
       </div>
-      <div class="comp-row">
-        <span class="comp-name na">PP</span>
+      <div class="comp-row" title="Limited power play time">
+        <span class="comp-name na">Power Play</span>
         <div class="bar-track"><div class="bar-fill" style="width:0%"></div></div>
-        <span class="pct-badge na">N/A</span>
+        <span class="pct-badge na">&mdash;</span>
       </div>
       <div class="comp-row">
-        <span class="comp-name bad">PK</span>
-        <div class="bar-track"><div class="bar-fill red" style="width:6%"></div></div>
-        <span class="pct-badge red">6th</span>
+        <span class="comp-name bad">Penalty Kill</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:8%"></div></div>
+        <span class="pct-badge red">8th</span>
       </div>
       <div class="comp-row">
-        <span class="comp-name bad">PEN</span>
+        <span class="comp-name bad">Penalties</span>
         <div class="bar-track"><div class="bar-fill red" style="width:38%"></div></div>
         <span class="pct-badge red">38th</span>
       </div>
       <div class="comp-row">
-        <span class="comp-name good">SH</span>
+        <span class="comp-name good">Shooting</span>
         <div class="bar-track"><div class="bar-fill green" style="width:80%"></div></div>
         <span class="pct-badge green">80th</span>
       </div>
     </div>
 
-    <div class="section-label">Career Arc</div>
+    <div class="section-label">Career Arc &middot; WAR by Season</div>
     <div class="chart-wrap">
       <canvas id="careerChart-season"></canvas>
     </div>
@@ -275,8 +295,8 @@ canvas#careerChart { width: 100% !important; }
         <div class="contract-lbl">AAV</div>
       </div>
       <div class="contract-box">
-        <div class="contract-val">2</div>
-        <div class="contract-lbl">Years Left</div>
+        <div class="contract-val">2 yrs</div>
+        <div class="contract-lbl">Term Left</div>
       </div>
       <div class="contract-box">
         <div class="contract-val">$4.0M</div>
@@ -285,19 +305,29 @@ canvas#careerChart { width: 100% !important; }
     </div>
     <div class="value-row over">
       <div>
-        <div class="value-delta">-$1.0M</div>
+        <div class="value-delta">-$1.0M/yr</div>
         <div class="value-desc">Over market value</div>
       </div>
-      <div class="value-meta">Costing $1.0M/yr vs fair market</div>
+      <div class="grade-chip c"><div class="grade-letter">C</div><div class="grade-lbl">Grade</div></div>
     </div>
 
     <div class="brand-footer">
-      <div class="brand-name">Blueprint Hockey</div>
-      <div class="brand-url">blueprinthockeyanalytics.com</div>
+      <div class="brand-left">
+        <img class="brand-logo" src="../assets/bp_logo_128.png" alt="" onerror="this.style.display='none'">
+        <div class="brand-name">Blue<span>print</span> Hockey</div>
+      </div>
+      <div class="brand-right">
+        <div class="brand-url">blueprinthockeyanalytics.com</div>
+        <div class="brand-date">Data thru 2025-26 &middot; Updated Sep 29, 2026</div>
+      </div>
     </div>
   </div>
 </div>
   <div class="card-toolbar">
+    <div class="fmt-toggle" role="group" aria-label="Image size" data-for="card-season">
+      <button type="button" class="fmt-btn on" data-fmt="ig" aria-pressed="true">Instagram 4:5</button>
+      <button type="button" class="fmt-btn" data-fmt="x" aria-pressed="false">X 16:9</button>
+    </div>
     <button class="toolbar-btn primary" onclick="shareCard('card-season', 'Jamie_Oleksiak_2025-26_Season')">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a2 2 0 002 2h12a2 2 0 002-2v-7"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
       Share
@@ -310,7 +340,7 @@ canvas#careerChart { width: 100% !important; }
 </div>
 
 <div class="card-column">
-<div class="card card-career" id="card-career">
+<div class="card card-career" id="card-career" data-name="Jamie Oleksiak" data-sub="SEA · D · Age 33" data-war="+0.12" data-label="3-Year Weighted" data-accent="#99D9D9">
   <div class="card-badge">3-Year Weighted &middot; 2023-24 to 2025-26</div>
   <div class="header">
     <div class="header-inner">
@@ -336,12 +366,12 @@ canvas#careerChart { width: 100% !important; }
         <div class="player-name-row">
           <div class="player-name" style="font-size:21px">Jamie Oleksiak</div>
           <span class="jersey-number">#24</span>
+          <img class="flag-img" src="https://flagcdn.com/w40/ca.png" alt="CAN">
         </div>
         <div class="header-tags">
           <span class="tag">SEA</span>
           <span class="tag">D</span>
           <span class='tag'>Age 33</span>
-          <img class="flag-img" src="https://flagcdn.com/w40/ca.png" alt="CAN" style="flex-shrink:0;width:26px;height:18px;border-radius:2px;object-fit:cover;display:block;">
         </div>
         <div class="header-physical">
           <span class="physical-text">6'7" · 252 lbs</span>
@@ -357,50 +387,50 @@ canvas#careerChart { width: 100% !important; }
   <div class="body">
     <img class="body-logo" src="https://assets.nhle.com/logos/nhl/svg/SEA_dark.svg" alt="">
 
-    <div class="section-label">82-GP Pace &middot; Last 3 Seasons</div>
+    <div class="section-label">Per-82 Pace &middot; Last 3 Seasons</div>
     <div class="stat-grid">
-      <div class="stat-box"><div class="stat-val">242</div><div class="stat-lbl">GP</div></div>
+      <div class="stat-box"><div class="stat-val">242</div><div class="stat-lbl">Total GP</div></div>
       <div class="stat-box"><div class="stat-val">4</div><div class="stat-lbl">G/82</div></div>
       <div class="stat-box"><div class="stat-val">12</div><div class="stat-lbl">A/82</div></div>
       <div class="stat-box"><div class="stat-val">16</div><div class="stat-lbl">P/82</div></div>
-      <div class="stat-box"><div class="stat-val">15:35</div><div class="stat-lbl">TOI/G</div></div>
+      <div class="stat-box"><div class="stat-val">15:35</div><div class="stat-lbl">5v5 TOI</div></div>
     </div>
 
-    <div class="section-label">3-Yr Weighted Percentiles &middot; 2023-24 to 2025-26</div>
+    <div class="section-label">3-Year Percentile vs. NHL Defensemen</div>
     <div class="components">
       <div class="comp-row">
-        <span class="comp-name bad">EVO</span>
+        <span class="comp-name bad">EV Offense</span>
         <div class="bar-track"><div class="bar-fill red" style="width:21%"></div></div>
         <span class="pct-badge red">21st</span>
       </div>
       <div class="comp-row">
-        <span class="comp-name good">EVD</span>
+        <span class="comp-name good">EV Defense</span>
         <div class="bar-track"><div class="bar-fill green" style="width:86%"></div></div>
         <span class="pct-badge green">86th</span>
       </div>
-      <div class="comp-row">
-        <span class="comp-name na">PP</span>
+      <div class="comp-row" title="Limited power play time">
+        <span class="comp-name na">Power Play</span>
         <div class="bar-track"><div class="bar-fill" style="width:0%"></div></div>
-        <span class="pct-badge na">N/A</span>
+        <span class="pct-badge na">&mdash;</span>
       </div>
       <div class="comp-row">
-        <span class="comp-name bad">PK</span>
-        <div class="bar-track"><div class="bar-fill red" style="width:21%"></div></div>
-        <span class="pct-badge red">21st</span>
+        <span class="comp-name bad">Penalty Kill</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:30%"></div></div>
+        <span class="pct-badge red">30th</span>
       </div>
       <div class="comp-row">
-        <span class="comp-name mid">PEN</span>
+        <span class="comp-name mid">Penalties</span>
         <div class="bar-track"><div class="bar-fill amber" style="width:65%"></div></div>
         <span class="pct-badge amber">65th</span>
       </div>
       <div class="comp-row">
-        <span class="comp-name mid">SH</span>
+        <span class="comp-name mid">Shooting</span>
         <div class="bar-track"><div class="bar-fill amber" style="width:66%"></div></div>
         <span class="pct-badge amber">66th</span>
       </div>
     </div>
 
-    <div class="section-label">Career Arc</div>
+    <div class="section-label">Career Arc &middot; WAR by Season</div>
     <div class="chart-wrap">
       <canvas id="careerChart-career"></canvas>
     </div>
@@ -412,8 +442,8 @@ canvas#careerChart { width: 100% !important; }
         <div class="contract-lbl">AAV</div>
       </div>
       <div class="contract-box">
-        <div class="contract-val">2</div>
-        <div class="contract-lbl">Years Left</div>
+        <div class="contract-val">2 yrs</div>
+        <div class="contract-lbl">Term Left</div>
       </div>
       <div class="contract-box">
         <div class="contract-val">$4.0M</div>
@@ -422,19 +452,29 @@ canvas#careerChart { width: 100% !important; }
     </div>
     <div class="value-row over">
       <div>
-        <div class="value-delta">-$1.0M</div>
+        <div class="value-delta">-$1.0M/yr</div>
         <div class="value-desc">Over market value</div>
       </div>
-      <div class="value-meta">Costing $1.0M/yr vs fair market</div>
+      <div class="grade-chip c"><div class="grade-letter">C</div><div class="grade-lbl">Grade</div></div>
     </div>
 
     <div class="brand-footer">
-      <div class="brand-name">Blueprint Hockey</div>
-      <div class="brand-url">blueprinthockeyanalytics.com</div>
+      <div class="brand-left">
+        <img class="brand-logo" src="../assets/bp_logo_128.png" alt="" onerror="this.style.display='none'">
+        <div class="brand-name">Blue<span>print</span> Hockey</div>
+      </div>
+      <div class="brand-right">
+        <div class="brand-url">blueprinthockeyanalytics.com</div>
+        <div class="brand-date">Data thru 2025-26 &middot; Updated Sep 29, 2026</div>
+      </div>
     </div>
   </div>
 </div>
   <div class="card-toolbar">
+    <div class="fmt-toggle" role="group" aria-label="Image size" data-for="card-career">
+      <button type="button" class="fmt-btn on" data-fmt="ig" aria-pressed="true">Instagram 4:5</button>
+      <button type="button" class="fmt-btn" data-fmt="x" aria-pressed="false">X 16:9</button>
+    </div>
     <button class="toolbar-btn primary" onclick="shareCard('card-career', 'Jamie_Oleksiak_3yr_weighted')">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a2 2 0 002 2h12a2 2 0 002-2v-7"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
       Share
@@ -485,16 +525,28 @@ function makeCareerChart(canvasId) {
   options: {
     responsive: true,
     maintainAspectRatio: false,
+    layout: { padding: { top: 14, right: 6 } },
     plugins: {
       legend: { display: false },
       annotation: {
+        clip: false,
         annotations: {
           zero: {
             type: 'line',
             yMin: 0, yMax: 0,
-            borderColor: 'rgba(0,0,0,0.15)',
+            borderColor: 'rgba(0,0,0,0.18)',
             borderWidth: 1,
             borderDash: [4,3],
+          },
+          peak: {
+            type: 'label',
+            xValue: 10,
+            yValue: 1.18,
+            yAdjust: -15,
+            content: ['PEAK 1.2'],
+            color: '#9A6B00',
+            font: { size: 9, weight: '800', family: 'Inter' },
+            display: true
           }
         }
       },
@@ -504,7 +556,7 @@ function makeCareerChart(canvasId) {
         bodyColor: '#fff',
         padding: 8,
         callbacks: {
-          label: (c) => [False, False, False, False, False, False, False, False, False, False, True, False, False, False][c.dataIndex] ? ` ${c.raw} WAR · Career Best` : ` ${c.raw} WAR`
+          label: (c) => [false, false, false, false, false, false, false, false, false, false, true, false, false, false][c.dataIndex] ? ` ${c.raw} WAR · Career Best` : ` ${c.raw} WAR`
         }
       }
     },
@@ -512,14 +564,15 @@ function makeCareerChart(canvasId) {
       x: {
         grid: { display: false },
         border: { display: false },
-        ticks: { font: { size: 10, weight: '600' }, color: '#aaa' }
+        ticks: { font: { size: 10, weight: '600' }, color: '#aaa', maxRotation: 0, autoSkipPadding: 8 }
       },
       y: {
-        min: -1.5,
+        min: -1.0,
         max: 2.0,
         grid: { color: '#f0f0f3' },
         border: { display: false },
-        ticks: { font: { size: 10 }, color: '#bbb', stepSize: 0.5 }
+        title: { display: true, text: 'WAR', color: '#999', font: { size: 9, weight: '700' }, padding: 2 },
+        ticks: { font: { size: 10 }, color: '#999', stepSize: 1 }
       }
     }
   }
@@ -539,22 +592,27 @@ function reportHeight() {
 window.addEventListener('load', () => setTimeout(reportHeight, 300));
 setTimeout(reportHeight, 800);</script>
 <script>
-// Long names: shrink the font until the full name fits its row (no "...").
-// Re-runs once web fonts load and on resize/rotate, since the space
-// available depends on screen width, the jersey number and the WAR box.
-(function() {
-  function fitNames() {
-    document.querySelectorAll('.player-name').forEach(function(el) {
-      var base = parseFloat(el.dataset.baseSize || el.style.fontSize || getComputedStyle(el).fontSize);
-      el.dataset.baseSize = base;
-      var size = base;
-      el.style.fontSize = size + 'px';
-      while (el.scrollWidth > el.clientWidth + 0.5 && size > 11) {
-        size -= 0.5;
-        el.style.fontSize = size + 'px';
-      }
-    });
+// Long names: shrink to fit on one line (down to 15px); if still too long,
+// give the name its own full-width line (number + flag drop below it) and
+// shrink again down to 12px; only as a last resort let it wrap.
+function fitName(el) {
+  var base = parseFloat(el.dataset.baseSize || el.style.fontSize || getComputedStyle(el).fontSize);
+  el.dataset.baseSize = base;
+  var row = el.parentElement;
+  row.style.flexWrap = 'nowrap'; row.style.rowGap = '';
+  el.style.flexBasis = ''; el.style.whiteSpace = 'nowrap';
+  var size = base;
+  el.style.fontSize = size + 'px';
+  while (el.scrollWidth > el.clientWidth + 0.5 && size > 15) { size -= 0.5; el.style.fontSize = size + 'px'; }
+  if (el.scrollWidth > el.clientWidth + 0.5) {
+    row.style.flexWrap = 'wrap'; row.style.rowGap = '2px'; el.style.flexBasis = '100%';
+    size = Math.min(base, 18); el.style.fontSize = size + 'px';
+    while (el.scrollWidth > el.clientWidth + 0.5 && size > 12) { size -= 0.5; el.style.fontSize = size + 'px'; }
+    if (el.scrollWidth > el.clientWidth + 0.5) el.style.whiteSpace = 'normal';
   }
+}
+(function() {
+  function fitNames() { document.querySelectorAll('.player-name').forEach(fitName); }
   fitNames();
   window.addEventListener('load', fitNames);
   window.addEventListener('resize', fitNames);
@@ -571,53 +629,59 @@ setTimeout(reportHeight, 800);</script>
 // approval, which is a different scope entirely. Save always just
 // downloads the PNG directly, which lands in Photos/gallery on most
 // phones automatically.
-async function captureCard(cardId) {
-  const original = document.getElementById(cardId);
-  // Clone into an offscreen, padded wrapper before capturing. This gives
-  // the exported PNG a small white border (so the rounded corners/shadow
-  // don't look clipped) and captures a clean copy without disturbing the
-  // page layout while the screenshot is taken.
-  const wrapper = document.createElement('div');
-  wrapper.style.cssText = 'position:fixed; top:-9999px; left:-9999px; padding:20px; background:#ffffff; display:inline-block;';
-  const clone = original.cloneNode(true);
+const HANDLES = { ig: "@blueprinthockeyanalytics", x: "@BlueprintHky" };
+const BRAND_LOGO_SRC = "../assets/bp_logo_128.png";
 
-  // cloneNode() copies <canvas> elements but not their rendered pixels —
-  // chart content lives outside the DOM, so the clone starts blank. Copy
-  // each canvas's actual bitmap over manually before capturing, or the
-  // Career Arc chart (and anything else drawn on canvas) exports empty.
-  const originalCanvases = original.querySelectorAll('canvas');
-  const cloneCanvases = clone.querySelectorAll('canvas');
-  originalCanvases.forEach((srcCanvas, i) => {
-    const dstCanvas = cloneCanvases[i];
-    if (!dstCanvas) return;
-    dstCanvas.width = srcCanvas.width;
-    dstCanvas.height = srcCanvas.height;
-    dstCanvas.getContext('2d').drawImage(srcCanvas, 0, 0);
+function loadImg(src) {
+  return new Promise(resolve => {
+    const im = new Image();
+    im.onload = () => resolve(im);
+    im.onerror = () => resolve(null);
+    im.src = src;
+    setTimeout(() => resolve(null), 3000);
   });
+}
 
+// Renders ONE card to a canvas at a fixed layout width (so the export looks
+// the same from a phone or a desktop), then places it on a 1080x1350 (4:5)
+// branded Blueprint background -- the size Instagram/X show uncropped.
+async function captureCard(cardId, fmt) {
+  const original = document.getElementById(cardId);
+  const wrapper = document.createElement('div');
+  wrapper.style.cssText = 'position:fixed; top:0; left:-10000px; width:500px; background:transparent;';
+  const clone = original.cloneNode(true);
+  clone.style.boxShadow = 'none';
   wrapper.appendChild(clone);
   document.body.appendChild(wrapper);
 
-  // The cloned <img> elements (headshot, flag, team logo) need to finish
-  // resolving again even though they're the same src as the original —
-  // cloneNode() doesn't guarantee they're already "loaded" in the new DOM
-  // position. Capturing before they're ready silently leaves them blank
-  // in the exported image, which is what was happening to the headshot.
-  const cloneImages = clone.querySelectorAll('img');
-  await Promise.all(Array.from(cloneImages).map(img => {
-    if (img.complete && img.naturalHeight !== 0) return Promise.resolve();
-    return new Promise(resolve => {
-      img.onload = resolve;
-      img.onerror = resolve;
-      setTimeout(resolve, 3000); // safety timeout, never hang the export
+  // cloneNode() doesn't copy canvas pixels (the career arc) -- copy them.
+  const srcC = original.querySelectorAll('canvas'), dstC = clone.querySelectorAll('canvas');
+  srcC.forEach((src, i) => {
+    const dst = dstC[i]; if (!dst) return;
+    dst.width = src.width; dst.height = src.height;
+    dst.getContext('2d').drawImage(src, 0, 0);
+  });
+  // re-fit the name at the export width
+  clone.querySelectorAll('.player-name').forEach(fitName);
+  // Redraw the career arc at the export width (a copied bitmap would keep
+  // the on-screen width and leave the chart short of the card's edge).
+  const expCharts = [];
+  if (window.Chart && typeof makeCareerChart === 'function') {
+    const prevAnim = Chart.defaults.animation;
+    Chart.defaults.animation = false;
+    dstC.forEach((dst, i) => {
+      dst.id = 'export-chart-' + i + '-' + Date.now();
+      dst.removeAttribute('style'); dst.removeAttribute('width'); dst.removeAttribute('height');
+      try { makeCareerChart(dst.id); expCharts.push(Chart.getChart(dst)); } catch (e) {}
     });
+    Chart.defaults.animation = prevAnim;
+  }
+  await Promise.all(Array.from(clone.querySelectorAll('img')).map(img => {
+    if (img.complete && img.naturalHeight !== 0) return Promise.resolve();
+    return new Promise(res => { img.onload = res; img.onerror = res; setTimeout(res, 3000); });
   }));
-
-  // html2canvas has a known limitation rendering <img> elements that use
-  // CSS object-fit inside an absolutely-positioned wrapper (exactly how
-  // the headshot is built) — it displays fine on the real page, but can
-  // silently omit it from the captured canvas. Converting the headshot to
-  // a plain CSS background-image for the capture avoids that gap entirely.
+  // html2canvas drops object-fit <img> in absolutely positioned wrappers --
+  // use a background-image for the headshot during capture.
   clone.querySelectorAll('.headshot-wrap').forEach(wrap => {
     const img = wrap.querySelector('img');
     if (!img || !img.src) return;
@@ -627,12 +691,142 @@ async function captureCard(cardId) {
     wrap.style.backgroundRepeat = 'no-repeat';
     img.style.display = 'none';
   });
-
+  let cardCanvas;
   try {
-    return await html2canvas(wrapper, { scale: 2, backgroundColor: '#ffffff', useCORS: true });
+    cardCanvas = await html2canvas(clone, { scale: 3, backgroundColor: null, useCORS: true });
   } finally {
+    expCharts.forEach(c => c && c.destroy());
     document.body.removeChild(wrapper);
   }
+  return fmt === 'x' ? composeX(cardCanvas, original.dataset) : composeIG(cardCanvas, original.dataset);
+}
+
+function getFmt(cardId) {
+  const on = document.querySelector(`.fmt-toggle[data-for="${cardId}"] .fmt-btn.on`);
+  return on ? on.dataset.fmt : 'ig';
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('.fmt-btn');
+  if (!b) return;
+  b.parentElement.querySelectorAll('.fmt-btn').forEach(x => {
+    x.classList.toggle('on', x === b); x.setAttribute('aria-pressed', String(x === b));
+  });
+});
+
+const DISPLAY = "'Barlow Condensed', 'Arial Narrow', sans-serif";
+function drawBackground(g, W, H) {
+  g.fillStyle = '#0B1F45'; g.fillRect(0, 0, W, H);
+  g.strokeStyle = 'rgba(122,170,216,0.09)'; g.lineWidth = 2;
+  for (let x = 0; x <= W; x += 90) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, H); g.stroke(); }
+  for (let y = 0; y <= H; y += 90) { g.beginPath(); g.moveTo(0, y); g.lineTo(W, y); g.stroke(); }
+}
+function drawWordmark(g, logo, x, top, size) {
+  // logo square + BLUE (solid) PRINT (outlined), baseline aligned to the logo
+  let tx = x;
+  if (logo) { g.drawImage(logo, x, top, size, size); tx = x + size * 1.25; }
+  const fs = Math.round(size * 0.84), base = top + size * 0.84;
+  g.textBaseline = 'alphabetic'; g.textAlign = 'left';
+  g.font = `900 ${fs}px ${DISPLAY}`;
+  g.fillStyle = '#FFFFFF'; g.fillText('BLUE', tx, base);
+  const bw = g.measureText('BLUE').width;
+  g.lineWidth = Math.max(2, size / 26); g.strokeStyle = '#5BB5EE';
+  g.strokeText('PRINT', tx + bw + 2, base);
+  return base;
+}
+function drawCard(g, cc, dx, dy, dw, dh) {
+  const r = 28;
+  g.save();
+  g.shadowColor = 'rgba(0,0,0,0.45)'; g.shadowBlur = 40; g.shadowOffsetY = 12;
+  g.beginPath(); g.roundRect ? g.roundRect(dx, dy, dw, dh, r) : g.rect(dx, dy, dw, dh);
+  g.fillStyle = '#FFFFFF'; g.fill();
+  g.restore();
+  g.save();
+  g.beginPath(); g.roundRect ? g.roundRect(dx, dy, dw, dh, r) : g.rect(dx, dy, dw, dh); g.clip();
+  g.drawImage(cc, dx, dy, dw, dh);
+  g.restore();
+}
+async function newCanvas(W, H) {
+  const out = document.createElement('canvas');
+  out.width = W; out.height = H;
+  if (document.fonts && document.fonts.ready) { try { await document.fonts.ready; } catch (e) {} }
+  return out;
+}
+
+// Instagram: 1080x1350 (4:5) -- the tallest shape the feed shows uncropped.
+async function composeIG(cc, meta) {
+  const W = 1080, H = 1350, M = 64, TOP = 150, BOT = 104;
+  const out = await newCanvas(W, H), g = out.getContext('2d');
+  drawBackground(g, W, H);
+  drawWordmark(g, await loadImg(BRAND_LOGO_SRC), M, 40, 76);
+  g.font = "700 20px Inter, sans-serif"; g.fillStyle = '#7AAAD8';
+  g.textAlign = 'right'; g.fillText('HOCKEY ANALYTICS', W - M, 100); g.textAlign = 'left';
+  const availW = W - 2 * M, availH = H - TOP - BOT;
+  const sc = Math.min(availW / cc.width, availH / cc.height);
+  const dw = cc.width * sc, dh = cc.height * sc;
+  drawCard(g, cc, (W - dw) / 2, TOP + (availH - dh) / 2, dw, dh);
+  g.font = "700 24px Inter, sans-serif"; g.fillStyle = '#FFFFFF';
+  g.fillText('blueprinthockeyanalytics.com', M, H - 44);
+  g.textAlign = 'right'; g.fillStyle = '#5BB5EE';
+  g.fillText(HANDLES.ig, W - M, H - 44); g.textAlign = 'left';
+  return out;
+}
+
+// X: 1600x900 (16:9) -- fills the timeline uncropped on phone and desktop.
+// Card on the right; name, season and WAR large on the left so the post
+// reads at a glance before anyone taps into it.
+async function composeX(cc, meta) {
+  const W = 1600, H = 900, PAD = 56, R = 72, L = 88;
+  const out = await newCanvas(W, H), g = out.getContext('2d');
+  drawBackground(g, W, H);
+
+  const sc = Math.min(760 / cc.width, (H - 2 * PAD) / cc.height);
+  const dw = cc.width * sc, dh = cc.height * sc;
+  const dx = W - R - dw, dy = (H - dh) / 2;
+  drawCard(g, cc, dx, dy, dw, dh);
+
+  const panelW = dx - L - 64;
+  drawWordmark(g, await loadImg(BRAND_LOGO_SRC), L, 64, 64);
+
+  // accent bar in the team colour + section label
+  g.fillStyle = meta.accent || '#5BB5EE'; g.fillRect(L, 272, 72, 6);
+  g.font = "700 26px Inter, sans-serif"; g.fillStyle = '#7AAAD8';
+  if ('letterSpacing' in g) g.letterSpacing = '3px';
+  g.fillText((meta.label || '').toUpperCase(), L, 330);
+  if ('letterSpacing' in g) g.letterSpacing = '0px';
+
+  // player name: shrink to fit the panel; two lines if it is very long
+  const name = (meta.name || '').toUpperCase();
+  let fs = 104, lines = [name];
+  g.font = `900 ${fs}px ${DISPLAY}`;
+  while (g.measureText(name).width > panelW && fs > 64) { fs -= 2; g.font = `900 ${fs}px ${DISPLAY}`; }
+  if (g.measureText(name).width > panelW && name.includes(' ')) {
+    const i = name.lastIndexOf(' ');
+    lines = [name.slice(0, i), name.slice(i + 1)];
+    fs = 88; g.font = `900 ${fs}px ${DISPLAY}`;
+    while (Math.max(...lines.map(t => g.measureText(t).width)) > panelW && fs > 48) { fs -= 2; g.font = `900 ${fs}px ${DISPLAY}`; }
+  }
+  g.fillStyle = '#FFFFFF';
+  let y = 330 + fs * 0.98;
+  lines.forEach((t, k) => { g.fillText(t, L, y + k * fs * 0.92); });
+  y += (lines.length - 1) * fs * 0.92;
+
+  g.font = "600 30px Inter, sans-serif"; g.fillStyle = '#CFE0F3';
+  g.fillText(meta.sub || '', L, y + 50);
+
+  // headline stat
+  g.font = `900 150px ${DISPLAY}`; g.fillStyle = '#5BB5EE';
+  const warTxt = meta.war || '';
+  g.fillText(warTxt, L - 4, 720);
+  const ww = g.measureText(warTxt).width;
+  g.font = `800 44px ${DISPLAY}`; g.fillStyle = '#FFFFFF';
+  g.fillText('WAR', L + ww + 14, 720);
+
+  // footer
+  g.font = "700 30px Inter, sans-serif"; g.fillStyle = '#5BB5EE';
+  g.fillText(HANDLES.x, L, H - 74);
+  g.font = "600 22px Inter, sans-serif"; g.fillStyle = 'rgba(255,255,255,0.8)';
+  g.fillText('blueprinthockeyanalytics.com', L, H - 40);
+  return out;
 }
 
 function downloadBlob(blob, filename) {
@@ -644,8 +838,10 @@ function downloadBlob(blob, filename) {
 }
 
 async function shareCard(cardId, filenameBase) {
+  const fmt = getFmt(cardId);
+  filenameBase += fmt === 'x' ? '_X' : '_Instagram';
   try {
-    const canvas = await captureCard(cardId);
+    const canvas = await captureCard(cardId, fmt);
     canvas.toBlob(async (blob) => {
       const file = new File([blob], filenameBase + '.png', { type: 'image/png' });
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
@@ -667,8 +863,10 @@ async function shareCard(cardId, filenameBase) {
 }
 
 async function saveCard(cardId, filenameBase) {
+  const fmt = getFmt(cardId);
+  filenameBase += fmt === 'x' ? '_X' : '_Instagram';
   try {
-    const canvas = await captureCard(cardId);
+    const canvas = await captureCard(cardId, fmt);
     canvas.toBlob((blob) => downloadBlob(blob, filenameBase + '.png'), 'image/png');
   } catch (e) {
     console.error('Save failed', e);
