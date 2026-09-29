@@ -188,7 +188,9 @@ canvas#careerChart { width: 100% !important; }
 }
 /* Export-only layout (Save / Share images): bigger headshot; for X the card
    body is laid out in two columns so it fills a 16:9 frame. */
-.exporting .headshot-wrap { width: 118px; height: 126px; }
+.exporting .headshot-wrap { width: 118px; height: 126px; margin: 0 0 8px 12px; }
+.exporting .header-info { padding-top: 0; }
+.exporting .war-box { margin-top: 0; }
 .export-x .body { display: grid; grid-template-columns: 1fr 1fr; column-gap: 22px; align-items: start; }
 .export-x .body > .xcol { min-width: 0; }
 
@@ -763,10 +765,11 @@ async function captureCard(cardId, fmt) {
     cg.roundRect ? cg.roundRect(x, y, w, hh, rr) : cg.rect(x, y, w, hh);
     cg.clip();
     cg.imageSmoothingEnabled = true; cg.imageSmoothingQuality = 'high';
-    // object-fit: cover; object-position: center 5% (same as the page)
-    const sc = Math.max(h.W / im.naturalWidth, h.H / im.naturalHeight);
+    // whole photo (head + jersey), zoomed 12% and shifted up 10% so the
+    // head sits near the top of the box
+    const sc = Math.max(h.W / im.naturalWidth, h.H / im.naturalHeight) * 1.12;
     const iw = im.naturalWidth * sc, ih = im.naturalHeight * sc;
-    try { cg.drawImage(im, h.x + (h.W - iw) / 2, h.y + (h.H - ih) * 0.05, iw, ih); } catch (e) {}
+    try { cg.drawImage(im, h.x + (h.W - iw) / 2, h.y - 0.10 * h.H, iw, ih); } catch (e) {}
     cg.restore();
   }
   return fmt === 'x' ? composeX(cardCanvas, original.dataset) : composeIG(cardCanvas, original.dataset);
@@ -860,38 +863,38 @@ function exportBlob(canvas) {
 // Instagram: 1080x1350 (4:5). Slim brand bar on top, handle + site along
 // the bottom, the card fills everything else.
 async function composeIG(cc, meta) {
-  const W = 1080, H = 1350, M = 36, TOP = 92, BOT = 66;
+  const W = 1080, H = 1350, M = 36, TOP = 70, BOT = 60;
   const out = await newCanvas(W, H), g = out.getContext('2d');
   drawBackground(g, W, H);
-  drawWordmark(g, await loadImg(BRAND_LOGO_SRC), M, 22, 54);
-  g.font = "700 19px Inter, sans-serif"; g.fillStyle = '#7AAAD8';
-  g.textAlign = 'right'; g.fillText('HOCKEY ANALYTICS', W - M, 62); g.textAlign = 'left';
+  drawWordmark(g, await loadImg(BRAND_LOGO_SRC), M, 14, 44);
+  g.font = "700 17px Inter, sans-serif"; g.fillStyle = '#7AAAD8';
+  g.textAlign = 'right'; g.fillText('HOCKEY ANALYTICS', W - M, 46); g.textAlign = 'left';
   const availW = W - 2 * M, availH = H - TOP - BOT;
   const sc = Math.min(availW / cc.width, availH / cc.height);
   const dw = cc.width * sc, dh = cc.height * sc;
   drawCard(g, cc, (W - dw) / 2, TOP + (availH - dh) / 2, dw, dh);
   g.font = "700 22px Inter, sans-serif"; g.fillStyle = '#FFFFFF';
-  g.fillText('blueprinthockeyanalytics.com', M, H - 26);
+  g.fillText('blueprinthockeyanalytics.com', M, H - 22);
   g.textAlign = 'right'; g.fillStyle = '#5BB5EE';
-  g.fillText(HANDLES.ig, W - M, H - 26); g.textAlign = 'left';
+  g.fillText(HANDLES.ig, W - M, H - 22); g.textAlign = 'left';
   return out;
 }
 
 // X: 1600x900 (16:9). The card is rendered in a two-column landscape
 // layout so it fills the frame; slim brand bar on top, site underneath.
 async function composeX(cc, meta) {
-  const W = 1600, H = 900, M = 44, TOP = 92, BOT = 50;
+  const W = 1600, H = 900, M = 44, TOP = 72, BOT = 46;
   const out = await newCanvas(W, H), g = out.getContext('2d');
   drawBackground(g, W, H);
-  drawWordmark(g, await loadImg(BRAND_LOGO_SRC), M, 20, 54);
-  g.font = "700 28px Inter, sans-serif"; g.fillStyle = '#5BB5EE';
-  g.textAlign = 'right'; g.fillText(HANDLES.x, W - M, 60); g.textAlign = 'left';
+  drawWordmark(g, await loadImg(BRAND_LOGO_SRC), M, 14, 44);
+  g.font = "700 26px Inter, sans-serif"; g.fillStyle = '#5BB5EE';
+  g.textAlign = 'right'; g.fillText(HANDLES.x, W - M, 48); g.textAlign = 'left';
   const availW = W - 2 * M, availH = H - TOP - BOT;
   const sc = Math.min(availW / cc.width, availH / cc.height);
   const dw = cc.width * sc, dh = cc.height * sc;
   drawCard(g, cc, (W - dw) / 2, TOP + (availH - dh) / 2, dw, dh);
   g.font = "600 20px Inter, sans-serif"; g.fillStyle = 'rgba(255,255,255,0.85)';
-  g.textAlign = 'center'; g.fillText('blueprinthockeyanalytics.com', W / 2, H - 18); g.textAlign = 'left';
+  g.textAlign = 'center'; g.fillText('blueprinthockeyanalytics.com', W / 2, H - 16); g.textAlign = 'left';
   return out;
 }
 
