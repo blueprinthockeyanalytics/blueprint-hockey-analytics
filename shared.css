@@ -358,3 +358,9 @@ a { color: inherit; text-decoration: none; }
 .bp-social a { display: inline-flex; align-items: center; gap: 7px; color: var(--navy); font-weight: 700; font-size: 12px; text-decoration: none; }
 .bp-social a svg { flex: none; }
 .bp-social a:hover { color: var(--ice); }
+
+/* ── FOOTER: contact + privacy (small) ───────────────────────── */
+.bp-footer-legal { margin-top: 12px; font-size: 11px; color: var(--muted); }
+.bp-footer-legal a { color: var(--muted); text-decoration: underline; }
+.bp-footer-legal a:hover { color: var(--navy); }
+.pr-form-note a { color: inherit; text-decoration: underline; }
