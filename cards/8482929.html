@@ -4,6 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Emil Lilleberg — Blueprint Hockey</title>
+<meta name="description" content="Emil Lilleberg (TBL · D): +0.04 WAR in 2025-26, market value $2.8M. Player card from the Blueprint Hockey WAR model.">
+<meta property="og:type" content="profile">
+<meta property="og:site_name" content="Blueprint Hockey Analytics">
+<meta property="og:title" content="Emil Lilleberg — Blueprint Hockey">
+<meta property="og:description" content="Emil Lilleberg (TBL · D): +0.04 WAR in 2025-26, market value $2.8M. Player card from the Blueprint Hockey WAR model.">
+<meta property="og:url" content="https://blueprinthockeyanalytics.com/cards/8482929.html">
+<meta property="og:image" content="https://blueprinthockeyanalytics.com/cards/headshots/8482929.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@BlueprintHky">
+<meta name="twitter:title" content="Emil Lilleberg — Blueprint Hockey">
+<meta name="twitter:description" content="Emil Lilleberg (TBL · D): +0.04 WAR in 2025-26, market value $2.8M. Player card from the Blueprint Hockey WAR model.">
+<meta name="twitter:image" content="https://blueprinthockeyanalytics.com/cards/headshots/8482929.png">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -97,6 +109,8 @@ body {
 .chart-wrap { position: relative; height: 112px; margin-top: 2px; }
 canvas#careerChart { width: 100% !important; }
 .contract-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.contract-grid.nocontract { grid-template-columns: 1fr 2fr; }
+.contract-val.nc { font-size: 13px; letter-spacing: 0; padding-top: 1px; }
 .contract-box { background: #f5f6f8; border-radius: 7px; padding: 7px 8px; text-align: center; }
 .contract-val { font-size: 15px; font-weight: 800; color: #041E42; letter-spacing: -0.4px; line-height: 1; }
 .contract-lbl { font-size: 8px; font-weight: 600; color: #aaa; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 2px; }
@@ -242,7 +256,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
 <div class="card-pair">
 
 <div class="card-column col-season">
-<div class="card card-season" id="card-season" data-name="Emil Lilleberg" data-sub="TBL · D · Age 25" data-war="+0.11" data-label="2025–26 Season" data-accent="#002868">
+<div class="card card-season" id="card-season" data-name="Emil Lilleberg" data-sub="TBL · D · Age 25" data-war="+0.04" data-label="2025–26 Season" data-accent="#002868">
   <div class="card-badge">2025&ndash;26 Season</div>
   <div class="header">
     <div class="header-inner">
@@ -281,8 +295,8 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="war-box">
         <div class="war-box-label">WAR</div>
-        <div class="war-box-value">+0.11</div>
-        <div class="war-box-gar">0.6 GAR</div>
+        <div class="war-box-value">+0.04</div>
+        <div class="war-box-gar">0.3 GAR</div>
       </div>
     </div>
   </div>
@@ -301,14 +315,14 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
     <div class="section-label">Percentile vs. NHL Defensemen</div>
     <div class="components">
       <div class="comp-row">
-        <span class="comp-name bad">EV Offense</span>
-        <div class="bar-track"><div class="bar-fill red" style="width:30%"></div></div>
-        <span class="pct-badge red">30th</span>
+        <span class="comp-name mid">EV Offense</span>
+        <div class="bar-track"><div class="bar-fill amber" style="width:57%"></div></div>
+        <span class="pct-badge amber">57th</span>
       </div>
       <div class="comp-row">
-        <span class="comp-name mid">EV Defense</span>
-        <div class="bar-track"><div class="bar-fill amber" style="width:47%"></div></div>
-        <span class="pct-badge amber">47th</span>
+        <span class="comp-name bad">EV Defense</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:36%"></div></div>
+        <span class="pct-badge red">36th</span>
       </div>
       <div class="comp-row" title="Limited power play time">
         <span class="comp-name na">Power Play</span>
@@ -317,18 +331,18 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="comp-row">
         <span class="comp-name mid">Penalty Kill</span>
-        <div class="bar-track"><div class="bar-fill amber" style="width:52%"></div></div>
-        <span class="pct-badge amber">52nd</span>
+        <div class="bar-track"><div class="bar-fill amber" style="width:56%"></div></div>
+        <span class="pct-badge amber">56th</span>
       </div>
       <div class="comp-row">
-        <span class="comp-name good">Penalties</span>
-        <div class="bar-track"><div class="bar-fill green" style="width:74%"></div></div>
-        <span class="pct-badge green">74th</span>
+        <span class="comp-name bad">Penalties</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:19%"></div></div>
+        <span class="pct-badge red">19th</span>
       </div>
       <div class="comp-row">
         <span class="comp-name bad">Shooting</span>
-        <div class="bar-track"><div class="bar-fill red" style="width:23%"></div></div>
-        <span class="pct-badge red">23rd</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:25%"></div></div>
+        <span class="pct-badge red">25th</span>
       </div>
     </div>
 
@@ -338,26 +352,15 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
     </div>
 
     <div class="section-label">Contract</div>
-    <div class="contract-grid">
+    <div class="contract-grid nocontract">
       <div class="contract-box">
-        <div class="contract-val">N/A</div>
-        <div class="contract-lbl">AAV</div>
-      </div>
-      <div class="contract-box">
-        <div class="contract-val">—</div>
-        <div class="contract-lbl">Term Left</div>
-      </div>
-      <div class="contract-box">
-        <div class="contract-val">N/A</div>
+        <div class="contract-val">$2.8M</div>
         <div class="contract-lbl">Market Value</div>
       </div>
-    </div>
-    <div class="value-row">
-      <div>
-        <div class="value-delta">+$0.0M/yr</div>
-        <div class="value-desc">Under market value</div>
+      <div class="contract-box">
+        <div class="contract-val nc">No contract on file</div>
+        <div class="contract-lbl">What the market would pay</div>
       </div>
-      <div class="value-meta">Saving $0.0M/yr vs fair market</div>
     </div>
 
     <div class="brand-footer">
@@ -367,7 +370,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="brand-right">
         <div class="brand-url">blueprinthockeyanalytics.com</div>
-        <div class="brand-date">Data thru 2025-26 &middot; Updated Sep 29, 2026</div>
+        <div class="brand-date">Data thru 2025-26 &middot; Updated Oct 4, 2026</div>
       </div>
     </div>
   </div>
@@ -389,7 +392,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
 </div>
 
 <div class="card-column col-career">
-<div class="card card-career" id="card-career" data-name="Emil Lilleberg" data-sub="TBL · D · Age 25" data-war="+0.17" data-label="3-Year Weighted" data-accent="#002868">
+<div class="card card-career" id="card-career" data-name="Emil Lilleberg" data-sub="TBL · D · Age 25" data-war="-0.20" data-label="3-Year Weighted" data-accent="#002868">
   <div class="card-badge">3-Year Weighted &middot; 2023-24 to 2025-26</div>
   <div class="header">
     <div class="header-inner">
@@ -428,8 +431,8 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="war-box">
         <div class="war-box-label">WAR</div>
-        <div class="war-box-value">+0.17</div>
-        <div class="war-box-gar">1.0 GAR</div>
+        <div class="war-box-value">-0.20</div>
+        <div class="war-box-gar">-1.2 GAR</div>
       </div>
     </div>
   </div>
@@ -449,13 +452,13 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
     <div class="components">
       <div class="comp-row">
         <span class="comp-name bad">EV Offense</span>
-        <div class="bar-track"><div class="bar-fill red" style="width:26%"></div></div>
-        <span class="pct-badge red">26th</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:13%"></div></div>
+        <span class="pct-badge red">13th</span>
       </div>
       <div class="comp-row">
         <span class="comp-name bad">EV Defense</span>
-        <div class="bar-track"><div class="bar-fill red" style="width:35%"></div></div>
-        <span class="pct-badge red">35th</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:30%"></div></div>
+        <span class="pct-badge red">30th</span>
       </div>
       <div class="comp-row" title="Limited power play time">
         <span class="comp-name na">Power Play</span>
@@ -468,14 +471,14 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
         <span class="pct-badge na">&mdash;</span>
       </div>
       <div class="comp-row">
-        <span class="comp-name good">Penalties</span>
-        <div class="bar-track"><div class="bar-fill green" style="width:77%"></div></div>
-        <span class="pct-badge green">77th</span>
+        <span class="comp-name bad">Penalties</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:9%"></div></div>
+        <span class="pct-badge red">9th</span>
       </div>
       <div class="comp-row">
         <span class="comp-name bad">Shooting</span>
-        <div class="bar-track"><div class="bar-fill red" style="width:25%"></div></div>
-        <span class="pct-badge red">25th</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:17%"></div></div>
+        <span class="pct-badge red">17th</span>
       </div>
     </div>
 
@@ -485,26 +488,15 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
     </div>
 
     <div class="section-label">Contract</div>
-    <div class="contract-grid">
+    <div class="contract-grid nocontract">
       <div class="contract-box">
-        <div class="contract-val">N/A</div>
-        <div class="contract-lbl">AAV</div>
-      </div>
-      <div class="contract-box">
-        <div class="contract-val">—</div>
-        <div class="contract-lbl">Term Left</div>
-      </div>
-      <div class="contract-box">
-        <div class="contract-val">N/A</div>
+        <div class="contract-val">$2.8M</div>
         <div class="contract-lbl">Market Value</div>
       </div>
-    </div>
-    <div class="value-row">
-      <div>
-        <div class="value-delta">+$0.0M/yr</div>
-        <div class="value-desc">Under market value</div>
+      <div class="contract-box">
+        <div class="contract-val nc">No contract on file</div>
+        <div class="contract-lbl">What the market would pay</div>
       </div>
-      <div class="value-meta">Saving $0.0M/yr vs fair market</div>
     </div>
 
     <div class="brand-footer">
@@ -514,7 +506,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="brand-right">
         <div class="brand-url">blueprinthockeyanalytics.com</div>
-        <div class="brand-date">Data thru 2025-26 &middot; Updated Sep 29, 2026</div>
+        <div class="brand-date">Data thru 2025-26 &middot; Updated Oct 4, 2026</div>
       </div>
     </div>
   </div>
@@ -553,13 +545,13 @@ function makeCareerChart(canvasId) {
   data: {
     labels: ['23-24', '24-25', '25-26'],
     datasets: [{
-      data: [0.07, 0.17, 0.11],
+      data: [-0.28, -0.79, 0.04],
       borderColor: '#041E42',
       borderWidth: 2.5,
-      pointBackgroundColor: ['#041E42', '#F5C518', '#041E42'],
+      pointBackgroundColor: ['#041E42', '#041E42', '#F5C518'],
       pointBorderColor: '#041E42',
       pointBorderWidth: 2,
-      pointRadius: [4, 6, 4],
+      pointRadius: [4, 4, 6],
       pointHoverRadius: 7,
       fill: true,
       backgroundColor: (ctx) => {
@@ -589,10 +581,10 @@ function makeCareerChart(canvasId) {
           },
           peak: {
             type: 'label',
-            xValue: 1,
-            yValue: 0.17,
+            xValue: 2,
+            yValue: 0.04,
             yAdjust: -15,
-            content: ['PEAK 0.2'],
+            content: ['PEAK 0.0'],
             color: '#9A6B00',
             font: { size: 9, weight: '800', family: 'Inter' },
             display: true
@@ -605,7 +597,7 @@ function makeCareerChart(canvasId) {
         bodyColor: '#fff',
         padding: 8,
         callbacks: {
-          label: (c) => [false, true, false][c.dataIndex] ? ` ${c.raw} WAR · Career Best` : ` ${c.raw} WAR`
+          label: (c) => [false, false, true][c.dataIndex] ? ` ${c.raw} WAR · Career Best` : ` ${c.raw} WAR`
         }
       }
     },
@@ -616,7 +608,7 @@ function makeCareerChart(canvasId) {
         ticks: { font: { size: 10, weight: '600' }, color: '#aaa', maxRotation: 0, autoSkipPadding: 8 }
       },
       y: {
-        min: -0.5,
+        min: -1.5,
         max: 1.0,
         grid: { color: '#f0f0f3' },
         border: { display: false },

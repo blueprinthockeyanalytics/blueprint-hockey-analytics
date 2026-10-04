@@ -4,6 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Yanni Gourde — Blueprint Hockey</title>
+<meta name="description" content="Yanni Gourde (TBL · C): -0.47 WAR in 2025-26, market value $2.6M. Player card from the Blueprint Hockey WAR model.">
+<meta property="og:type" content="profile">
+<meta property="og:site_name" content="Blueprint Hockey Analytics">
+<meta property="og:title" content="Yanni Gourde — Blueprint Hockey">
+<meta property="og:description" content="Yanni Gourde (TBL · C): -0.47 WAR in 2025-26, market value $2.6M. Player card from the Blueprint Hockey WAR model.">
+<meta property="og:url" content="https://blueprinthockeyanalytics.com/cards/8476826.html">
+<meta property="og:image" content="https://blueprinthockeyanalytics.com/cards/headshots/8476826.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@BlueprintHky">
+<meta name="twitter:title" content="Yanni Gourde — Blueprint Hockey">
+<meta name="twitter:description" content="Yanni Gourde (TBL · C): -0.47 WAR in 2025-26, market value $2.6M. Player card from the Blueprint Hockey WAR model.">
+<meta name="twitter:image" content="https://blueprinthockeyanalytics.com/cards/headshots/8476826.png">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -97,6 +109,8 @@ body {
 .chart-wrap { position: relative; height: 112px; margin-top: 2px; }
 canvas#careerChart { width: 100% !important; }
 .contract-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.contract-grid.nocontract { grid-template-columns: 1fr 2fr; }
+.contract-val.nc { font-size: 13px; letter-spacing: 0; padding-top: 1px; }
 .contract-box { background: #f5f6f8; border-radius: 7px; padding: 7px 8px; text-align: center; }
 .contract-val { font-size: 15px; font-weight: 800; color: #041E42; letter-spacing: -0.4px; line-height: 1; }
 .contract-lbl { font-size: 8px; font-weight: 600; color: #aaa; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 2px; }
@@ -242,7 +256,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
 <div class="card-pair">
 
 <div class="card-column col-season">
-<div class="card card-season" id="card-season" data-name="Yanni Gourde" data-sub="TBL · C · Age 34" data-war="-0.45" data-label="2025–26 Season" data-accent="#002868">
+<div class="card card-season" id="card-season" data-name="Yanni Gourde" data-sub="TBL · C · Age 34" data-war="-0.47" data-label="2025–26 Season" data-accent="#002868">
   <div class="card-badge">2025&ndash;26 Season</div>
   <div class="header">
     <div class="header-inner">
@@ -281,8 +295,8 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="war-box">
         <div class="war-box-label">WAR</div>
-        <div class="war-box-value">-0.45</div>
-        <div class="war-box-gar">-2.7 GAR</div>
+        <div class="war-box-value">-0.47</div>
+        <div class="war-box-gar">-2.8 GAR</div>
       </div>
     </div>
   </div>
@@ -302,8 +316,8 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
     <div class="components">
       <div class="comp-row">
         <span class="comp-name bad">EV Offense</span>
-        <div class="bar-track"><div class="bar-fill red" style="width:19%"></div></div>
-        <span class="pct-badge red">19th</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:18%"></div></div>
+        <span class="pct-badge red">18th</span>
       </div>
       <div class="comp-row">
         <span class="comp-name good">EV Defense</span>
@@ -337,7 +351,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       <canvas id="careerChart-season"></canvas>
     </div>
 
-    <div class="section-label">Contract</div>
+        <div class="section-label">Contract</div>
     <div class="contract-grid">
       <div class="contract-box">
         <div class="contract-val">$2.3M</div>
@@ -367,7 +381,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="brand-right">
         <div class="brand-url">blueprinthockeyanalytics.com</div>
-        <div class="brand-date">Data thru 2025-26 &middot; Updated Sep 29, 2026</div>
+        <div class="brand-date">Data thru 2025-26 &middot; Updated Oct 4, 2026</div>
       </div>
     </div>
   </div>
@@ -464,8 +478,8 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="comp-row">
         <span class="comp-name good">Penalty Kill</span>
-        <div class="bar-track"><div class="bar-fill green" style="width:99%"></div></div>
-        <span class="pct-badge green">99th</span>
+        <div class="bar-track"><div class="bar-fill green" style="width:98%"></div></div>
+        <span class="pct-badge green">98th</span>
       </div>
       <div class="comp-row">
         <span class="comp-name bad">Penalties</span>
@@ -484,7 +498,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       <canvas id="careerChart-career"></canvas>
     </div>
 
-    <div class="section-label">Contract</div>
+        <div class="section-label">Contract</div>
     <div class="contract-grid">
       <div class="contract-box">
         <div class="contract-val">$2.3M</div>
@@ -514,7 +528,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="brand-right">
         <div class="brand-url">blueprinthockeyanalytics.com</div>
-        <div class="brand-date">Data thru 2025-26 &middot; Updated Sep 29, 2026</div>
+        <div class="brand-date">Data thru 2025-26 &middot; Updated Oct 4, 2026</div>
       </div>
     </div>
   </div>
@@ -553,7 +567,7 @@ function makeCareerChart(canvasId) {
   data: {
     labels: ['16-17', '17-18', '18-19', '19-20', '20-21', '21-22', '22-23', '23-24', '24-25', '25-26'],
     datasets: [{
-      data: [0.18, 2.41, 1.67, -0.01, 0.85, 1.11, 0.59, -0.4, -0.14, -0.45],
+      data: [0.18, 2.42, 1.65, -0.01, 0.85, 1.1, 0.6, -0.39, -0.13, -0.47],
       borderColor: '#041E42',
       borderWidth: 2.5,
       pointBackgroundColor: ['#041E42', '#F5C518', '#041E42', '#041E42', '#041E42', '#041E42', '#041E42', '#041E42', '#041E42', '#041E42'],
@@ -590,7 +604,7 @@ function makeCareerChart(canvasId) {
           peak: {
             type: 'label',
             xValue: 1,
-            yValue: 2.41,
+            yValue: 2.42,
             yAdjust: -15,
             content: ['PEAK 2.4'],
             color: '#9A6B00',
