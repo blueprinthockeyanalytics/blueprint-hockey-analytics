@@ -110,7 +110,8 @@
     <li><strong>Score state</strong>, home ice, back-to-back games, and shifts coming straight off a power play or penalty kill</li>
   </ul>
   <p>Each season starts from the player's estimate the season before, then updates based on what he did this year. That keeps a player's rating from swinging wildly on a small sample while still letting a real improvement or decline show up. How strongly the model leans on that starting point is tuned on held-out data, not set by hand.</p>
-  <p>Chances are measured with our own <strong>expected goals (xG)</strong> model: a machine-learning model trained on more than 880,000 NHL shots that estimates the chance each shot becomes a goal from its distance, angle, shot type, rebound status, game situation and more.</p>
+  <p>Chances are measured with our own <strong>expected goals (xG)</strong> model: a machine-learning model built from 1.6 million unblocked NHL shot attempts that estimates the chance each shot becomes a goal. It looks at distance, angle, shot type, the shooter's handedness (off-wing shots), the play before the shot, rebounds and how far the angle changed, rush chances, the exact skaters on the ice (including empty nets), how long both teams' players have been on their shift, and the game situation.</p>
+  <p>Hockey changes, so each past season is scored by a model trained on the seasons around it, and this season's games by a model trained on the three most recent. Every shot is scored by a model that never saw it in training: across every shot since 2010-11 that comes to an AUC of 0.78, where 0.5 is a coin flip and 1.0 is perfect.</p>
 
   <h2 id="xg-defense">Where expected goals fall short, especially on defense</h2>
   <div class="callout">
