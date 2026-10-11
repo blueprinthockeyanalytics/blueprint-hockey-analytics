@@ -127,6 +127,19 @@ canvas#careerChart { width: 100% !important; }
 .grade-lbl { font-size: 7.5px; font-weight: 700; letter-spacing: 1.2px; color: #999; text-transform: uppercase; margin-top: 1px; }
 .grade-chip.a .grade-letter { color: #1a7a3c; } .grade-chip.b .grade-letter { color: #2f855a; }
 .grade-chip.c .grade-letter { color: #8A6100; } .grade-chip.d .grade-letter, .grade-chip.f .grade-letter { color: #c0392b; }
+.proj-grid { display: grid; gap: 4px; margin-top: 2px; }
+.proj-cell { background: #f5f6f8; border-radius: 6px; padding: 5px 2px; text-align: center; min-width: 0; }
+.proj-yr { font-size: 9px; font-weight: 800; color: #041E42; }
+.proj-age { font-size: 7.5px; font-weight: 600; color: #aaa; margin-top: 1px; }
+.proj-war { font-size: 13px; font-weight: 800; color: #041E42; margin-top: 3px; letter-spacing: -0.3px; }
+.proj-sp { font-size: 9px; font-weight: 700; margin-top: 2px; white-space: nowrap; }
+.proj-sp.pos { color: #1a7a3c; } .proj-sp.neg { color: #c0392b; }
+.proj-total { margin-top: 6px; font-size: 11px; font-weight: 600; color: #555; }
+.proj-total.pos b { color: #1a7a3c; } .proj-total.neg b { color: #c0392b; }
+.proj-next { margin-top: 4px; font-size: 11px; font-weight: 600; color: #555; }
+.proj-next b { color: #041E42; }
+.proj-note { margin-top: 4px; font-size: 8.5px; color: #aaa; line-height: 1.35; }
+.exporting .proj-wrap { display: none; }
 .brand-footer { margin-top: 10px; padding-top: 9px; border-top: 1px solid #eceef2; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .brand-left { display: flex; align-items: center; gap: 7px; }
 .brand-logo { width: 24px; height: 24px; border-radius: 5px; display: block; }
@@ -382,7 +395,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="brand-right">
         <div class="brand-url">blueprinthockeyanalytics.com</div>
-        <div class="brand-date">Data thru 2025-26 &middot; Updated Oct 6, 2026</div>
+        <div class="brand-date">Data thru 2025-26 &middot; Updated Oct 11, 2026</div>
       </div>
     </div>
   </div>
@@ -521,6 +534,14 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="grade-chip c"><div class="grade-letter">C</div><div class="grade-lbl">Grade</div></div>
     </div>
+    
+    <div class="proj-wrap">
+      <div class="section-label">Contract Outlook &middot; Projected WAR &amp; Surplus</div>
+      <div class="proj-grid" style="grid-template-columns: repeat(1, 1fr);"><div class="proj-cell"><div class="proj-yr">26-27</div><div class="proj-age">Age 34</div><div class="proj-war">+1.6</div><div class="proj-sp neg">−$1.5M</div></div></div>
+      <div class="proj-total neg">Projected value over the deal: <b>−$1.5M</b></div>
+      <div class="proj-next">Next contract: fair price about <b>$5.6M</b> a year (5-year deal)</div>
+      <div class="proj-note">Projected from how 2,500+ NHL careers aged since 2010-11, including injury and decline risk, on each season's salary cap.</div>
+    </div>
 
     <div class="brand-footer">
       <div class="brand-left">
@@ -529,7 +550,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="brand-right">
         <div class="brand-url">blueprinthockeyanalytics.com</div>
-        <div class="brand-date">Data thru 2025-26 &middot; Updated Oct 6, 2026</div>
+        <div class="brand-date">Data thru 2025-26 &middot; Updated Oct 11, 2026</div>
       </div>
     </div>
   </div>
