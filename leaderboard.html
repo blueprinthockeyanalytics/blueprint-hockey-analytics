@@ -59,11 +59,11 @@ td.num { text-align: right; font-variant-numeric: tabular-nums; }
   .player-meta { font-size: 9px; }
 }
 </style>
-<meta name="description" content="Every NHL skater ranked by Wins Above Replacement, with even-strength, special teams, penalty and shooting components.">
+<meta name="description" content="Every NHL skater and goalie ranked by Wins Above Replacement: skaters by even-strength, special teams, penalty and shooting components, goalies by goals saved above expected.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Blueprint Hockey Analytics">
 <meta property="og:title" content="WAR Leaderboard — Blueprint Hockey">
-<meta property="og:description" content="Every NHL skater ranked by Wins Above Replacement, with even-strength, special teams, penalty and shooting components.">
+<meta property="og:description" content="Every NHL skater and goalie ranked by Wins Above Replacement: skaters by even-strength, special teams, penalty and shooting components, goalies by goals saved above expected.">
 <meta property="og:url" content="https://blueprinthockeyanalytics.com/leaderboard.html">
 <meta property="og:image" content="https://blueprinthockeyanalytics.com/assets/og-share.png">
 <meta property="og:image:width" content="1200">
@@ -71,7 +71,7 @@ td.num { text-align: right; font-variant-numeric: tabular-nums; }
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@BlueprintHky">
 <meta name="twitter:title" content="WAR Leaderboard — Blueprint Hockey">
-<meta name="twitter:description" content="Every NHL skater ranked by Wins Above Replacement, with even-strength, special teams, penalty and shooting components.">
+<meta name="twitter:description" content="Every NHL skater and goalie ranked by Wins Above Replacement: skaters by even-strength, special teams, penalty and shooting components, goalies by goals saved above expected.">
 <meta name="twitter:image" content="https://blueprinthockeyanalytics.com/assets/og-share.png">
 <script src="analytics.js" defer></script>
 </head>
@@ -91,6 +91,7 @@ td.num { text-align: right; font-variant-numeric: tabular-nums; }
       <div class="bp-tab-group" id="pos-tabs">
         <button class="bp-tab-btn active" data-pos="F">Forwards</button>
         <button class="bp-tab-btn" data-pos="D">Defensemen</button>
+        <button class="bp-tab-btn" data-pos="G">Goalies</button>
       </div>
       <div class="bp-tab-group" id="season-tabs">
         <button class="bp-tab-btn active" data-view="current">2025&ndash;26</button>
@@ -140,7 +141,7 @@ td.num { text-align: right; font-variant-numeric: tabular-nums; }
   <div class="bp-footer-legal"><a href="mailto:blueprinthockeyanalytics@gmail.com">blueprinthockeyanalytics@gmail.com</a> &middot; <a href="privacy.html">Privacy Policy</a></div>
 </div>
 
-<script src="nav-search.js?v=2"></script>
+<script src="nav-search.js?v=3"></script>
 <script>
 fetch('nav.html').then(r => r.text()).then(html => {
   document.getElementById('nav-placeholder').innerHTML = html;
@@ -192,7 +193,7 @@ async function loadLeaderboardData() {
     const multi = ratings.length
       ? ratings.map(r => ({ ...r, ...(paceByPlayer[r.playerId] || {}), _view: 'multi' }))
       : current.map(r => ({ ...r, _view: 'multi' }));
-    ALL_DATA = [...current, ...multi];
+    ALL_DATA = [...current, ...multi, ...(await loadGoalies(maxSeason))];
     console.log('Loaded', current.length, 'current season rows from data/master_season.csv');
   } catch (e) {
     console.warn('Could not load data/master_season.csv — using sample data. Reason:', e.message);
@@ -202,6 +203,47 @@ async function loadLeaderboardData() {
   }
   renderTable();
 }
+
+// Goalies (Oct 12): goalie_season.csv (one row per goalie-season) and
+// goalie_ratings.csv (3-year talent), both from goalie_model.py
+async function loadGoalies(maxSeason) {
+  try {
+    const [gsRes, grRes] = await Promise.all([fetch('data/goalie_season.csv'), fetch('data/goalie_ratings.csv')]);
+    if (!gsRes.ok || !grRes.ok) return [];
+    const gs = bpParseCSVNum(await gsRes.text());
+    const gr = bpParseCSVNum(await grRes.text());
+    const cur = gs.filter(r => r.season === maxSeason).map(r => ({
+      playerId: r.goalie_id, name: r.name, team: r.team, position: 'G', pos_group: 'G',
+      gp: r.gp, shots: r.shots, sv_pct: r.sv_pct, xsv_pct: r.xsv_pct, gsax: r.gsax,
+      gsax_per100: r.gsax_per100, hd_sv_pct: r.hd_sv_pct, WAR: r.WAR, _view: 'current' }));
+    const multi = gr.map(r => ({
+      playerId: r.playerId, name: r.name, team: r.team, position: 'G', pos_group: 'G',
+      gp: r.gp_3yr, shots: r.shots_3yr, sv_pct: r.sv_pct_3yr, xsv_pct: r.xsv_pct_3yr, gsax: r.gsax_3yr,
+      gsax_per100: r.gsax_per100_talent, hd_sv_pct: r.hd_sv_pct_3yr, WAR: r.WAR, _view: 'multi' }));
+    return [...cur, ...multi];
+  } catch (e) { return []; }
+}
+
+const GOALIE_HEAD = `<tr>
+  <th style="width:44px">#</th>
+  <th data-col="name">Goalie</th>
+  <th class="num" data-col="gp">GP</th>
+  <th class="num" data-col="shots" title="Unblocked shots faced (empty net excluded)">Shots</th>
+  <th class="num" data-col="sv_pct">SV%</th>
+  <th class="num" data-col="xsv_pct" title="Save % an average goalie would have had on the same shots">xSV%</th>
+  <th class="num" data-col="gsax" title="Goals saved above expected">GSAx</th>
+  <th class="num" data-col="gsax_per100" title="Goals saved above expected per 100 shots (multi-year: sample-size adjusted talent)">GSAx/100</th>
+  <th class="num" data-col="hd_sv_pct" title="Save % on high-danger chances (expected goal 20%+)">HD SV%</th>
+  <th class="num" data-col="WAR" style="min-width:64px">WAR</th>
+</tr>`;
+let SKATER_HEAD = null;
+function fmtGsax(v) {
+  if (typeof v !== 'number' || isNaN(v)) return '<span class="comp na">N/A</span>';
+  const cls = v >= 8 ? 'high' : v >= 2 ? 'mid' : v >= -2 ? 'neu' : 'low';
+  return `<span class="comp ${cls}">${v >= 0 ? '+' : ''}${v.toFixed(1)}</span>`;
+}
+function fmtSv(v) { return (typeof v !== 'number' || isNaN(v)) ? '\u2014' : v.toFixed(3).replace(/^0/, ''); }
+function fmtSigned(v, d) { return (typeof v !== 'number' || isNaN(v)) ? '\u2014' : (v >= 0 ? '+' : '') + v.toFixed(d); }
 
 function bpComputePace82ByPlayer(careerRows, nSeasons) {
   const byPlayer = {};
@@ -271,6 +313,16 @@ function fmtWAR(val) {
 
 function updateHeaderLabels() {
   const isMulti = currentView === 'multi';
+  const thead = document.querySelector('#lb-table thead');
+  if (SKATER_HEAD === null) SKATER_HEAD = thead.innerHTML;
+  if (currentPos === 'G') {
+    thead.innerHTML = GOALIE_HEAD;
+    document.getElementById('view-subtitle').textContent = isMulti
+      ? '3-year goalie ratings \u00b7 totals over the last 3 seasons; GSAx/100 and WAR are sample-size adjusted'
+      : 'Showing ' + (window.BP_SEASON_LABEL || '2025\u201326') + ' season totals \u00b7 empty-net shots excluded';
+    return;
+  }
+  if (thead.innerHTML !== SKATER_HEAD) thead.innerHTML = SKATER_HEAD;
   document.getElementById('th-gp').textContent = isMulti ? 'GP (3yr)' : 'GP';
   document.getElementById('th-goals').textContent = isMulti ? 'G/82' : 'G';
   document.getElementById('th-assists').textContent = isMulti ? 'A/82' : 'A';
@@ -296,6 +348,32 @@ function renderTable() {
   const tbody = document.getElementById('lb-body');
   if (!rows.length) {
     tbody.innerHTML = '<tr><td colspan="13" class="empty">No players found</td></tr>';
+    return;
+  }
+
+  if (currentPos === 'G') {
+    tbody.innerHTML = rows.map((r, i) => {
+      const team = r.team || '';
+      return `<tr onclick="window.location.href='player.html?id=${r.playerId}'">
+        <td class="rank" data-rank="${i + 1}">${i + 1}</td>
+        <td><div class="player-cell">
+          <img class="team-logo" data-team="${team}" src="${bpLogoUrl(team)}" alt="${team}" onerror="this.style.opacity=0.15">
+          <div class="player-info"><div class="player-name">${r.name || '\u2014'}</div>
+          <div class="player-meta">${team} &middot; G</div></div></div></td>
+        <td class="num stat dim">${r.gp ?? '\u2014'}</td>
+        <td class="num stat dim">${r.shots ?? '\u2014'}</td>
+        <td class="num stat">${fmtSv(r.sv_pct)}</td>
+        <td class="num stat dim">${fmtSv(r.xsv_pct)}</td>
+        <td class="num">${fmtGsax(r.gsax)}</td>
+        <td class="num stat">${fmtSigned(r.gsax_per100, 2)}</td>
+        <td class="num stat">${fmtSv(r.hd_sv_pct)}</td>
+        <td class="num">${fmtWAR(r.WAR)}</td>
+      </tr>`;
+    }).join('');
+    document.querySelectorAll('th[data-col]').forEach(th => {
+      th.classList.toggle('sorted', th.dataset.col === sortCol);
+      th.classList.toggle('asc', th.dataset.col === sortCol && sortAsc);
+    });
     return;
   }
 
@@ -344,6 +422,12 @@ document.getElementById('pos-tabs').addEventListener('click', e => {
   document.querySelectorAll('#pos-tabs .bp-tab-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   currentPos = btn.dataset.pos;
+  const goalieCols = ['name', 'gp', 'shots', 'sv_pct', 'xsv_pct', 'gsax', 'gsax_per100', 'hd_sv_pct', 'WAR'];
+  const skaterCols = ['name', 'gp', 'goals', 'assists', 'points', 'WAR', 'WAR_evo', 'WAR_evd', 'WAR_pp', 'WAR_pk', 'WAR_pen', 'WAR_shoot'];
+  // goalies open sorted by goals saved above expected (pure shot-stopping);
+  // skaters by WAR
+  if (currentPos === 'G') { sortCol = 'gsax'; sortAsc = false; }
+  else if (!skaterCols.includes(sortCol)) { sortCol = 'WAR'; sortAsc = false; }
   renderTable();
 });
 document.getElementById('season-tabs').addEventListener('click', e => {

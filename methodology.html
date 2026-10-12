@@ -85,6 +85,7 @@
     <a href="#replacement">Replacement</a>
     <a href="#calibration">Real results</a>
     <a href="#talent">3-year talent</a>
+    <a href="#goalies">Goalies</a>
     <a href="#contracts">Contracts</a>
     <a href="#cards">The cards</a>
   </div>
@@ -156,6 +157,17 @@
   </ul>
   <p>The single-season numbers are never adjusted this way. If a player scored on 25% of his shots, his season card says so.</p>
 
+  <h2 id="goalies">Goalies</h2>
+  <p>Goalies are rated on <strong>goals saved above expected (GSAx)</strong>: for every unblocked shot a goalie faced, our expected goals model says how likely an average goalie was to let it in. Add those up, subtract the goals he actually allowed, and you have how many goals he saved beyond an average goalie.</p>
+  <ul>
+    <li>Empty-net goals and shootouts are left out, so the rating only covers shots he actually faced in net during the game.</li>
+    <li>Rebounds in the same scramble are counted as one chance, not several (a "flurry" adjustment), so a goalie isn't charged twice for one sequence.</li>
+    <li>Every season is set so the league-average goalie is exactly 0.</li>
+    <li>Goalie numbers swing a lot from season to season, so the 3-year rating leans on all three seasons and pulls small samples firmly toward average. How hard it pulls was chosen by testing which setting best predicts each goalie's next season.</li>
+    <li>WAR compares a goalie with a replacement-level goalie (one outside the top two on a team), so it counts both how well and how much he plays. The Goalies tab opens sorted by GSAx, which is pure shot-stopping.</li>
+  </ul>
+  <p>Checked against the public record, our goalie GSAx matches MoneyPuck's closely (0.90 correlation over 888 goalie-seasons since 2010-11), and each goalie's goals allowed line up with MoneyPuck's almost exactly (0.999), confirming every shot is credited to the right goalie.</p>
+
   <h2 id="contracts">Contract value</h2>
   <p>Market value is what NHL teams actually pay for a player's level of WAR, learned from real contracts:</p>
   <ul>
@@ -165,6 +177,7 @@
     <li>No player is valued above the league's maximum contract (20% of the cap) or below a replacement-level salary.</li>
   </ul>
   <p>The difference between market value and actual cap hit is the player's contract surplus, which is what the A+ to F contract grade is based on.</p>
+  <p><strong>Contract outlook.</strong> For every remaining season of a deal, we project the player's WAR from how thousands of NHL careers have aged since 2010-11, separately for forwards, defensemen and goalies. That includes the real chance of injury, decline or leaving the league. Each season is valued on that year's salary cap. Tested on past seasons, the projection beats assuming a player simply stays at his current level, at every horizon from one to five years out.</p>
 
   <h2 id="cards">What's on the player cards</h2>
   <ul>
@@ -190,7 +203,7 @@
   <div class="bp-footer-legal"><a href="mailto:blueprinthockeyanalytics@gmail.com">blueprinthockeyanalytics@gmail.com</a> &middot; <a href="privacy.html">Privacy Policy</a></div>
 </div>
 
-<script src="nav-search.js?v=2"></script>
+<script src="nav-search.js?v=3"></script>
 <script>
 fetch('nav.html').then(r => r.text()).then(html => {
   document.getElementById('nav-placeholder').innerHTML = html;

@@ -38,6 +38,17 @@ async function bpLoadPlayerIndex() {
         pos_group: r.pos_group,
         WAR: Number(r.WAR) || 0,
       }));
+    // goalies (Oct 12): searchable too, from goalie_season.csv
+    try {
+      const gres = await fetch('data/goalie_season.csv');
+      if (gres.ok) {
+        const g = bpParseCSV(await gres.text()).filter(r => Number(r.season) === maxSeason);
+        BP_PLAYER_INDEX = BP_PLAYER_INDEX.concat(g.map(r => ({
+          playerId: r.goalie_id, name: r.name, fullName: r.name, team: r.team,
+          position: 'G', pos_group: 'G', WAR: Number(r.WAR) || 0,
+        })));
+      }
+    } catch (e) { /* goalies optional */ }
   } catch (e) {
     // Fallback sample data for preview without local files
     BP_PLAYER_INDEX = [

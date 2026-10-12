@@ -83,6 +83,25 @@ body { background: #fff; margin: 0; }
 .pr-lightbox img { max-width: 100%; max-height: 100%; border-radius: 8px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
 .pr-lightbox-close { position: absolute; top: 20px; right: 28px; color: #fff; font-size: 28px; cursor: pointer; font-family: 'Inter',sans-serif; }
 
+/* Pricing */
+.pr-pricing { background:#F7F8FA; }
+.pr-founding { display:flex; flex-wrap:wrap; align-items:center; gap:10px 16px; background:#041E42; color:#fff; border-radius:10px; padding:14px 18px; margin-top:24px; font-family:'Inter',sans-serif; font-size:14px; line-height:1.5; }
+.pr-founding strong { color:#F5C518; }
+.pr-founding-tag { font-size:11px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; background:#F5C518; color:#041E42; border-radius:4px; padding:4px 8px; }
+.pr-price-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:24px; }
+.pr-price-card { background:#fff; border:1.5px solid #E3E7EC; border-radius:12px; padding:24px 22px; display:flex; flex-direction:column; gap:10px; }
+.pr-price-card.featured { border:2px solid #041E42; box-shadow:0 10px 30px rgba(4,30,66,0.10); }
+.pr-price-name { font-family:'Inter',sans-serif; font-size:12px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#6B7686; }
+.pr-price-amt { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:44px; line-height:1; color:#041E42; }
+.pr-price-amt small { font-family:'Inter',sans-serif; font-size:13px; font-weight:600; color:#6B7686; margin-left:4px; }
+.pr-price-founding { font-family:'Inter',sans-serif; font-size:13px; font-weight:700; color:#1a7a3c; }
+.pr-price-desc { font-family:'Inter',sans-serif; font-size:13.5px; line-height:1.55; color:#4A5568; margin:0; }
+.pr-price-list { font-family:'Inter',sans-serif; font-size:13px; color:#4A5568; margin:0; padding-left:18px; display:flex; flex-direction:column; gap:4px; }
+.pr-price-card .pr-btn { margin-top:auto; text-align:center; }
+.pr-coverage { font-family:'Inter',sans-serif; font-size:13.5px; line-height:1.55; color:#4A5568; margin-top:20px; max-width:720px; }
+.pr-coverage strong { color:#041E42; }
+@media (max-width:860px){ .pr-price-grid{ grid-template-columns:1fr; } }
+
 @media (max-width: 720px) {
   .pr-hero-inner { flex-direction: column; text-align: center; }
   .pr-hero-text { order: 2; }
@@ -119,8 +138,8 @@ body { background: #fff; margin: 0; }
       <h1 class="pr-h1">Your game, broken down the way a pro scout would.</h1>
       <p class="pr-sub">A personalized analytics report on your season — shot locations, zone entries, puck battles, and everything else that doesn't show up in the box score. We pair the model with direct video review, using tools such as InStat and FloHockey, and deliver it built to order.</p>
       <div class="pr-cta-row">
-        <a href="#pr-quote" class="pr-btn pr-btn-primary">Get a Quote</a>
-        <a href="#pr-examples" class="pr-btn pr-btn-ghost">See Examples</a>
+        <a href="#pr-quote" class="pr-btn pr-btn-primary">Check My Player</a>
+        <a href="#pr-pricing" class="pr-btn pr-btn-ghost">See Pricing</a>
       </div>
     </div>
     <div class="pr-hero-img-wrap">
@@ -168,6 +187,40 @@ body { background: #fff; margin: 0; }
   </div>
 </div>
 
+
+<div class="pr-section-wrap pr-pricing" id="pr-pricing">
+<div class="pr-section">
+  <div class="pr-section-label">Pricing</div>
+  <h2 class="pr-h2">Simple, upfront pricing</h2>
+  <p class="pr-p">One full season of tracked game data, percentile rankings against teammates at your position, shot and zone maps, and a written video assessment of your game. All prices in CAD.</p>
+  <div class="pr-founding"><span class="pr-founding-tag">Founding rate</span><span>Our first 20 players get <strong>$149 per card</strong> in exchange for an honest review once it's delivered.</span></div>
+  <div class="pr-price-grid">
+    <div class="pr-price-card featured">
+      <div class="pr-price-name">Single Player</div>
+      <div class="pr-price-amt">$200<small>per card</small></div>
+      <div class="pr-price-founding">Founding rate: $149</div>
+      <p class="pr-price-desc">A complete season report for one player. Built for players and families who want a clear picture of what to work on, and something to send to coaches and scouts.</p>
+      <a href="#pr-quote" class="pr-btn pr-btn-primary" data-package="Single player">Check my player</a>
+    </div>
+    <div class="pr-price-card">
+      <div class="pr-price-name">5-Player Pack</div>
+      <div class="pr-price-amt">$800<small>$160 per card</small></div>
+      <div class="pr-price-founding">Founding rate: $649</div>
+      <p class="pr-price-desc">Five cards for linemates, a defence group, or a few families splitting the cost. Players can be on the same team or different teams.</p>
+      <a href="#pr-quote" class="pr-btn pr-btn-ghost" style="color:#041E42;border-color:#041E42;" data-package="5-player pack">Get the 5-pack</a>
+    </div>
+    <div class="pr-price-card">
+      <div class="pr-price-name">Full Team</div>
+      <div class="pr-price-amt">$100<small>per player</small></div>
+      <div class="pr-price-founding">Founding rate: $75 per player</div>
+      <p class="pr-price-desc">A card for every player on the roster, goalies included, whatever the roster size (15 players minimum). Built for coaches who want a development plan for each player.</p>
+      <a href="#pr-quote" class="pr-btn pr-btn-ghost" style="color:#041E42;border-color:#041E42;" data-package="Full team">Talk team pricing</a>
+    </div>
+  </div>
+  <p class="pr-coverage"><strong>Is my player covered?</strong> Send a request and we'll confirm your player's league and season are covered within 24 hours, before you pay anything.</p>
+</div>
+</div>
+
 <div class="pr-section" style="padding-top:0;">
   <div class="pr-section-label">How It Works</div>
   <h2 class="pr-h2">From request to report</h2>
@@ -176,14 +229,14 @@ body { background: #fff; margin: 0; }
       <div class="pr-step-num"></div>
       <div>
         <div class="pr-step-title">Submit your request</div>
-        <div class="pr-step-desc">Tell us who the report is for and what league/level they play in — takes two minutes.</div>
+        <div class="pr-step-desc">Tell us who the report is for, their team and league — takes two minutes.</div>
       </div>
     </div>
     <div class="pr-step">
       <div class="pr-step-num"></div>
       <div>
-        <div class="pr-step-title">We confirm scope and quote</div>
-        <div class="pr-step-desc">We'll follow up by email with pricing and turnaround based on your specific request.</div>
+        <div class="pr-step-title">We confirm your player is covered</div>
+        <div class="pr-step-desc">Within 24 hours we check that your player's league and season are tracked, then email you to confirm and arrange payment. You don't pay until we've confirmed.</div>
       </div>
     </div>
     <div class="pr-step">
@@ -221,8 +274,8 @@ body { background: #fff; margin: 0; }
 
 <div class="pr-section pr-quote-section" id="pr-quote">
   <div class="pr-section-label">Get Started</div>
-  <h2 class="pr-h2">Request a quote</h2>
-  <p class="pr-p">Tell us a bit about who the report is for, and we'll follow up by email with pricing and next steps.</p>
+  <h2 class="pr-h2">Check my player</h2>
+  <p class="pr-p">Tell us who the card is for. We'll confirm their league and season are covered and follow up by email with next steps.</p>
 
   <form class="pr-form" id="pr-quote-form" action="https://formspree.io/f/xdenjobo" method="POST">
     <div class="pr-form-row">
@@ -254,12 +307,20 @@ body { background: #fff; margin: 0; }
       </div>
     </div>
     <div>
+      <label class="pr-label" for="pr-package">Package</label>
+      <select class="pr-select" id="pr-package" name="package">
+        <option>Single player</option>
+        <option>5-player pack</option>
+        <option>Full team</option>
+      </select>
+    </div>
+    <div>
       <label class="pr-label" for="pr-details">Anything else we should know?</label>
       <textarea class="pr-textarea" id="pr-details" name="details" placeholder="Timeline, specific games/season, or anything else useful for a quote"></textarea>
     </div>
-    <button type="submit" class="pr-btn pr-btn-primary pr-submit">Request Quote</button>
-    <div class="pr-form-note">We'll get back to you by email, typically within 1-2 business days. Prefer email? Write to <a href="mailto:blueprinthockeyanalytics@gmail.com">blueprinthockeyanalytics@gmail.com</a>. See our <a href="privacy.html">Privacy Policy</a> for how we handle your information.</div>
-    <div class="pr-success" id="pr-success">Thanks — your request is in. We'll follow up by email shortly.</div>
+    <button type="submit" class="pr-btn pr-btn-primary pr-submit">Check My Player</button>
+    <div class="pr-form-note">We'll confirm coverage by email within 24 hours. Prefer email? Write to <a href="mailto:blueprinthockeyanalytics@gmail.com">blueprinthockeyanalytics@gmail.com</a>. See our <a href="privacy.html">Privacy Policy</a> for how we handle your information.</div>
+    <div class="pr-success" id="pr-success">Thanks — your request is in. We'll confirm your player's coverage by email within 24 hours.</div>
   </form>
 </div>
 
@@ -278,7 +339,7 @@ body { background: #fff; margin: 0; }
   <img id="pr-lightbox-img" src="" alt="">
 </div>
 
-<script src="nav-search.js?v=2"></script>
+<script src="nav-search.js?v=3"></script>
 <script>
 fetch('nav.html').then(r => r.text()).then(html => {
   document.getElementById('nav-placeholder').innerHTML = html;
@@ -300,6 +361,12 @@ const TESTIMONIALS = [
     `<figcaption class="pr-t-who"><strong>${esc(t.name)}</strong>${esc(t.detail)}</figcaption></figure>`).join('');
   document.getElementById('pr-testimonials').hidden = false;
 })();
+
+// Pricing buttons preselect the package in the form
+document.querySelectorAll('[data-package]').forEach(a => a.addEventListener('click', () => {
+  const sel = document.getElementById('pr-package');
+  if (sel) sel.value = a.getAttribute('data-package');
+}));
 
 // Lightbox
 const lightbox = document.getElementById('pr-lightbox');
