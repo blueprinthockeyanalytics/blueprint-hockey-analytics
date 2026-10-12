@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jacob Fowler — Blueprint Hockey</title>
+<script src="../analytics.js" defer></script>
+<meta name="description" content="Jacob Fowler (MTL · G): +2.21 WAR in 2025-26, market value $2.3M. Player card from the Blueprint Hockey WAR model.">
+<meta property="og:type" content="profile">
+<meta property="og:site_name" content="Blueprint Hockey Analytics">
+<meta property="og:title" content="Jacob Fowler — Blueprint Hockey">
+<meta property="og:description" content="Jacob Fowler (MTL · G): +2.21 WAR in 2025-26, market value $2.3M. Player card from the Blueprint Hockey WAR model.">
+<meta property="og:url" content="https://blueprinthockeyanalytics.com/cards/8484170.html">
+<meta property="og:image" content="https://blueprinthockeyanalytics.com/assets/og-share.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@BlueprintHky">
+<meta name="twitter:title" content="Jacob Fowler — Blueprint Hockey">
+<meta name="twitter:description" content="Jacob Fowler (MTL · G): +2.21 WAR in 2025-26, market value $2.3M. Player card from the Blueprint Hockey WAR model.">
+<meta name="twitter:image" content="https://blueprinthockeyanalytics.com/assets/og-share.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #ffffff;
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  min-height: 100vh;
+}
+.card {
+  background: #fff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 760px;
+  overflow: hidden;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.10);
+}
+.header { background: #AF1E2D; position: relative; overflow: hidden; }
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, #001E62 0%, #001E62 100%);
+  z-index: 2;
+}
+.header-inner { display: flex; align-items: stretch; position: relative; z-index: 1; }
+.headshot-wrap {
+  flex-shrink: 0; width: 80px; height: 86px;
+  position: relative; overflow: hidden;
+  background: rgba(0,0,0,0.35); rgba(255,255,255,0);
+  border: 1px solid rgba(255,255,255,0.12); 
+  border-radius: 10px;
+  margin: 2px 0 8px 12px;
+}
+.headshot-wrap img {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: top 5%; display: block;
+}
+.header-info { flex: 1; min-width: 0; padding: 2px 10px 5px; }
+.player-name-row { display: flex; align-items: center; gap: 7px; flex-wrap: nowrap; min-width: 0; }
+.player-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; color: #fff; letter-spacing: -0.2px; line-height: 1.05; white-space: nowrap; overflow: hidden; flex: 0 1 auto; min-width: 0; }
+.jersey-number { font-size: 14px; font-weight: 700; color: #fff; white-space: nowrap; }
+.flag-img { width: 22px; height: 15px; border-radius: 2px; object-fit: cover; display: block; flex-shrink: 0; box-shadow: 0 0 0 1px rgba(255,255,255,0.25); }
+.header-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; margin-top: 6px; }
+.tag { font-size: 13px; font-weight: 600; padding: 3px 9px; border-radius: 20px; background: rgba(255,255,255,0.08); color: #fff; }
+.header-physical { display: flex; align-items: center; gap: 7px; margin-top: 7px; }
+.physical-text { font-size: 13px; font-weight: 500; color: #fff; }
+.war-box {
+  flex-shrink: 0; margin: 2px 10px 8px 0; padding: 2px 10px 8px;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.35);rgba(255,255,255,0);
+  border-radius: 10px;
+  display: flex; flex-direction: column; justify-content: flex-start; min-width: 78px;
+}
+.war-box-label { font-size: 13px; font-weight: 700; letter-spacing: 2px; color: #fff; text-transform: uppercase; }
+.war-box-value { font-family: 'Barlow Condensed', sans-serif; font-size: 34px; font-weight: 900; color: #fff; letter-spacing: -1px; line-height: 1; margin-top: 1px; }
+.war-box-gar { font-size: 13px; font-weight: 600; color: #fff; margin-top: 2px; }
+.body { padding: 0 12px 12px; position: relative; }
+.body-logo {
+  position: absolute; top: 38%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 525px; height: 525px;
+  object-fit: contain; opacity: 0.06;
+  pointer-events: none; z-index: 0;
+  filter: grayscale(1) contrast(1.5) brightness(0.55);
+}
+.body > *:not(.body-logo) { position: relative; z-index: 1; }
+.section-label { font-size: 9px; font-weight: 700; letter-spacing: 2px; color: #aaa; text-transform: uppercase; margin: 10px 0 6px; }
+.stat-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+.stat-box { background: #f5f6f8; border-radius: 7px; padding: 6px 4px; text-align: center; }
+.stat-val { font-family: 'Barlow Condensed', sans-serif; font-size: 19px; font-weight: 800; color: #041E42; letter-spacing: -0.3px; line-height: 1; }
+.stat-lbl { font-size: 8px; font-weight: 600; color: #aaa; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 2px; }
+.components { display: flex; flex-direction: column; gap: 5px; }
+.comp-row { display: flex; align-items: center; gap: 8px; }
+.comp-name { font-size: 11.5px; font-weight: 700; width: 88px; flex-shrink: 0; color: #041E42; white-space: nowrap; }
+.comp-name.na { color: #aaa; font-weight: 600; }
+.bar-track { flex: 1; height: 8px; background: #eef0f3; border-radius: 4px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 4px; transition: width 0.4s ease; }
+.bar-fill.green { background: #1a7a3c; } .bar-fill.red { background: #c0392b; } .bar-fill.amber { background: #E0A800; }
+.pct-badge { font-size: 13px; font-weight: 800; padding: 3px 9px; border-radius: 5px; min-width: 46px; text-align: center; flex-shrink: 0; }
+.pct-badge.green { background: #e8f5ee; color: #1a7a3c; }
+.pct-badge.red   { background: #fdecea; color: #c0392b; }
+.pct-badge.amber { background: #FFF4D1; color: #8A6100; }
+.pct-badge.na    { background: #f0f0f0; color: #aaa; font-weight: 600; }
+.chart-wrap { position: relative; height: 112px; margin-top: 2px; }
+canvas#careerChart { width: 100% !important; }
+.contract-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.contract-grid.nocontract { grid-template-columns: 1fr 2fr; }
+.contract-val.nc { font-size: 13px; letter-spacing: 0; padding-top: 1px; }
+.contract-box { background: #f5f6f8; border-radius: 7px; padding: 7px 8px; text-align: center; }
+.contract-val { font-size: 15px; font-weight: 800; color: #041E42; letter-spacing: -0.4px; line-height: 1; }
+.contract-lbl { font-size: 8px; font-weight: 600; color: #aaa; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 2px; }
+.value-row { margin-top: 6px; background: #e8f5ee; border-radius: 7px; padding: 7px 12px; display: flex; align-items: center; justify-content: space-between; }
+.value-row.over { background: #fdecea; }
+.value-delta { font-size: 18px; font-weight: 900; color: #1a7a3c; letter-spacing: -0.5px; }
+.value-row.over .value-delta { color: #c0392b; }
+.value-desc { font-size: 11px; font-weight: 600; color: #1a7a3c; }
+.value-row.over .value-desc { color: #c0392b; }
+.value-meta { font-size: 10px; color: #888; font-weight: 500; text-align: right; }
+.grade-chip { display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 54px; padding: 3px 8px; border-radius: 7px; background: #fff; }
+.grade-letter { font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 900; line-height: 1; }
+.grade-lbl { font-size: 7.5px; font-weight: 700; letter-spacing: 1.2px; color: #999; text-transform: uppercase; margin-top: 1px; }
+.grade-chip.a .grade-letter { color: #1a7a3c; } .grade-chip.b .grade-letter { color: #2f855a; }
+.grade-chip.c .grade-letter { color: #8A6100; } .grade-chip.d .grade-letter, .grade-chip.f .grade-letter { color: #c0392b; }
+.proj-grid { display: grid; gap: 4px; margin-top: 2px; }
+.proj-cell { background: #f5f6f8; border-radius: 6px; padding: 5px 2px; text-align: center; min-width: 0; }
+.proj-yr { font-size: 9px; font-weight: 800; color: #041E42; }
+.proj-age { font-size: 7.5px; font-weight: 600; color: #aaa; margin-top: 1px; }
+.proj-war { font-size: 13px; font-weight: 800; color: #041E42; margin-top: 3px; letter-spacing: -0.3px; }
+.proj-sp { font-size: 9px; font-weight: 700; margin-top: 2px; white-space: nowrap; }
+.proj-sp.pos { color: #1a7a3c; } .proj-sp.neg { color: #c0392b; }
+.proj-total { margin-top: 6px; font-size: 11px; font-weight: 600; color: #555; }
+.proj-total.pos b { color: #1a7a3c; } .proj-total.neg b { color: #c0392b; }
+.proj-next { margin-top: 4px; font-size: 11px; font-weight: 600; color: #555; }
+.proj-next b { color: #041E42; }
+.proj-note { margin-top: 4px; font-size: 8.5px; color: #aaa; line-height: 1.35; }
+.exporting .proj-wrap { display: none; }
+.brand-footer { margin-top: 10px; padding-top: 9px; border-top: 1px solid #eceef2; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.brand-left { display: flex; align-items: center; gap: 7px; }
+.brand-logo { width: 24px; height: 24px; border-radius: 5px; display: block; }
+.brand-name { font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 800; color: #041E42; letter-spacing: 0.6px; text-transform: uppercase; line-height: 1; white-space: nowrap; }
+.brand-name span { color: #3A9AD9; }
+.brand-right { text-align: right; white-space: nowrap; min-width: 0; }
+.brand-url { font-size: 10px; color: #041E42; font-weight: 700; }
+.brand-date { font-size: 9px; color: #999; font-weight: 500; margin-top: 1px; }
+
+/* ── Two complete cards, side by side ──────────────────────────────────── */
+.card-pair { display: flex; gap: 16px; max-width: 940px; width: 100%; align-items: flex-start; }
+.card-column { flex: 1; min-width: 0; max-width: 460px; }
+.card-column .card { max-width: none; }
+.card-toolbar { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 12px; }
+.fmt-toggle { flex-basis: 100%; display: flex; justify-content: center; }
+.fmt-btn { font-family: 'Inter', sans-serif; font-size: 11.5px; font-weight: 700; color: #5a6b82; background: #f5f6f8; border: 1px solid #dde1e7; padding: 5px 12px; cursor: pointer; }
+.fmt-btn:first-child { border-radius: 20px 0 0 20px; }
+.fmt-btn:last-child { border-radius: 0 20px 20px 0; border-left: 0; }
+.fmt-btn.on { background: #041E42; border-color: #041E42; color: #fff; }
+.fmt-btn:focus-visible { outline: 2px solid #3A9AD9; outline-offset: 2px; }
+.toolbar-btn {
+  font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700;
+  padding: 9px 18px; border-radius: 24px; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 7px;
+  border: 1.5px solid transparent;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+.toolbar-btn svg { display: block; }
+.toolbar-btn.primary { background: #041E42; color: #fff; box-shadow: 0 2px 8px rgba(4,30,66,0.22); }
+.toolbar-btn.primary:hover { background: #0a2e5c; box-shadow: 0 4px 14px rgba(4,30,66,0.32); transform: translateY(-1px); }
+.toolbar-btn.primary:active { transform: translateY(0); box-shadow: 0 2px 6px rgba(4,30,66,0.25); }
+.toolbar-btn.secondary { background: #fff; color: #041E42; border-color: #dde1e7; }
+.toolbar-btn.secondary:hover { background: #f5f6f8; border-color: #041E42; transform: translateY(-1px); }
+.toolbar-btn.secondary:active { transform: translateY(0); background: #eef0f3; }
+.pr-callout {
+  max-width: 940px; margin: 18px auto 0; padding: 14px 20px;
+  background: #f5f6f8; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  flex-wrap: wrap; text-align: center;
+}
+.pr-callout span { font-size: 12.5px; color: #4A5568; font-weight: 500; }
+.pr-callout a { font-size: 12.5px; font-weight: 700; color: #041E42; text-decoration: underline; }
+.card-column .card { margin: 0; }
+.card-badge {
+  background: #AF1E2D; color: #ffffff; text-align: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase;
+  padding: 7px 0;
+}
+
+@media (max-width: 720px) {
+  html:not(.embed-wide) body:not(.exporting *) { padding: 14px 10px; }
+  html:not(.embed-wide) .card-pair:not(.exporting *) { flex-direction: column; max-width: 460px; }
+  html:not(.embed-wide) .card-column:not(.exporting *) { max-width: 100%; }
+  html:not(.embed-wide) .header-inner:not(.exporting *) { flex-wrap: wrap; }
+  html:not(.embed-wide) .headshot-wrap:not(.exporting *) { width: 64px; height: 70px; margin: 8px 0 8px 10px; }
+  html:not(.embed-wide) .header-info:not(.exporting *) { padding: 10px 8px 6px; min-width: 0; }
+  html:not(.embed-wide) .name:not(.exporting *) { font-size: 18px; }
+  html:not(.embed-wide) .war-box:not(.exporting *) { margin: 8px 8px 8px 0; min-width: 66px; padding: 6px 8px; }
+  html:not(.embed-wide) .war-value:not(.exporting *) { font-size: 26px; }
+  html:not(.embed-wide) .stat-grid:not(.exporting *) { gap: 4px; }
+  html:not(.embed-wide) .stat-box:not(.exporting *) { padding: 5px 3px; }
+  html:not(.embed-wide) .stat-val:not(.exporting *) { font-size: 15px; }
+  html:not(.embed-wide) .stat-lbl:not(.exporting *) { font-size: 7px; }
+  html:not(.embed-wide) .body:not(.exporting *) { padding: 0 10px 10px; }
+  html:not(.embed-wide) .contract-grid:not(.exporting *) { gap: 5px; }
+  html:not(.embed-wide) .card-toolbar:not(.exporting *) { gap: 8px; }
+  html:not(.embed-wide) .toolbar-btn:not(.exporting *) { padding: 8px 14px; font-size: 12px; }
+  html:not(.embed-wide) .pr-callout:not(.exporting *) { padding: 12px 16px; margin-top: 14px; }
+  html:not(.embed-wide) .brand-logo:not(.exporting *) { width: 20px; height: 20px; }
+  html:not(.embed-wide) .brand-name:not(.exporting *) { font-size: 13px; }
+  html:not(.embed-wide) .brand-url:not(.exporting *) { font-size: 9.5px; }
+  html:not(.embed-wide) .brand-date:not(.exporting *) { font-size: 8.5px; }
+}
+/* Export-only layout (Save / Share images): bigger headshot; for X the card
+   body is laid out in two columns so it fills a 16:9 frame. */
+/* photo + WAR box rise into the season bar, so the dark header is shorter */
+.exporting .header { overflow: visible; }
+.exporting .header-inner { z-index: 3; }
+.exporting .headshot-wrap { width: 108px; height: 116px; margin: -26px 0 8px 12px; }
+.exporting .header-info { padding: 4px 12px 12px; }
+.exporting .jersey-number { font-size: 18px; }
+.exporting .flag-img { width: 28px; height: 19px; }
+.exporting .header-tags { gap: 6px; margin-top: 8px; }
+.exporting .tag { font-size: 16px; padding: 4px 11px; }
+.exporting .header-physical { margin-top: 9px; }
+.exporting .physical-text { font-size: 16px; }
+.exporting .war-box { margin: -26px 12px 8px 0; min-width: 96px; padding: 4px 12px 10px; }
+.exporting .war-box-label { font-size: 15px; }
+.exporting .war-box-value { font-size: 42px; }
+.exporting .war-box-gar { font-size: 15px; }
+/* team-logo watermark: kept inside the white body; bigger on Instagram,
+   smaller on the short X layout so it doesn't run into the header */
+.exporting .body { overflow: hidden; }
+.export-ig .body-logo { width: 700px; height: 700px; top: 46%; }
+.export-x .body-logo { width: 430px; height: 430px; top: 50%; }
+.export-x .body { display: grid; grid-template-columns: 1fr 1fr; column-gap: 22px; align-items: start; }
+.export-x .body > .xcol { min-width: 0; }
+
+/* Embed mode: compare.html shows one card per player with
+   cards/{id}.html#embed-season or #embed-career */
+html.embed body { min-height: 0; padding: 2px 2px 8px; }
+html.embed .pr-callout { display: none; }
+html.embed .card-pair { max-width: 460px; margin: 0 auto; }
+html.embed-season .col-career, html.embed-career .col-season { display: none; }
+</style>
+<script>
+(function() {
+  function applyEmbed() {
+    // #embed-season / #embed-career, plus "-wide" when the compare page is
+    // on a laptop: the card's frame is narrower than 720px, but it should
+    // still use the desktop card layout, not the phone one.
+    var m = (location.hash || '').match(/^#embed-(season|career)(-wide)?$/);
+    var c = document.documentElement.classList;
+    c.remove('embed', 'embed-season', 'embed-career', 'embed-wide');
+    if (m) { c.add('embed', 'embed-' + m[1]); if (m[2]) c.add('embed-wide'); }
+  }
+  applyEmbed();
+  window.addEventListener('hashchange', function() {
+    applyEmbed();
+    window.dispatchEvent(new Event('resize'));
+  });
+})();
+</script>
+</head>
+<body>
+
+<div class="card-pair">
+
+<div class="card-column col-season">
+<div class="card card-season" id="card-season" data-name="Jacob Fowler" data-sub="MTL · G · Age 21" data-war="+2.21" data-label="2025–26 Season" data-accent="#001E62">
+  <div class="card-badge">2025&ndash;26 Season</div>
+  <div class="header">
+    <div class="header-inner">
+      <div class="headshot-wrap">
+        <img src="https://assets.nhle.com/mugs/nhl/20242025/MTL/8484170.png" alt="Jacob Fowler"
+        onerror="(function(img){
+          var tries=[
+            'https://assets.nhle.com/mugs/nhl/20242025/MTL/8484170.png',
+            'https://assets.nhle.com/mugs/nhl/20232024/MTL/8484170.png',
+            'https://assets.nhle.com/mugs/nhl/20222023/MTL/8484170.png',
+            'https://assets.nhle.com/mugs/nhl/20232024/MTL/8484170.png',
+            'https://assets.nhle.com/mugs/nhl/20212022/MTL/8484170.png',
+            'https://assets.nhle.com/mugs/nhl/20202021/MTL/8484170.png',
+            'https://assets.nhle.com/mugs/nhl/20192020/MTL/8484170.png',
+          ];
+          var idx=parseInt(img.dataset.try||0);
+          img.dataset.try=idx+1;
+          if(idx<tries.length){img.src=tries[idx];}
+          else{img.style.background='#0E2A5A';img.style.opacity='0.5';}
+        })(this)">
+      </div>
+      <div class="header-info">
+        <div class="player-name-row">
+          <div class="player-name" style="font-size:21px">Jacob Fowler</div>
+          <span class="jersey-number">#32</span>
+          <img class="flag-img" src="https://flagcdn.com/w40/us.png" alt="USA">
+        </div>
+        <div class="header-tags">
+          <span class="tag">MTL</span>
+          <span class="tag">G</span>
+          <span class='tag'>Age 21</span>
+        </div>
+        <div class="header-physical">
+          <span class="physical-text">6'1" · 223 lbs</span>
+        </div>
+      </div>
+      <div class="war-box">
+        <div class="war-box-label">WAR</div>
+        <div class="war-box-value">+2.21</div>
+        <div class="war-box-gar">13.3 GAR</div>
+      </div>
+    </div>
+  </div>
+  <div class="body">
+    <img class="body-logo" src="../assets/logos/MTL_dark.svg" alt="">
+
+    <div class="section-label">Season Stats</div>
+    <div class="stat-grid">
+      <div class="stat-box"><div class="stat-val">17</div><div class="stat-lbl">GP</div></div>
+      <div class="stat-box"><div class="stat-val">.908</div><div class="stat-lbl">SV%</div></div>
+      <div class="stat-box"><div class="stat-val">.890</div><div class="stat-lbl">xSV%</div></div>
+      <div class="stat-box"><div class="stat-val">+8.3</div><div class="stat-lbl">GSAx</div></div>
+      <div class="stat-box"><div class="stat-val">.643</div><div class="stat-lbl">HD SV%</div></div>
+    </div>
+
+    <div class="section-label">Percentile vs. NHL Goalies</div>
+    <div class="components">
+      <div class="comp-row" title="+8.3 goals saved above expected">
+        <span class="comp-name good">Goals Saved</span>
+        <div class="bar-track"><div class="bar-fill green" style="width:97%"></div></div>
+        <span class="pct-badge green">97th</span>
+      </div>
+      <div class="comp-row">
+        <span class="comp-name bad">High-Danger</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:24%"></div></div>
+        <span class="pct-badge red">24th</span>
+      </div>
+      <div class="comp-row">
+        <span class="comp-name good">Medium-Danger</span>
+        <div class="bar-track"><div class="bar-fill green" style="width:76%"></div></div>
+        <span class="pct-badge green">76th</span>
+      </div>
+      <div class="comp-row">
+        <span class="comp-name good">Low-Danger</span>
+        <div class="bar-track"><div class="bar-fill green" style="width:100%"></div></div>
+        <span class="pct-badge green">100th</span>
+      </div>
+      <div class="comp-row" title="665 shots faced">
+        <span class="comp-name bad">Workload</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:2%"></div></div>
+        <span class="pct-badge red">2nd</span>
+      </div>
+    </div>
+
+    <div class="section-label">Career Arc &middot; WAR by Season</div>
+    <div class="chart-wrap">
+      <canvas id="careerChart-season"></canvas>
+    </div>
+
+        <div class="section-label">Contract</div>
+    <div class="contract-grid">
+      <div class="contract-box">
+        <div class="contract-val">$0.9M</div>
+        <div class="contract-lbl">AAV</div>
+      </div>
+      <div class="contract-box">
+        <div class="contract-val">2 yrs</div>
+        <div class="contract-lbl">Term Left</div>
+      </div>
+      <div class="contract-box">
+        <div class="contract-val">$2.3M</div>
+        <div class="contract-lbl">Market Value</div>
+      </div>
+    </div>
+    <div class="value-row">
+      <div>
+        <div class="value-delta">+$1.3M/yr</div>
+        <div class="value-desc">Under market value</div>
+      </div>
+      <div class="grade-chip b"><div class="grade-letter">B+</div><div class="grade-lbl">Grade</div></div>
+    </div>
+
+    <div class="brand-footer">
+      <div class="brand-left">
+        <img class="brand-logo" src="../assets/bp_logo_128.png" alt="" onerror="this.style.display='none'">
+        <div class="brand-name">Blue<span>print</span> Hockey</div>
+      </div>
+      <div class="brand-right">
+        <div class="brand-url">blueprinthockeyanalytics.com</div>
+        <div class="brand-date">Data thru 2025-26 &middot; Updated Oct 12, 2026</div>
+      </div>
+    </div>
+  </div>
+</div>
+  <div class="card-toolbar">
+    <div class="fmt-toggle" role="group" aria-label="Image size" data-for="card-season">
+      <button type="button" class="fmt-btn on" data-fmt="ig" aria-pressed="true">Instagram 4:5</button>
+      <button type="button" class="fmt-btn" data-fmt="x" aria-pressed="false">X 16:9</button>
+    </div>
+    <button class="toolbar-btn primary" onclick="shareCard('card-season', 'Jacob_Fowler_2025-26_Season')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a2 2 0 002 2h12a2 2 0 002-2v-7"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+      Share
+    </button>
+    <button class="toolbar-btn secondary" onclick="saveCard('card-season', 'Jacob_Fowler_2025-26_Season')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+      Save
+    </button>
+  </div>
+</div>
+
+<div class="card-column col-career">
+<div class="card card-career" id="card-career" data-name="Jacob Fowler" data-sub="MTL · G · Age 21" data-war="+0.94" data-label="3-Year Weighted" data-accent="#001E62">
+  <div class="card-badge">3-Year Weighted &middot; 2025-26</div>
+  <div class="header">
+    <div class="header-inner">
+      <div class="headshot-wrap">
+        <img src="https://assets.nhle.com/mugs/nhl/20242025/MTL/8484170.png" alt="Jacob Fowler"
+        onerror="(function(img){
+          var tries=[
+            'https://assets.nhle.com/mugs/nhl/20242025/MTL/8484170.png',
+            'https://assets.nhle.com/mugs/nhl/20232024/MTL/8484170.png',
+            'https://assets.nhle.com/mugs/nhl/20222023/MTL/8484170.png',
+            'https://assets.nhle.com/mugs/nhl/20232024/MTL/8484170.png',
+            'https://assets.nhle.com/mugs/nhl/20212022/MTL/8484170.png',
+            'https://assets.nhle.com/mugs/nhl/20202021/MTL/8484170.png',
+            'https://assets.nhle.com/mugs/nhl/20192020/MTL/8484170.png',
+          ];
+          var idx=parseInt(img.dataset.try||0);
+          img.dataset.try=idx+1;
+          if(idx<tries.length){img.src=tries[idx];}
+          else{img.style.background='#0E2A5A';img.style.opacity='0.5';}
+        })(this)">
+      </div>
+      <div class="header-info">
+        <div class="player-name-row">
+          <div class="player-name" style="font-size:21px">Jacob Fowler</div>
+          <span class="jersey-number">#32</span>
+          <img class="flag-img" src="https://flagcdn.com/w40/us.png" alt="USA">
+        </div>
+        <div class="header-tags">
+          <span class="tag">MTL</span>
+          <span class="tag">G</span>
+          <span class='tag'>Age 21</span>
+        </div>
+        <div class="header-physical">
+          <span class="physical-text">6'1" · 223 lbs</span>
+        </div>
+      </div>
+      <div class="war-box">
+        <div class="war-box-label">WAR</div>
+        <div class="war-box-value">+0.94</div>
+        <div class="war-box-gar">5.6 GAR</div>
+      </div>
+    </div>
+  </div>
+  <div class="body">
+    <img class="body-logo" src="../assets/logos/MTL_dark.svg" alt="">
+
+    <div class="section-label">Last 1 Seasons</div>
+    <div class="stat-grid">
+      <div class="stat-box"><div class="stat-val">17</div><div class="stat-lbl">Total GP</div></div>
+      <div class="stat-box"><div class="stat-val">.908</div><div class="stat-lbl">SV%</div></div>
+      <div class="stat-box"><div class="stat-val">.890</div><div class="stat-lbl">xSV%</div></div>
+      <div class="stat-box"><div class="stat-val">+8.3</div><div class="stat-lbl">GSAx</div></div>
+      <div class="stat-box"><div class="stat-val">+0.10</div><div class="stat-lbl">GSAx/100</div></div>
+    </div>
+
+    <div class="section-label">3-Year Percentile vs. NHL Goalies</div>
+    <div class="components">
+      <div class="comp-row" title="+8.3 goals saved above expected, last 3 seasons">
+        <span class="comp-name good">Goals Saved</span>
+        <div class="bar-track"><div class="bar-fill green" style="width:71%"></div></div>
+        <span class="pct-badge green">71st</span>
+      </div>
+      <div class="comp-row">
+        <span class="comp-name bad">High-Danger</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:35%"></div></div>
+        <span class="pct-badge red">35th</span>
+      </div>
+      <div class="comp-row">
+        <span class="comp-name good">Medium-Danger</span>
+        <div class="bar-track"><div class="bar-fill green" style="width:90%"></div></div>
+        <span class="pct-badge green">90th</span>
+      </div>
+      <div class="comp-row">
+        <span class="comp-name good">Low-Danger</span>
+        <div class="bar-track"><div class="bar-fill green" style="width:100%"></div></div>
+        <span class="pct-badge green">100th</span>
+      </div>
+      <div class="comp-row" title="665 shots faced, last 3 seasons">
+        <span class="comp-name bad">Workload</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:2%"></div></div>
+        <span class="pct-badge red">0th</span>
+      </div>
+    </div>
+
+    <div class="section-label">Career Arc &middot; WAR by Season</div>
+    <div class="chart-wrap">
+      <canvas id="careerChart-career"></canvas>
+    </div>
+
+        <div class="section-label">Contract</div>
+    <div class="contract-grid">
+      <div class="contract-box">
+        <div class="contract-val">$0.9M</div>
+        <div class="contract-lbl">AAV</div>
+      </div>
+      <div class="contract-box">
+        <div class="contract-val">2 yrs</div>
+        <div class="contract-lbl">Term Left</div>
+      </div>
+      <div class="contract-box">
+        <div class="contract-val">$2.3M</div>
+        <div class="contract-lbl">Market Value</div>
+      </div>
+    </div>
+    <div class="value-row">
+      <div>
+        <div class="value-delta">+$1.3M/yr</div>
+        <div class="value-desc">Under market value</div>
+      </div>
+      <div class="grade-chip b"><div class="grade-letter">B+</div><div class="grade-lbl">Grade</div></div>
+    </div>
+    
+    <div class="proj-wrap">
+      <div class="section-label">Contract Outlook &middot; Projected WAR &amp; Surplus</div>
+      <div class="proj-grid" style="grid-template-columns: repeat(2, 1fr);"><div class="proj-cell"><div class="proj-yr">26-27</div><div class="proj-age">Age 22</div><div class="proj-war">+1.6</div><div class="proj-sp pos">+$2.9M</div></div><div class="proj-cell"><div class="proj-yr">27-28</div><div class="proj-age">Age 23</div><div class="proj-war">+2.0</div><div class="proj-sp pos">+$4.5M</div></div></div>
+      <div class="proj-total pos">Projected value over the deal: <b>+$7.5M</b></div>
+      
+      <div class="proj-note">Projected from how 300+ NHL goalie careers aged since 2010-11, including injury and decline risk, on each season's salary cap.</div>
+    </div>
+
+    <div class="brand-footer">
+      <div class="brand-left">
+        <img class="brand-logo" src="../assets/bp_logo_128.png" alt="" onerror="this.style.display='none'">
+        <div class="brand-name">Blue<span>print</span> Hockey</div>
+      </div>
+      <div class="brand-right">
+        <div class="brand-url">blueprinthockeyanalytics.com</div>
+        <div class="brand-date">Data thru 2025-26 &middot; Updated Oct 12, 2026</div>
+      </div>
+    </div>
+  </div>
+</div>
+  <div class="card-toolbar">
+    <div class="fmt-toggle" role="group" aria-label="Image size" data-for="card-career">
+      <button type="button" class="fmt-btn on" data-fmt="ig" aria-pressed="true">Instagram 4:5</button>
+      <button type="button" class="fmt-btn" data-fmt="x" aria-pressed="false">X 16:9</button>
+    </div>
+    <button class="toolbar-btn primary" onclick="shareCard('card-career', 'Jacob_Fowler_3yr_weighted')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a2 2 0 002 2h12a2 2 0 002-2v-7"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+      Share
+    </button>
+    <button class="toolbar-btn secondary" onclick="saveCard('card-career', 'Jacob_Fowler_3yr_weighted')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+      Save
+    </button>
+  </div>
+</div>
+
+</div>
+
+<div class="pr-callout">
+  <span>Want a report like this built for your own player?</span>
+  <a href="../player-reports.html" target="_top">Get a Quote &rarr;</a>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.0.1/chartjs-plugin-annotation.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+function makeCareerChart(canvasId) {
+  const ctx = document.getElementById(canvasId).getContext('2d');
+  new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: ['25-26'],
+    datasets: [{
+      data: [2.21],
+      borderColor: '#041E42',
+      borderWidth: 2.5,
+      pointBackgroundColor: ['#F5C518'],
+      pointBorderColor: '#041E42',
+      pointBorderWidth: 2,
+      pointRadius: [6],
+      pointHoverRadius: 7,
+      fill: true,
+      backgroundColor: (ctx) => {
+        const g = ctx.chart.ctx.createLinearGradient(0,0,0,96);
+        g.addColorStop(0,'rgba(4,30,66,0.12)');
+        g.addColorStop(1,'rgba(4,30,66,0)');
+        return g;
+      },
+      tension: 0.35
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    layout: { padding: { top: 14, right: 6 } },
+    plugins: {
+      legend: { display: false },
+      annotation: {
+        clip: false,
+        annotations: {
+          zero: {
+            type: 'line',
+            yMin: 0, yMax: 0,
+            borderColor: 'rgba(0,0,0,0.18)',
+            borderWidth: 1,
+            borderDash: [4,3],
+          },
+          peak: {
+            type: 'label',
+            xValue: 0,
+            yValue: 2.21,
+            yAdjust: -15,
+            content: ['PEAK 2.2'],
+            color: '#9A6B00',
+            font: { size: 9, weight: '800', family: 'Inter' },
+            display: true
+          }
+        }
+      },
+      tooltip: {
+        backgroundColor: '#041E42',
+        titleColor: '#7AAAD8',
+        bodyColor: '#fff',
+        padding: 8,
+        callbacks: {
+          label: (c) => [true][c.dataIndex] ? ` ${c.raw} WAR · Career Best` : ` ${c.raw} WAR`
+        }
+      }
+    },
+    scales: {
+      x: {
+        grid: { display: false },
+        border: { display: false },
+        ticks: { font: { size: 10, weight: '600' }, color: '#aaa', maxRotation: 0, autoSkipPadding: 8 }
+      },
+      y: {
+        min: 0.0,
+        max: 3.0,
+        grid: { color: '#f0f0f3' },
+        border: { display: false },
+        title: { display: true, text: 'WAR', color: '#999', font: { size: 9, weight: '700' }, padding: 2 },
+        ticks: { font: { size: 10 }, color: '#999', stepSize: 1 }
+      }
+    }
+  }
+  });
+}
+makeCareerChart('careerChart-season');
+makeCareerChart('careerChart-career');
+
+// Report real height to the parent page (player.html listens for this but
+// nothing was ever sending it — the iframe was just using a fixed guess).
+// Small delay so charts/fonts/images finish affecting layout first.
+function reportHeight() {
+  if (window.parent && window.parent !== window) {
+    window.parent.postMessage({height: document.body.scrollHeight}, '*');
+  }
+}
+window.addEventListener('load', () => setTimeout(reportHeight, 300));
+setTimeout(reportHeight, 800);
+if (window.ResizeObserver) new ResizeObserver(() => reportHeight()).observe(document.body);</script>
+<script>
+// Long names: shrink to fit on one line (down to 15px); if still too long,
+// give the name its own full-width line (number + flag drop below it) and
+// shrink again down to 12px; only as a last resort let it wrap.
+function fitName(el) {
+  var base = parseFloat(el.dataset.baseSize || el.style.fontSize || getComputedStyle(el).fontSize);
+  el.dataset.baseSize = base;
+  var row = el.parentElement;
+  row.style.flexWrap = 'nowrap'; row.style.rowGap = '';
+  el.style.flexBasis = ''; el.style.whiteSpace = 'nowrap';
+  var size = base;
+  el.style.fontSize = size + 'px';
+  while (el.scrollWidth > el.clientWidth + 0.5 && size > 15) { size -= 0.5; el.style.fontSize = size + 'px'; }
+  if (el.scrollWidth > el.clientWidth + 0.5) {
+    row.style.flexWrap = 'wrap'; row.style.rowGap = '2px'; el.style.flexBasis = '100%';
+    size = Math.min(base, 18); el.style.fontSize = size + 'px';
+    while (el.scrollWidth > el.clientWidth + 0.5 && size > 12) { size -= 0.5; el.style.fontSize = size + 'px'; }
+    if (el.scrollWidth > el.clientWidth + 0.5) el.style.whiteSpace = 'normal';
+  }
+}
+(function() {
+  function fitNames() { document.querySelectorAll('.player-name').forEach(fitName); }
+  fitNames();
+  window.addEventListener('load', fitNames);
+  window.addEventListener('resize', fitNames);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitNames);
+})();
+</script>
+<script>
+// ── Share / Save — captures just the one card div (toolbar lives outside
+// it, so the buttons never end up in the image itself). Share uses the
+// device's native share sheet (Instagram, X, Messages, Save to Photos,
+// etc all show up there on mobile) — that's the realistic way to get a
+// card into those apps from a website; there's no way to bypass that
+// sheet and post directly without each platform's own developer/OAuth
+// approval, which is a different scope entirely. Save always just
+// downloads the PNG directly, which lands in Photos/gallery on most
+// phones automatically.
+const HANDLES = { ig: "@blueprinthockeyanalytics", x: "@BlueprintHky" };
+const BRAND_LOGO_SRC = "../assets/bp_logo_128.png";
+
+function loadImg(src) {
+  return new Promise(resolve => {
+    const im = new Image();
+    im.onload = () => resolve(im);
+    im.onerror = () => resolve(null);
+    im.src = src;
+    setTimeout(() => resolve(null), 3000);
+  });
+}
+
+// Renders ONE card to a canvas at a fixed layout width (so the export looks
+// the same from a phone or a desktop), then places it on a 1080x1350 (4:5)
+// branded Blueprint background -- the size Instagram/X show uncropped.
+async function captureCard(cardId, fmt) {
+  const original = document.getElementById(cardId);
+  const wrapper = document.createElement('div');
+  // Instagram: 610px wide card ~= 4:5; X: 960px, two columns ~= 16:9
+  wrapper.className = 'exporting ' + (fmt === 'x' ? 'export-x' : 'export-ig');
+  wrapper.style.cssText = `position:fixed; top:0; left:-10000px; width:${fmt === 'x' ? 960 : 610}px; background:transparent;`;
+  const clone = original.cloneNode(true);
+  clone.style.boxShadow = 'none';
+  wrapper.appendChild(clone);
+  document.body.appendChild(wrapper);
+  if (fmt === 'x') {
+    // left column: stats + percentiles; right column: career arc + contract
+    const body = clone.querySelector('.body');
+    const kids = Array.from(body.children).filter(k => !k.classList.contains('body-logo'));
+    let cut = kids.findIndex(k => k.classList.contains('section-label') && /career/i.test(k.textContent));
+    if (cut < 0) cut = Math.ceil(kids.length / 2);
+    const L = document.createElement('div'), R = document.createElement('div');
+    L.className = R.className = 'xcol';
+    kids.forEach((k, i) => (i < cut ? L : R).appendChild(k));
+    body.appendChild(L); body.appendChild(R);
+  }
+
+  // cloneNode() doesn't copy canvas pixels (the career arc) -- copy them.
+  const srcC = original.querySelectorAll('canvas'), dstC = clone.querySelectorAll('canvas');
+  srcC.forEach((src, i) => {
+    const dst = dstC[i]; if (!dst) return;
+    dst.width = src.width; dst.height = src.height;
+    dst.getContext('2d').drawImage(src, 0, 0);
+  });
+  // name 30% bigger in the saved image, then fit it to the export width
+  clone.querySelectorAll('.player-name').forEach(el => {
+    const base = parseFloat(el.dataset.baseSize || el.style.fontSize);
+    el.dataset.baseSize = Math.round(base * 1.3);
+    el.style.fontSize = el.dataset.baseSize + 'px';
+    fitName(el);
+  });
+  // Redraw the career arc at the export width (a copied bitmap would keep
+  // the on-screen width and leave the chart short of the card's edge).
+  const expCharts = [];
+  if (window.Chart && typeof makeCareerChart === 'function') {
+    const prevAnim = Chart.defaults.animation;
+    Chart.defaults.animation = false;
+    dstC.forEach((dst, i) => {
+      dst.id = 'export-chart-' + i + '-' + Date.now();
+      dst.removeAttribute('style'); dst.removeAttribute('width'); dst.removeAttribute('height');
+      try { makeCareerChart(dst.id); expCharts.push(Chart.getChart(dst)); } catch (e) {}
+    });
+    Chart.defaults.animation = prevAnim;
+  }
+  await Promise.all(Array.from(clone.querySelectorAll('img')).map(img => {
+    if (img.complete && img.naturalHeight !== 0) return Promise.resolve();
+    return new Promise(res => { img.onload = res; img.onerror = res; setTimeout(res, 3000); });
+  }));
+  // Team-logo watermark: html2canvas ignores CSS filters, so pre-draw the
+  // logo greyed out onto a canvas and swap that in for the capture.
+  const wm = clone.querySelector('.body-logo');
+  if (wm) await flattenWatermark(wm);
+  // html2canvas drops object-fit <img> in absolutely positioned wrappers --
+  // use a background-image for the headshot during capture.
+  // Headshot: html2canvas renders photos at low resolution and then blows
+  // them up (that was the blocky face in saved images), so leave it out of
+  // the capture and draw the photo onto the finished image ourselves at full
+  // quality, with the same framing as the CSS (whole photo, cover, top).
+  const cloneRect = clone.getBoundingClientRect();
+  const shots = [];
+  for (const wrap of clone.querySelectorAll('.headshot-wrap')) {
+    const img = wrap.querySelector('img');
+    if (!img || !img.src) continue;
+    const r = wrap.getBoundingClientRect(), cs = getComputedStyle(wrap);
+    shots.push({ x: r.left - cloneRect.left, y: r.top - cloneRect.top, W: r.width, H: r.height,
+                  b: parseFloat(cs.borderTopWidth) || 0, rad: parseFloat(cs.borderTopLeftRadius) || 0,
+                  src: img.currentSrc || img.src });
+    img.style.visibility = 'hidden';
+  }
+  let cardCanvas;
+  try {
+    cardCanvas = await html2canvas(clone, { scale: CAPTURE_SCALE, backgroundColor: null, useCORS: true });
+  } finally {
+    expCharts.forEach(c => c && c.destroy());
+    document.body.removeChild(wrapper);
+  }
+  const cg = cardCanvas.getContext('2d');
+  for (const h of shots) {
+    const im = await loadImg(h.src);
+    if (!im || !im.naturalWidth) continue;
+    cg.save();
+    cg.setTransform(CAPTURE_SCALE, 0, 0, CAPTURE_SCALE, 0, 0);   // html2canvas leaves its own scale set
+    cg.beginPath();
+    const x = h.x + h.b, y = h.y + h.b, w = h.W - 2 * h.b, hh = h.H - 2 * h.b, rr = Math.max(0, h.rad - h.b);
+    cg.roundRect ? cg.roundRect(x, y, w, hh, rr) : cg.rect(x, y, w, hh);
+    cg.clip();
+    cg.imageSmoothingEnabled = true; cg.imageSmoothingQuality = 'high';
+    // whole photo (head + jersey), zoomed 12% and shifted up 10% so the
+    // head sits near the top of the box
+    const sc = Math.max(h.W / im.naturalWidth, h.H / im.naturalHeight) * 1.12;
+    const iw = im.naturalWidth * sc, ih = im.naturalHeight * sc;
+    try { cg.drawImage(im, h.x + (h.W - iw) / 2, h.y - 0.10 * h.H, iw, ih); } catch (e) {}
+    cg.restore();
+  }
+  return fmt === 'x' ? composeX(cardCanvas, original.dataset) : composeIG(cardCanvas, original.dataset);
+}
+
+function getFmt(cardId) {
+  const on = document.querySelector(`.fmt-toggle[data-for="${cardId}"] .fmt-btn.on`);
+  return on ? on.dataset.fmt : 'ig';
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('.fmt-btn');
+  if (!b) return;
+  b.parentElement.querySelectorAll('.fmt-btn').forEach(x => {
+    x.classList.toggle('on', x === b); x.setAttribute('aria-pressed', String(x === b));
+  });
+});
+
+const DISPLAY = "'Barlow Condensed', 'Arial Narrow', sans-serif";
+function drawBackground(g, W, H) {
+  g.fillStyle = '#0B1F45'; g.fillRect(0, 0, W, H);
+  g.strokeStyle = 'rgba(122,170,216,0.09)'; g.lineWidth = 2;
+  for (let x = 0; x <= W; x += 90) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, H); g.stroke(); }
+  for (let y = 0; y <= H; y += 90) { g.beginPath(); g.moveTo(0, y); g.lineTo(W, y); g.stroke(); }
+}
+function drawWordmark(g, logo, x, top, size) {
+  // logo square + BLUE (solid) PRINT (outlined), baseline aligned to the logo
+  let tx = x;
+  if (logo) { g.drawImage(logo, x, top, size, size); tx = x + size * 1.25; }
+  const fs = Math.round(size * 0.84), base = top + size * 0.84;
+  g.textBaseline = 'alphabetic'; g.textAlign = 'left';
+  g.font = `900 ${fs}px ${DISPLAY}`;
+  g.fillStyle = '#FFFFFF'; g.fillText('BLUE', tx, base);
+  const bw = g.measureText('BLUE').width;
+  g.lineWidth = Math.max(2, size / 26); g.strokeStyle = '#5BB5EE';
+  g.strokeText('PRINT', tx + bw + 2, base);
+  return base;
+}
+function drawCard(g, cc, dx, dy, dw, dh) {
+  const r = 28;
+  g.imageSmoothingEnabled = true; g.imageSmoothingQuality = 'high';
+  g.save();
+  g.shadowColor = 'rgba(0,0,0,0.45)'; g.shadowBlur = 40; g.shadowOffsetY = 12;
+  g.beginPath(); g.roundRect ? g.roundRect(dx, dy, dw, dh, r) : g.rect(dx, dy, dw, dh);
+  g.fillStyle = '#FFFFFF'; g.fill();
+  g.restore();
+  g.save();
+  g.beginPath(); g.roundRect ? g.roundRect(dx, dy, dw, dh, r) : g.rect(dx, dy, dw, dh); g.clip();
+  g.drawImage(cc, dx, dy, dw, dh);
+  g.restore();
+}
+// Exports are drawn at 2x (Instagram 2160x2700, X 3200x1800): same 4:5 and
+// 16:9 shapes, twice the detail. All layout below is in 1x units.
+const EXPORT_SCALE = 2;
+const CAPTURE_SCALE = 4;   // card is rendered at 4x before being placed
+async function newCanvas(W, H) {
+  const out = document.createElement('canvas');
+  out.width = W * EXPORT_SCALE; out.height = H * EXPORT_SCALE;
+  out.getContext('2d').scale(EXPORT_SCALE, EXPORT_SCALE);
+  if (document.fonts && document.fonts.ready) { try { await document.fonts.ready; } catch (e) {} }
+  return out;
+}
+
+async function flattenWatermark(img) {
+  try {
+    const im = await loadImg(img.currentSrc || img.src);
+    if (!im) { img.remove(); return; }
+    const S = 1050, c = document.createElement('canvas');
+    c.width = S; c.height = S;
+    const g = c.getContext('2d');
+    const nw = im.naturalWidth || S, nh = im.naturalHeight || S;
+    const r = Math.min(S / nw, S / nh), w = nw * r, h = nh * r;
+    if ('filter' in g) g.filter = 'grayscale(1) contrast(1.5) brightness(0.55)';
+    g.drawImage(im, (S - w) / 2, (S - h) / 2, w, h);
+    const url = c.toDataURL('image/png');   // throws if the logo came from another site
+    await new Promise(res => { img.onload = res; img.onerror = res; img.src = url; setTimeout(res, 2000); });
+    img.style.filter = 'none';
+  } catch (e) {
+    img.remove();   // never let the watermark break an export
+  }
+}
+
+// PNG normally; if a 2x PNG would be over ~4.8 MB (X's photo limit is 5 MB),
+// fall back to a high-quality JPEG.
+function exportBlob(canvas) {
+  return new Promise(resolve => canvas.toBlob(png => {
+    if (png && png.size <= 4.8e6) return resolve({ blob: png, ext: '.png' });
+    canvas.toBlob(jpg => resolve({ blob: jpg || png, ext: jpg ? '.jpg' : '.png' }), 'image/jpeg', 0.95);
+  }, 'image/png'));
+}
+
+// Instagram: 1080x1350 (4:5). Slim brand bar on top, handle + site along
+// the bottom, the card fills everything else.
+async function composeIG(cc, meta) {
+  const W = 1080, H = 1350, M = 36, TOP = 70, BOT = 60;
+  const out = await newCanvas(W, H), g = out.getContext('2d');
+  drawBackground(g, W, H);
+  drawWordmark(g, await loadImg(BRAND_LOGO_SRC), M, 14, 44);
+  g.font = "700 17px Inter, sans-serif"; g.fillStyle = '#7AAAD8';
+  g.textAlign = 'right'; g.fillText('HOCKEY ANALYTICS', W - M, 46); g.textAlign = 'left';
+  const availW = W - 2 * M, availH = H - TOP - BOT;
+  const sc = Math.min(availW / cc.width, availH / cc.height);
+  const dw = cc.width * sc, dh = cc.height * sc;
+  drawCard(g, cc, (W - dw) / 2, TOP + (availH - dh) / 2, dw, dh);
+  g.font = "700 22px Inter, sans-serif"; g.fillStyle = '#FFFFFF';
+  g.fillText('blueprinthockeyanalytics.com', M, H - 22);
+  g.textAlign = 'right'; g.fillStyle = '#5BB5EE';
+  g.fillText(HANDLES.ig, W - M, H - 22); g.textAlign = 'left';
+  return out;
+}
+
+// X: 1600x900 (16:9). The card is rendered in a two-column landscape
+// layout so it fills the frame; slim brand bar on top, site underneath.
+async function composeX(cc, meta) {
+  const W = 1600, H = 900, M = 44, TOP = 72, BOT = 46;
+  const out = await newCanvas(W, H), g = out.getContext('2d');
+  drawBackground(g, W, H);
+  drawWordmark(g, await loadImg(BRAND_LOGO_SRC), M, 14, 44);
+  g.font = "700 26px Inter, sans-serif"; g.fillStyle = '#5BB5EE';
+  g.textAlign = 'right'; g.fillText(HANDLES.x, W - M, 48); g.textAlign = 'left';
+  const availW = W - 2 * M, availH = H - TOP - BOT;
+  const sc = Math.min(availW / cc.width, availH / cc.height);
+  const dw = cc.width * sc, dh = cc.height * sc;
+  drawCard(g, cc, (W - dw) / 2, TOP + (availH - dh) / 2, dw, dh);
+  g.font = "600 20px Inter, sans-serif"; g.fillStyle = 'rgba(255,255,255,0.85)';
+  g.textAlign = 'center'; g.fillText('blueprinthockeyanalytics.com', W / 2, H - 16); g.textAlign = 'left';
+  return out;
+}
+
+function downloadBlob(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+async function shareCard(cardId, filenameBase) {
+  const fmt = getFmt(cardId);
+  filenameBase += fmt === 'x' ? '_X' : '_Instagram';
+  try {
+    const canvas = await captureCard(cardId, fmt);
+    const { blob, ext } = await exportBlob(canvas);
+    const file = new File([blob], filenameBase + ext, { type: blob.type });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({ files: [file], title: 'Blueprint Hockey' });
+        return;
+      } catch (shareErr) {
+        if (shareErr.name === 'AbortError') return; // user cancelled, not an error
+      }
+    }
+    // Web Share with files isn't supported here (mostly desktop) -- download instead
+    downloadBlob(blob, filenameBase + ext);
+  } catch (e) {
+    console.error('Share failed', e);
+    alert('Could not generate image for sharing.');
+  }
+}
+
+async function saveCard(cardId, filenameBase) {
+  const fmt = getFmt(cardId);
+  filenameBase += fmt === 'x' ? '_X' : '_Instagram';
+  try {
+    const canvas = await captureCard(cardId, fmt);
+    const { blob, ext } = await exportBlob(canvas);
+    downloadBlob(blob, filenameBase + ext);
+  } catch (e) {
+    console.error('Save failed', e);
+    alert('Could not generate image.');
+  }
+}
+</script>
+</body>
+</html>
