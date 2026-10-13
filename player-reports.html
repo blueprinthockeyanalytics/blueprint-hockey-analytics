@@ -365,7 +365,7 @@ body { background: #fff; margin: 0; }
   <img id="pr-lightbox-img" src="" alt="">
 </div>
 
-<script src="nav-search.js?v=5"></script>
+<script src="nav-search.js?v=6"></script>
 <script>
 fetch('nav.html').then(r => r.text()).then(html => {
   document.getElementById('nav-placeholder').innerHTML = html;
@@ -379,7 +379,7 @@ fetch('nav.html').then(r => r.text()).then(html => {
 // not be named. Only use quotes people actually gave you, with their permission.
 const TESTIMONIALS = [
   { quote: "Without knowing the numbers, the card seems very representative of his game, both strengths and areas to improve. Whether analytics or the eye test, a realistic evaluation has areas to improve for any player. Important to recognize it, state it, and then go to work on it!",
-    name: "Amateur Scout", detail: "NHL organization" },
+    name: "NHL Amateur Scout", detail: "" },
 ];
 (function renderTestimonials() {
   if (!TESTIMONIALS.length) return;

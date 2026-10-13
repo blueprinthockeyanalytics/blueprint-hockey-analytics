@@ -32,7 +32,8 @@
 .bar-val { font-size: 12px; font-weight: 700; font-family: 'Barlow Condensed', sans-serif; width: 50px; text-align: right; flex-shrink: 0; }
 
 .roster-table-wrap { background: var(--white); border-radius: 12px; box-shadow: var(--shadow); overflow: hidden; }
-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed; }   /* (Oct 13) skater + goalie tables share column widths */
+td .player-name { overflow: hidden; text-overflow: ellipsis; }
 thead { background: var(--navy); }
 th { padding: 10px 12px; text-align: left; font-size: 10px; font-weight: 700; letter-spacing: 1px; color: var(--muted-dk); text-transform: uppercase; white-space: nowrap; }
 th.num { text-align: right; }
@@ -86,7 +87,7 @@ td.num { text-align: right; font-variant-numeric: tabular-nums; }
 
 <div class="team-hero" id="team-hero" style="background: var(--navy);">
   <div class="team-hero-inner">
-    <a href="teams.html" class="bp-back" style="position:absolute; top:-16px; left:0;">&larr; All teams</a>
+    <a href="teams.html" class="bp-back" style="position:absolute; top:-16px; left:0;" onclick="return bpBackTo('teams.html')">&larr; All teams</a>
     <img class="team-hero-logo" id="team-logo-img" src="" alt="">
     <div>
       <div class="team-hero-name" id="team-name">Loading&hellip;</div>
@@ -113,9 +114,10 @@ td.num { text-align: right; font-variant-numeric: tabular-nums; }
 
   <div class="roster-table-wrap">
     <table>
+      <colgroup><col style="width:44px"><col style="width:24%"><col span="9"></colgroup>
       <thead>
         <tr>
-          <th style="width:36px">#</th>
+          <th>#</th>
           <th>Player</th>
           <th class="num">GP</th>
           <th class="num">PTS</th>
@@ -136,17 +138,20 @@ td.num { text-align: right; font-variant-numeric: tabular-nums; }
 
   <div class="roster-table-wrap" id="goalie-wrap" style="margin-top:20px; display:none;">
     <table>
+      <colgroup><col style="width:44px"><col style="width:24%"><col span="9"></colgroup>
       <thead>
         <tr>
-          <th style="width:36px">#</th>
+          <th>#</th>
           <th>Goalie</th>
           <th class="num">GP</th>
-          <th class="num">SV%</th>
-          <th class="num" title="Save % an average goalie would have had on the same shots">xSV%</th>
+          <th class="num" title="Save percentage">SV%</th>
+          <th class="num">WAR</th>
           <th class="num" title="Goals saved above expected">GSAx</th>
           <th class="num" title="Goals saved above expected per 100 shots">GSAx/100</th>
+          <th class="num" title="Goals saved above expected on high-danger shots">HD GSAx</th>
+          <th class="num" title="Goals saved above expected on medium-danger shots">MD GSAx</th>
+          <th class="num" title="Goals saved above expected on low-danger shots">LD GSAx</th>
           <th class="num" title="Save % on high-danger chances">HD SV%</th>
-          <th class="num">WAR</th>
         </tr>
       </thead>
       <tbody id="goalie-body"></tbody>
@@ -164,7 +169,7 @@ td.num { text-align: right; font-variant-numeric: tabular-nums; }
   <div class="bp-footer-legal"><a href="mailto:blueprinthockeyanalytics@gmail.com">blueprinthockeyanalytics@gmail.com</a> &middot; <a href="privacy.html">Privacy Policy</a></div>
 </div>
 
-<script src="nav-search.js?v=5"></script>
+<script src="nav-search.js?v=6"></script>
 <script>
 fetch('nav.html').then(r => r.text()).then(html => {
   document.getElementById('nav-placeholder').innerHTML = html;
@@ -186,6 +191,16 @@ const TEAM_BG = {
   EDM:'#041E42', TOR:'#00205B', MTL:'#1A0308', COL:'#1A0008', BOS:'#1A0F00',
   TBL:'#00112B', NYR:'#001060', VGK:'#1A1300', CAR:'#1A0000', DAL:'#001F15',
 };
+
+// (Oct 13) goalie numbers use the same coloured pills as the skater WAR parts
+function gPill(v, hi, mid, d) {
+  if (typeof v !== 'number' || isNaN(v)) return '<span class="comp na">N/A</span>';
+  const cls = v >= hi ? 'high' : v >= mid ? 'mid' : v >= -mid ? 'neu' : 'low';
+  return `<span class="comp ${cls}">${v >= 0 ? '+' : ''}${v.toFixed(d)}</span>`;
+}
+const fmtGsaxTot  = v => gPill(v, 8, 2, 1);      // season / 3-yr GSAx
+const fmtGsaxZone = v => gPill(v, 4, 1, 1);      // GSAx on high / mid / low danger shots
+const fmtGsax100  = v => gPill(v, 0.6, 0.2, 2);  // per 100 shots
 
 function getParam(name) {
   return new URLSearchParams(window.location.search).get(name);
@@ -228,7 +243,8 @@ async function loadTeamPage() {
           .filter(r => Number(r.season) === maxSeason && r.team === team)
           .map(r => ({ playerId: r.goalie_id, name: r.name, position: 'G', gp: Number(r.gp),
                        sv: Number(r.sv_pct), xsv: Number(r.xsv_pct), gsax: Number(r.gsax),
-                       gsax100: Number(r.gsax_per100), hdsv: Number(r.hd_sv_pct), WAR: Number(r.WAR) }))
+                       gsax100: Number(r.gsax_per100), hdsv: Number(r.hd_sv_pct), WAR: Number(r.WAR),
+                       hdg: Number(r.hd_gsax), mdg: Number(r.md_gsax), ldg: Number(r.ld_gsax) }))
           .sort((a, b) => b.gp - a.gp);
       }
     } catch (e) { goalies = []; }
@@ -297,11 +313,13 @@ async function loadTeamPage() {
       </div></div></td>
       <td class="num">${r.gp || '\u2014'}</td>
       <td class="num">${sv(r.sv)}</td>
-      <td class="num" style="color:var(--muted);">${sv(r.xsv)}</td>
-      <td class="num"><span class="gsax ${r.gsax >= 0 ? 'pos' : 'neg'}">${sg(r.gsax, 1)}</span></td>
-      <td class="num">${sg(r.gsax100, 2)}</td>
-      <td class="num">${sv(r.hdsv)}</td>
       <td class="num"><span class="war-val ${r.WAR>=0?'pos':'neg'}">${sg(r.WAR, 2)}</span></td>
+      <td class="num">${fmtGsaxTot(r.gsax)}</td>
+      <td class="num">${fmtGsax100(r.gsax100)}</td>
+      <td class="num">${fmtGsaxZone(r.hdg)}</td>
+      <td class="num">${fmtGsaxZone(r.mdg)}</td>
+      <td class="num">${fmtGsaxZone(r.ldg)}</td>
+      <td class="num">${sv(r.hdsv)}</td>
     </tr>`).join('');
     document.getElementById('goalie-wrap').style.display = '';
   }

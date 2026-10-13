@@ -177,6 +177,18 @@ function bpStateSet(obj) {
     try { history.replaceState(history.state, '', url); } catch (e) { /* file:// etc. */ }
   }
 }
+// "Back to list" links: if the visitor came from that page on this site,
+// go Back (keeps their sort/scroll); otherwise follow the link normally.
+function bpBackTo(page) {
+  try {
+    const ref = document.referrer ? new URL(document.referrer) : null;
+    if (ref && ref.origin === window.location.origin && ref.pathname.endsWith('/' + page) && history.length > 1) {
+      history.back();
+      return false;
+    }
+  } catch (e) {}
+  return true;
+}
 function bpRememberView() {
   if (window._bpRemembering) return;
   window._bpRemembering = true;
