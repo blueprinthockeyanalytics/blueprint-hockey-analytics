@@ -47,7 +47,7 @@ body {
   background: linear-gradient(90deg, #CE1126 0%, #CE1126 100%);
   z-index: 2;
 }
-.header-inner { display: flex; align-items: stretch; position: relative; z-index: 1; }
+.header-inner { display: flex; align-items: stretch; position: relative; z-index: 1; padding-bottom: 6px; }   /* (Oct 12) clears the 6px colour line so the gap under photo/WAR box shows */
 .headshot-wrap {
   flex-shrink: 0; width: 80px; height: 86px;
   position: relative; overflow: hidden;
@@ -75,7 +75,8 @@ body {
   text-align: center;
   border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.35);rgba(255,255,255,0);
   border-radius: 10px;
-  display: flex; flex-direction: column; justify-content: flex-start; min-width: 78px;
+  display: flex; flex-direction: column; justify-content: center; min-width: 78px;
+  align-self: flex-start; height: 86px; box-sizing: border-box;   /* (Oct 12) lines up with the headshot */
 }
 .war-box-label { font-size: 13px; font-weight: 700; letter-spacing: 2px; color: #fff; text-transform: uppercase; }
 .war-box-value { font-family: 'Barlow Condensed', sans-serif; font-size: 34px; font-weight: 900; color: #fff; letter-spacing: -1px; line-height: 1; margin-top: 1px; }
@@ -85,19 +86,19 @@ body {
   position: absolute; top: 38%; left: 50%;
   transform: translate(-50%, -50%);
   width: 525px; height: 525px;
-  object-fit: contain; opacity: 0.06;
+  object-fit: contain; opacity: 0.10;   /* (Oct 12) was 0.06 -- a bit more visible */
   pointer-events: none; z-index: 0;
   filter: grayscale(1) contrast(1.5) brightness(0.55);
 }
 .body > *:not(.body-logo) { position: relative; z-index: 1; }
-.section-label { font-size: 9px; font-weight: 700; letter-spacing: 2px; color: #aaa; text-transform: uppercase; margin: 10px 0 6px; }
+.section-label { font-size: 10.5px; font-weight: 700; letter-spacing: 2px; color: #aaa; text-transform: uppercase; margin: 10px 0 6px; }
 .stat-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
 .stat-box { background: #f5f6f8; border-radius: 7px; padding: 6px 4px; text-align: center; }
 .stat-val { font-family: 'Barlow Condensed', sans-serif; font-size: 19px; font-weight: 800; color: #041E42; letter-spacing: -0.3px; line-height: 1; }
-.stat-lbl { font-size: 8px; font-weight: 600; color: #aaa; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 2px; }
+.stat-lbl { font-size: 9.5px; font-weight: 600; color: #aaa; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 2px; }
 .components { display: flex; flex-direction: column; gap: 5px; }
 .comp-row { display: flex; align-items: center; gap: 8px; }
-.comp-name { font-size: 11.5px; font-weight: 700; width: 88px; flex-shrink: 0; color: #041E42; white-space: nowrap; }
+.comp-name { font-size: 12.5px; font-weight: 700; width: 100px; flex-shrink: 0; color: #041E42; white-space: nowrap; }
 .comp-name.na { color: #aaa; font-weight: 600; }
 .bar-track { flex: 1; height: 8px; background: #eef0f3; border-radius: 4px; overflow: hidden; }
 .bar-fill { height: 100%; border-radius: 4px; transition: width 0.4s ease; }
@@ -198,12 +199,12 @@ canvas#careerChart { width: 100% !important; }
   html:not(.embed-wide) .headshot-wrap:not(.exporting *) { width: 64px; height: 70px; margin: 8px 0 8px 10px; }
   html:not(.embed-wide) .header-info:not(.exporting *) { padding: 10px 8px 6px; min-width: 0; }
   html:not(.embed-wide) .name:not(.exporting *) { font-size: 18px; }
-  html:not(.embed-wide) .war-box:not(.exporting *) { margin: 8px 8px 8px 0; min-width: 66px; padding: 6px 8px; }
+  html:not(.embed-wide) .war-box:not(.exporting *) { margin: 8px 8px 8px 0; min-width: 66px; padding: 3px 8px; height: 70px; }
   html:not(.embed-wide) .war-value:not(.exporting *) { font-size: 26px; }
   html:not(.embed-wide) .stat-grid:not(.exporting *) { gap: 4px; }
   html:not(.embed-wide) .stat-box:not(.exporting *) { padding: 5px 3px; }
   html:not(.embed-wide) .stat-val:not(.exporting *) { font-size: 15px; }
-  html:not(.embed-wide) .stat-lbl:not(.exporting *) { font-size: 7px; }
+  html:not(.embed-wide) .stat-lbl:not(.exporting *) { font-size: 8.5px; }
   html:not(.embed-wide) .body:not(.exporting *) { padding: 0 10px 10px; }
   html:not(.embed-wide) .contract-grid:not(.exporting *) { gap: 5px; }
   html:not(.embed-wide) .card-toolbar:not(.exporting *) { gap: 8px; }
@@ -227,7 +228,7 @@ canvas#careerChart { width: 100% !important; }
 .exporting .tag { font-size: 16px; padding: 4px 11px; }
 .exporting .header-physical { margin-top: 9px; }
 .exporting .physical-text { font-size: 16px; }
-.exporting .war-box { margin: -26px 12px 8px 0; min-width: 96px; padding: 4px 12px 10px; }
+.exporting .war-box { margin: -26px 12px 8px 0; min-width: 96px; padding: 4px 12px 6px; height: 116px; }
 .exporting .war-box-label { font-size: 15px; }
 .exporting .war-box-value { font-size: 42px; }
 .exporting .war-box-gar { font-size: 15px; }
@@ -395,7 +396,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="brand-right">
         <div class="brand-url">blueprinthockeyanalytics.com</div>
-        <div class="brand-date">Data thru 2025-26 &middot; Updated Oct 12, 2026</div>
+        <div class="brand-date">Data thru 2025-26 &middot; Updated Oct 13, 2026</div>
       </div>
     </div>
   </div>
@@ -550,7 +551,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="brand-right">
         <div class="brand-url">blueprinthockeyanalytics.com</div>
-        <div class="brand-date">Data thru 2025-26 &middot; Updated Oct 12, 2026</div>
+        <div class="brand-date">Data thru 2025-26 &middot; Updated Oct 13, 2026</div>
       </div>
     </div>
   </div>
@@ -628,6 +629,7 @@ function makeCareerChart(canvasId) {
             xValue: 2,
             yValue: 0.02,
             yAdjust: -15,
+            xAdjust: -16,
             content: ['PEAK 0.0'],
             color: '#9A6B00',
             font: { size: 9, weight: '800', family: 'Inter' },
@@ -649,7 +651,7 @@ function makeCareerChart(canvasId) {
       x: {
         grid: { display: false },
         border: { display: false },
-        ticks: { font: { size: 10, weight: '600' }, color: '#aaa', maxRotation: 0, autoSkipPadding: 8 }
+        ticks: { font: { size: 11, weight: '600' }, color: '#aaa', maxRotation: 0, autoSkipPadding: 8 }
       },
       y: {
         min: -0.5,
@@ -657,7 +659,7 @@ function makeCareerChart(canvasId) {
         grid: { color: '#f0f0f3' },
         border: { display: false },
         title: { display: true, text: 'WAR', color: '#999', font: { size: 9, weight: '700' }, padding: 2 },
-        ticks: { font: { size: 10 }, color: '#999', stepSize: 1 }
+        ticks: { font: { size: 11 }, color: '#999', stepSize: 1 }
       }
     }
   }
