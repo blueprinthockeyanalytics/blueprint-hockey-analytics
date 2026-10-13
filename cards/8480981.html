@@ -5,17 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Joel Hofer — Blueprint Hockey</title>
 <script src="../analytics.js" defer></script>
-<meta name="description" content="Joel Hofer (STL · G): +4.32 WAR in 2025-26, market value $5.3M. Player card from the Blueprint Hockey WAR model.">
+<meta name="description" content="Joel Hofer (STL · G): +3.89 WAR in 2025-26, market value $5.4M. Player card from the Blueprint Hockey WAR model.">
 <meta property="og:type" content="profile">
 <meta property="og:site_name" content="Blueprint Hockey Analytics">
 <meta property="og:title" content="Joel Hofer — Blueprint Hockey">
-<meta property="og:description" content="Joel Hofer (STL · G): +4.32 WAR in 2025-26, market value $5.3M. Player card from the Blueprint Hockey WAR model.">
+<meta property="og:description" content="Joel Hofer (STL · G): +3.89 WAR in 2025-26, market value $5.4M. Player card from the Blueprint Hockey WAR model.">
 <meta property="og:url" content="https://blueprinthockeyanalytics.com/cards/8480981.html">
 <meta property="og:image" content="https://blueprinthockeyanalytics.com/assets/og-share.png">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="@BlueprintHky">
 <meta name="twitter:title" content="Joel Hofer — Blueprint Hockey">
-<meta name="twitter:description" content="Joel Hofer (STL · G): +4.32 WAR in 2025-26, market value $5.3M. Player card from the Blueprint Hockey WAR model.">
+<meta name="twitter:description" content="Joel Hofer (STL · G): +3.89 WAR in 2025-26, market value $5.4M. Player card from the Blueprint Hockey WAR model.">
 <meta name="twitter:image" content="https://blueprinthockeyanalytics.com/assets/og-share.png">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -86,9 +86,8 @@ body {
   position: absolute; top: 38%; left: 50%;
   transform: translate(-50%, -50%);
   width: 525px; height: 525px;
-  object-fit: contain; opacity: 0.10;   /* (Oct 12) was 0.06 -- a bit more visible */
+  object-fit: contain; opacity: 0.09;   /* (Oct 13) team colours, not grey */
   pointer-events: none; z-index: 0;
-  filter: grayscale(1) contrast(1.5) brightness(0.55);
 }
 .body > *:not(.body-logo) { position: relative; z-index: 1; }
 .section-label { font-size: 10.5px; font-weight: 700; letter-spacing: 2px; color: #aaa; text-transform: uppercase; margin: 10px 0 6px; }
@@ -96,9 +95,11 @@ body {
 .stat-box { background: #f5f6f8; border-radius: 7px; padding: 6px 4px; text-align: center; }
 .stat-val { font-family: 'Barlow Condensed', sans-serif; font-size: 19px; font-weight: 800; color: #041E42; letter-spacing: -0.3px; line-height: 1; }
 .stat-lbl { font-size: 9.5px; font-weight: 600; color: #aaa; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 2px; }
-.components { display: flex; flex-direction: column; gap: 5px; }
-.comp-row { display: flex; align-items: center; gap: 8px; }
-.comp-name { font-size: 12.5px; font-weight: 700; width: 100px; flex-shrink: 0; color: #041E42; white-space: nowrap; }
+/* (Oct 13) label column is exactly as wide as the longest label, so the bars
+   start right after the words instead of after a fixed 100px */
+.components { display: grid; grid-template-columns: max-content minmax(0, 1fr) auto; column-gap: 10px; row-gap: 5px; align-items: center; }
+.comp-row { display: contents; }
+.comp-name { font-size: 12.5px; font-weight: 700; color: #041E42; white-space: nowrap; }
 .comp-name.na { color: #aaa; font-weight: 600; }
 .bar-track { flex: 1; height: 8px; background: #eef0f3; border-radius: 4px; overflow: hidden; }
 .bar-fill { height: 100%; border-radius: 4px; transition: width 0.4s ease; }
@@ -271,7 +272,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
 <div class="card-pair">
 
 <div class="card-column col-season">
-<div class="card card-season" id="card-season" data-name="Joel Hofer" data-sub="STL · G · Age 26" data-war="+4.32" data-label="2025–26 Season" data-accent="#FCB514">
+<div class="card card-season" id="card-season" data-name="Joel Hofer" data-sub="STL · G · Age 26" data-war="+3.89" data-label="2025–26 Season" data-accent="#FCB514">
   <div class="card-badge">2025&ndash;26 Season</div>
   <div class="header">
     <div class="header-inner">
@@ -310,13 +311,13 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="war-box">
         <div class="war-box-label">WAR</div>
-        <div class="war-box-value">+4.32</div>
-        <div class="war-box-gar">26.0 GAR</div>
+        <div class="war-box-value">+3.89</div>
+        <div class="war-box-gar">23.4 GAR</div>
       </div>
     </div>
   </div>
   <div class="body">
-    <img class="body-logo" src="../assets/logos/STL_dark.svg" alt="">
+    <img class="body-logo" src="../assets/logos/STL_light.svg" alt="">
 
     <div class="section-label">Season Stats</div>
     <div class="stat-grid">
@@ -330,7 +331,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
     <div class="section-label">Percentile vs. NHL Goalies</div>
     <div class="components">
       <div class="comp-row" title="+11.4 goals saved above expected">
-        <span class="comp-name good">Goals Saved</span>
+        <span class="comp-name good" title="+11.4 goals saved above expected">Goals Saved</span>
         <div class="bar-track"><div class="bar-fill green" style="width:77%"></div></div>
         <span class="pct-badge green">77th</span>
       </div>
@@ -350,7 +351,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
         <span class="pct-badge amber">67th</span>
       </div>
       <div class="comp-row" title="1935 shots faced">
-        <span class="comp-name good">Workload</span>
+        <span class="comp-name good" title="1935 shots faced">Workload</span>
         <div class="bar-track"><div class="bar-fill green" style="width:70%"></div></div>
         <span class="pct-badge green">70th</span>
       </div>
@@ -364,7 +365,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
     <div class="section-label">Contract</div>
     <div class="contract-grid nocontract">
       <div class="contract-box">
-        <div class="contract-val">$5.3M</div>
+        <div class="contract-val">$5.4M</div>
         <div class="contract-lbl">Market Value</div>
       </div>
       <div class="contract-box">
@@ -402,7 +403,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
 </div>
 
 <div class="card-column col-career">
-<div class="card card-career" id="card-career" data-name="Joel Hofer" data-sub="STL · G · Age 26" data-war="+2.15" data-label="3-Year Weighted" data-accent="#FCB514">
+<div class="card card-career" id="card-career" data-name="Joel Hofer" data-sub="STL · G · Age 26" data-war="+1.82" data-label="3-Year Weighted" data-accent="#FCB514">
   <div class="card-badge">3-Year Weighted &middot; 2023-24 to 2025-26</div>
   <div class="header">
     <div class="header-inner">
@@ -441,13 +442,13 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="war-box">
         <div class="war-box-label">WAR</div>
-        <div class="war-box-value">+2.15</div>
-        <div class="war-box-gar">12.9 GAR</div>
+        <div class="war-box-value">+1.82</div>
+        <div class="war-box-gar">11.0 GAR</div>
       </div>
     </div>
   </div>
   <div class="body">
-    <img class="body-logo" src="../assets/logos/STL_dark.svg" alt="">
+    <img class="body-logo" src="../assets/logos/STL_light.svg" alt="">
 
     <div class="section-label">Last 3 Seasons</div>
     <div class="stat-grid">
@@ -461,7 +462,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
     <div class="section-label">3-Year Percentile vs. NHL Goalies</div>
     <div class="components">
       <div class="comp-row" title="+18.0 goals saved above expected, last 3 seasons">
-        <span class="comp-name good">Goals Saved</span>
+        <span class="comp-name good" title="+18.0 goals saved above expected, last 3 seasons">Goals Saved</span>
         <div class="bar-track"><div class="bar-fill green" style="width:81%"></div></div>
         <span class="pct-badge green">81st</span>
       </div>
@@ -481,7 +482,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
         <span class="pct-badge green">97th</span>
       </div>
       <div class="comp-row" title="4252 shots faced, last 3 seasons">
-        <span class="comp-name mid">Workload</span>
+        <span class="comp-name mid" title="4252 shots faced, last 3 seasons">Workload</span>
         <div class="bar-track"><div class="bar-fill amber" style="width:45%"></div></div>
         <span class="pct-badge amber">45th</span>
       </div>
@@ -495,7 +496,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
     <div class="section-label">Contract</div>
     <div class="contract-grid nocontract">
       <div class="contract-box">
-        <div class="contract-val">$5.3M</div>
+        <div class="contract-val">$5.4M</div>
         <div class="contract-lbl">Market Value</div>
       </div>
       <div class="contract-box">
@@ -551,7 +552,7 @@ function makeCareerChart(canvasId) {
   data: {
     labels: ['21-22', '22-23', '23-24', '24-25', '25-26'],
     datasets: [{
-      data: [-0.04, -0.02, 3.28, 0.72, 4.32],
+      data: [-0.06, -0.07, 3.02, 0.47, 3.89],
       borderColor: '#041E42',
       borderWidth: 2.5,
       pointBackgroundColor: ['#041E42', '#041E42', '#041E42', '#041E42', '#F5C518'],
@@ -588,10 +589,10 @@ function makeCareerChart(canvasId) {
           peak: {
             type: 'label',
             xValue: 4,
-            yValue: 4.32,
+            yValue: 3.89,
             yAdjust: -15,
             xAdjust: -16,
-            content: ['PEAK 4.3'],
+            content: ['PEAK 3.9'],
             color: '#9A6B00',
             font: { size: 9, weight: '800', family: 'Inter' },
             display: true
@@ -616,7 +617,7 @@ function makeCareerChart(canvasId) {
       },
       y: {
         min: -0.5,
-        max: 5.5,
+        max: 5.0,
         grid: { color: '#f0f0f3' },
         border: { display: false },
         title: { display: true, text: 'WAR', color: '#999', font: { size: 9, weight: '700' }, padding: 2 },
@@ -862,7 +863,6 @@ async function flattenWatermark(img) {
     const g = c.getContext('2d');
     const nw = im.naturalWidth || S, nh = im.naturalHeight || S;
     const r = Math.min(S / nw, S / nh), w = nw * r, h = nh * r;
-    if ('filter' in g) g.filter = 'grayscale(1) contrast(1.5) brightness(0.55)';
     g.drawImage(im, (S - w) / 2, (S - h) / 2, w, h);
     const url = c.toDataURL('image/png');   // throws if the logo came from another site
     await new Promise(res => { img.onload = res; img.onerror = res; img.src = url; setTimeout(res, 2000); });
