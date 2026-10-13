@@ -44,6 +44,8 @@ td.num { text-align: right; font-variant-numeric: tabular-nums; }
 .player-cell { display: flex; align-items: center; gap: 8px; }
 .player-name { font-weight: 700; font-size: 13px; }
 .player-pos { font-size: 10px; color: var(--muted); font-weight: 500; }
+.gsax { font-weight: 700; }
+.gsax.pos { color: #1a7a3c; } .gsax.neg { color: #c0392b; }
 
 @media (max-width: 720px) {
   .team-hero { padding: 20px 16px; }
@@ -62,11 +64,11 @@ td.num { text-align: right; font-variant-numeric: tabular-nums; }
   th, td { padding: 7px 8px; }
 }
 </style>
-<meta name="description" content="Player WAR and roster value for an NHL team.">
+<meta name="description" content="Player WAR and roster value for an NHL team, skaters and goalies.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Blueprint Hockey Analytics">
 <meta property="og:title" content="Team — Blueprint Hockey">
-<meta property="og:description" content="Player WAR and roster value for an NHL team.">
+<meta property="og:description" content="Player WAR and roster value for an NHL team, skaters and goalies.">
 <meta property="og:url" content="https://blueprinthockeyanalytics.com/team.html">
 <meta property="og:image" content="https://blueprinthockeyanalytics.com/assets/og-share.png">
 <meta property="og:image:width" content="1200">
@@ -74,7 +76,7 @@ td.num { text-align: right; font-variant-numeric: tabular-nums; }
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@BlueprintHky">
 <meta name="twitter:title" content="Team — Blueprint Hockey">
-<meta name="twitter:description" content="Player WAR and roster value for an NHL team.">
+<meta name="twitter:description" content="Player WAR and roster value for an NHL team, skaters and goalies.">
 <meta name="twitter:image" content="https://blueprinthockeyanalytics.com/assets/og-share.png">
 <script src="analytics.js" defer></script>
 </head>
@@ -131,6 +133,25 @@ td.num { text-align: right; font-variant-numeric: tabular-nums; }
       </tbody>
     </table>
   </div>
+
+  <div class="roster-table-wrap" id="goalie-wrap" style="margin-top:20px; display:none;">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:36px">#</th>
+          <th>Goalie</th>
+          <th class="num">GP</th>
+          <th class="num">SV%</th>
+          <th class="num" title="Save % an average goalie would have had on the same shots">xSV%</th>
+          <th class="num" title="Goals saved above expected">GSAx</th>
+          <th class="num" title="Goals saved above expected per 100 shots">GSAx/100</th>
+          <th class="num" title="Save % on high-danger chances">HD SV%</th>
+          <th class="num">WAR</th>
+        </tr>
+      </thead>
+      <tbody id="goalie-body"></tbody>
+    </table>
+  </div>
 </div>
 
 <div class="bp-footer">
@@ -143,7 +164,7 @@ td.num { text-align: right; font-variant-numeric: tabular-nums; }
   <div class="bp-footer-legal"><a href="mailto:blueprinthockeyanalytics@gmail.com">blueprinthockeyanalytics@gmail.com</a> &middot; <a href="privacy.html">Privacy Policy</a></div>
 </div>
 
-<script src="nav-search.js?v=3"></script>
+<script src="nav-search.js?v=5"></script>
 <script>
 fetch('nav.html').then(r => r.text()).then(html => {
   document.getElementById('nav-placeholder').innerHTML = html;
@@ -184,6 +205,7 @@ async function loadTeamPage() {
   document.getElementById('team-hero').style.background = TEAM_BG[team] || '#041E42';
 
   let roster = [];
+  let goalies = [];
   try {
     const res = await fetch('data/master_season.csv');
     const text = await res.text();
@@ -198,22 +220,35 @@ async function loadTeamPage() {
     document.getElementById('team-sub').textContent = maxSeason + '\u2013' + String(maxSeason + 1).slice(-2) + ' Season';
     roster = rows.filter(r => r.season === maxSeason && r.team === team)
                  .sort((a, b) => b.WAR - a.WAR);
+    // goalies (Oct 12) from goalie_season.csv -- team = current team
+    try {
+      const gres = await fetch('data/goalie_season.csv');
+      if (gres.ok) {
+        goalies = bpParseCSV(await gres.text())
+          .filter(r => Number(r.season) === maxSeason && r.team === team)
+          .map(r => ({ playerId: r.goalie_id, name: r.name, position: 'G', gp: Number(r.gp),
+                       sv: Number(r.sv_pct), xsv: Number(r.xsv_pct), gsax: Number(r.gsax),
+                       gsax100: Number(r.gsax_per100), hdsv: Number(r.hd_sv_pct), WAR: Number(r.WAR) }))
+          .sort((a, b) => b.gp - a.gp);
+      }
+    } catch (e) { goalies = []; }
   } catch (e) {
     roster = [];
   }
 
-  const totalWAR = roster.reduce((s, r) => s + (r.WAR || 0), 0);
+  const everyone = roster.concat(goalies);
+  const totalWAR = everyone.reduce((s, r) => s + (r.WAR || 0), 0);
   document.getElementById('team-war-total').textContent = (totalWAR >= 0 ? '+' : '') + totalWAR.toFixed(1);
-  document.getElementById('team-players').textContent = roster.length;
+  document.getElementById('team-players').textContent = everyone.length;
 
-  // Comparison bar chart — top 10 by |WAR|
-  const top10 = roster.slice(0, 10);
+  // Comparison bar chart — top 10 by WAR, skaters and goalies
+  const top10 = everyone.slice().sort((a, b) => b.WAR - a.WAR).slice(0, 10);
   const maxAbs = Math.max(...top10.map(r => Math.abs(r.WAR)), 1);
   document.getElementById('compare-chart').innerHTML = top10.map(r => {
     const pct = Math.abs(r.WAR) / maxAbs * 100;
     const neg = r.WAR < 0;
     return `<div class="bar-row">
-      <div class="bar-name">${r.display_name || r.name}</div>
+      <div class="bar-name">${r.display_name || r.name}${r.position === 'G' ? ' <span style="color:var(--muted);font-weight:600;">(G)</span>' : ''}</div>
       <div class="bar-track"><div class="bar-fill ${neg?'neg':''}" style="width:${pct}%"></div></div>
       <div class="bar-val">${r.WAR>=0?'+':''}${r.WAR.toFixed(2)}</div>
     </div>`;
@@ -249,8 +284,30 @@ async function loadTeamPage() {
       <td class="num">${fmtComp(r.WAR_shoot)}</td>
     </tr>`;
   }).join('');
+
+  // Goalies table, below the skaters
+  if (goalies.length) {
+    const sv = v => isNaN(v) ? '\u2014' : v.toFixed(3).replace(/^0/, '');
+    const sg = (v, d) => isNaN(v) ? '\u2014' : (v >= 0 ? '+' : '') + v.toFixed(d);
+    document.getElementById('goalie-body').innerHTML = goalies.map((r, i) => `
+    <tr onclick="window.location.href='player.html?id=${r.playerId}'">
+      <td style="color:var(--muted); font-weight:600;">${i+1}</td>
+      <td><div class="player-cell"><div>
+        <div class="player-name">${r.name}</div><div class="player-pos">G</div>
+      </div></div></td>
+      <td class="num">${r.gp || '\u2014'}</td>
+      <td class="num">${sv(r.sv)}</td>
+      <td class="num" style="color:var(--muted);">${sv(r.xsv)}</td>
+      <td class="num"><span class="gsax ${r.gsax >= 0 ? 'pos' : 'neg'}">${sg(r.gsax, 1)}</span></td>
+      <td class="num">${sg(r.gsax100, 2)}</td>
+      <td class="num">${sv(r.hdsv)}</td>
+      <td class="num"><span class="war-val ${r.WAR>=0?'pos':'neg'}">${sg(r.WAR, 2)}</span></td>
+    </tr>`).join('');
+    document.getElementById('goalie-wrap').style.display = '';
+  }
 }
 
+bpRememberView();   // (Oct 13) Back returns to the same scroll position
 loadTeamPage();
 </script>
 </body>

@@ -99,7 +99,7 @@
   <div class="bp-footer-legal"><a href="mailto:blueprinthockeyanalytics@gmail.com">blueprinthockeyanalytics@gmail.com</a> &middot; <a href="privacy.html">Privacy Policy</a></div>
 </div>
 
-<script src="nav-search.js?v=3"></script>
+<script src="nav-search.js?v=5"></script>
 <script>
 fetch('nav.html').then(r => r.text()).then(html => {
   document.getElementById('nav-placeholder').innerHTML = html;
@@ -119,7 +119,8 @@ const TEAM_NAMES = {
   WPG:'Winnipeg Jets'
 };
 
-let CURRENT_SORT = 'az';
+let CURRENT_SORT = bpStateGet('sort') === 'war' ? 'war' : 'az';   // (Oct 13) kept in the URL for Back
+bpRememberView();
 let TEAM_WAR = {};
 
 function renderTeams() {
@@ -144,6 +145,7 @@ function renderTeams() {
 
 function setSort(mode) {
   CURRENT_SORT = mode;
+  bpStateSet({ sort: mode === 'war' ? 'war' : null });
   document.getElementById('sort-az').classList.toggle('active', mode === 'az');
   document.getElementById('sort-war').classList.toggle('active', mode === 'war');
   renderTeams();
@@ -157,6 +159,14 @@ async function loadTeams() {
     const rows = bpParseCSV(text).map(r => ({ ...r, WAR: Number(r.WAR), season: Number(r.season) }));
     const maxSeason = Math.max(...rows.map(r => r.season));
     data = rows.filter(r => r.season === maxSeason);
+    // goalies count toward Team WAR too (Oct 12)
+    try {
+      const gres = await fetch('data/goalie_season.csv');
+      if (gres.ok) {
+        const g = bpParseCSV(await gres.text()).filter(r => Number(r.season) === maxSeason);
+        data = data.concat(g.map(r => ({ team: r.team, WAR: Number(r.WAR) })));
+      }
+    } catch (e) { /* goalies optional */ }
   } catch (e) {
     data = [];
   }
@@ -166,7 +176,7 @@ async function loadTeams() {
     TEAM_WAR[r.team] += r.WAR || 0;
   });
 
-  renderTeams();
+  setSort(CURRENT_SORT);
 }
 
 loadTeams();

@@ -141,7 +141,7 @@ td.num { text-align: right; font-variant-numeric: tabular-nums; }
   <div class="bp-footer-legal"><a href="mailto:blueprinthockeyanalytics@gmail.com">blueprinthockeyanalytics@gmail.com</a> &middot; <a href="privacy.html">Privacy Policy</a></div>
 </div>
 
-<script src="nav-search.js?v=3"></script>
+<script src="nav-search.js?v=5"></script>
 <script>
 fetch('nav.html').then(r => r.text()).then(html => {
   document.getElementById('nav-placeholder').innerHTML = html;
@@ -150,10 +150,29 @@ fetch('nav.html').then(r => r.text()).then(html => {
 });
 
 let ALL_DATA = [];
-let currentPos = 'F';
-let currentView = 'current';
-let sortCol = 'WAR';
-let sortAsc = false;
+// (Oct 13) view is read from / kept in the address bar so Back returns to it
+const LB_COLS = {
+  G: ['name', 'gp', 'shots', 'sv_pct', 'xsv_pct', 'gsax', 'gsax_per100', 'hd_sv_pct', 'WAR'],
+  S: ['name', 'gp', 'goals', 'assists', 'points', 'WAR', 'WAR_evo', 'WAR_evd', 'WAR_pp', 'WAR_pk', 'WAR_pen', 'WAR_shoot'],
+};
+const lbDefaultSort = pos => (pos === 'G' ? 'gsax' : 'WAR');
+let currentPos = ['F', 'D', 'G'].includes(bpStateGet('pos')) ? bpStateGet('pos') : 'F';
+let currentView = bpStateGet('view') === 'multi' ? 'multi' : 'current';
+let sortCol = bpStateGet('sort', lbDefaultSort(currentPos));
+if (!LB_COLS[currentPos === 'G' ? 'G' : 'S'].includes(sortCol)) sortCol = lbDefaultSort(currentPos);
+let sortAsc = bpStateGet('dir') ? bpStateGet('dir') === 'asc' : sortCol === 'name';
+document.querySelectorAll('#pos-tabs .bp-tab-btn').forEach(b => b.classList.toggle('active', b.dataset.pos === currentPos));
+document.querySelectorAll('#season-tabs .bp-tab-btn').forEach(b => b.classList.toggle('active', b.dataset.view === currentView));
+function saveLbState() {
+  const defAsc = sortCol === 'name';
+  bpStateSet({
+    pos: currentPos === 'F' ? null : currentPos,
+    view: currentView === 'current' ? null : currentView,
+    sort: sortCol === lbDefaultSort(currentPos) ? null : sortCol,
+    dir: sortAsc === defAsc ? null : (sortAsc ? 'asc' : 'desc'),
+  });
+}
+bpRememberView();
 
 async function loadLeaderboardData() {
   try {
@@ -333,6 +352,7 @@ function updateHeaderLabels() {
 }
 
 function renderTable() {
+  saveLbState();
   updateHeaderLabels();
   let rows = ALL_DATA.filter(r => r.pos_group === currentPos && r._view === currentView);
 

@@ -109,7 +109,7 @@
   <div class="bp-footer-legal"><a href="mailto:blueprinthockeyanalytics@gmail.com">blueprinthockeyanalytics@gmail.com</a> &middot; <a href="privacy.html">Privacy Policy</a></div>
 </div>
 
-<script src="nav-search.js?v=3"></script>
+<script src="nav-search.js?v=5"></script>
 <script>
 fetch('nav.html').then(r => r.text()).then(html => {
   document.getElementById('nav-placeholder').innerHTML = html;
@@ -203,6 +203,7 @@ function setupSlot(slotKey) {
     modeGroup.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     SLOT[slotKey].mode = btn.dataset.mode;
+    saveCmpState();
     renderOutput();
   });
 }
@@ -212,6 +213,33 @@ function selectSlotPlayer(slotKey, playerId, fullName) {
   document.getElementById(`current-${slotKey}`).textContent = fullName;
   document.getElementById(`search-${slotKey}`).value = '';
   document.getElementById(`results-${slotKey}`).classList.remove('open');
+  saveCmpState();
+  renderOutput();
+}
+
+// (Oct 13) picked players + card modes live in the URL so Back returns to them
+function saveCmpState() {
+  bpStateSet({
+    a: SLOT.a.playerId, b: SLOT.b.playerId,
+    ma: SLOT.a.mode === 'season' ? null : SLOT.a.mode,
+    mb: SLOT.b.mode === 'season' ? null : SLOT.b.mode,
+  });
+}
+function loadCmpState() {
+  ['a', 'b'].forEach(k => {
+    const mode = bpStateGet('m' + k);
+    const modeGroup = document.getElementById(`mode-${k}`);
+    if (mode && modeGroup.querySelector(`.mode-btn[data-mode="${mode}"]`)) {
+      SLOT[k].mode = mode;
+      modeGroup.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+    }
+    const id = bpStateGet(k);
+    if (id && /^\d+$/.test(id)) {
+      SLOT[k].playerId = Number(id);
+      const p = BP_PLAYER_INDEX.find(x => String(x.playerId) === id);
+      document.getElementById(`current-${k}`).textContent = p ? p.fullName : '';
+    }
+  });
   renderOutput();
 }
 
@@ -219,6 +247,8 @@ function selectSlotPlayer(slotKey, playerId, fullName) {
   await bpLoadPlayerIndex();
   setupSlot('a');
   setupSlot('b');
+  loadCmpState();
+  bpRememberView();
 })();
 </script>
 </body>

@@ -15,7 +15,7 @@ let BP_PLAYER_INDEX = [];
 const bpLogoUrl = (team) => {
   // Some logos render with better edge detail using the light variant
   // against our backgrounds (thin outlines get lost in the dark variant)
-  const lightVariant = new Set(['TOR']);
+  const lightVariant = new Set(['TOR', 'TBL']);   // TBL dark logo is all white (Oct 12)
   const variant = lightVariant.has(team) ? 'light' : 'dark';
   return `https://assets.nhle.com/logos/nhl/svg/${team}_${variant}.svg`;
 };
@@ -152,6 +152,60 @@ function bpInitNavSearch() {
       results.classList.remove('open');
     }
   });
+}
+
+/* ============================================================
+   Back-button memory (Oct 13)
+   Pages keep their current view (tab, sort, picked players) in the
+   address bar via replaceState, so Back / Forward lands on exactly the
+   view the visitor left. bpRememberView() also puts the scroll position
+   back once the page has finished drawing its (async-loaded) content.
+   ============================================================ */
+function bpStateGet(key, fallback) {
+  const v = new URLSearchParams(window.location.search).get(key);
+  return v === null || v === '' ? fallback : v;
+}
+function bpStateSet(obj) {
+  const p = new URLSearchParams(window.location.search);
+  for (const k in obj) {
+    const v = obj[k];
+    if (v === null || v === undefined || v === '') p.delete(k); else p.set(k, v);
+  }
+  const qs = p.toString();
+  const url = window.location.pathname + (qs ? '?' + qs : '') + window.location.hash;
+  if (url !== window.location.pathname + window.location.search + window.location.hash) {
+    try { history.replaceState(history.state, '', url); } catch (e) { /* file:// etc. */ }
+  }
+}
+function bpRememberView() {
+  if (window._bpRemembering) return;
+  window._bpRemembering = true;
+  try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch (e) {}
+  const key = () => 'bp-scroll:' + window.location.pathname + window.location.search;
+  const save = () => { try { sessionStorage.setItem(key(), String(Math.round(window.scrollY))); } catch (e) {} };
+  let t = null;
+  window.addEventListener('scroll', () => { clearTimeout(t); t = setTimeout(save, 150); }, { passive: true });
+  window.addEventListener('pagehide', save);
+  // restore only when coming Back/Forward (or reloading), never on a fresh visit
+  let navType = '';
+  try { navType = (performance.getEntriesByType('navigation')[0] || {}).type || ''; } catch (e) {}
+  if (navType !== 'back_forward' && navType !== 'reload') return;
+  let y = 0;
+  try { y = Number(sessionStorage.getItem(key())) || 0; } catch (e) {}
+  if (y <= 0) return;
+  // keep re-applying for ~3 s while tables/cards finish drawing (a redraw can
+  // briefly shorten the page and knock the position back); stop as soon as
+  // the visitor scrolls on their own
+  let cancelled = false;
+  const cancel = () => { cancelled = true; };
+  ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(ev => window.addEventListener(ev, cancel, { once: true, passive: true }));
+  const started = Date.now();
+  (function attempt() {
+    if (cancelled) return;
+    const maxY = document.documentElement.scrollHeight - window.innerHeight;
+    if (Math.abs(window.scrollY - Math.min(y, maxY)) > 2) window.scrollTo(0, y);
+    if (Date.now() - started < 3000) setTimeout(attempt, 100);
+  })();
 }
 
 document.addEventListener('DOMContentLoaded', async () => {

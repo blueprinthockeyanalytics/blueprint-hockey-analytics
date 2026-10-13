@@ -55,14 +55,29 @@ body { background: #fff; margin: 0; }
 
 .pr-guide-row { display: flex; gap: 32px; align-items: center; margin-top: 32px; flex-wrap: wrap; }
 .pr-guide-row img { width: 260px; border-radius: 10px; box-shadow: 0 8px 28px rgba(4,30,66,0.14); cursor: pointer; flex-shrink: 0; }
+.pr-guide-pages { display: flex; gap: 12px; flex-shrink: 0; }
+.pr-guide-pages img { width: 150px; border-radius: 8px; }
+@media (max-width: 560px) { .pr-guide-pages { width: 100%; } .pr-guide-pages img { width: calc((100% - 24px) / 3); } }
 
 .pr-quote-section { background: #F7F8FA; }
 
 /* Testimonials: add entries to TESTIMONIALS in the script at the bottom; the
    section stays hidden until there is at least one. */
 .pr-testimonials[hidden] { display: none !important; }
-.pr-t-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-top: 28px; }
-.pr-t-card { background: #fff; border: 1.5px solid #EEF0F3; border-radius: 12px; padding: 22px 22px 18px; display: flex; flex-direction: column; gap: 14px; }
+.pr-t-wrap { max-width: 760px; margin-top: 28px; }
+/* (Oct 12) reviews carousel: swipe on phones, arrows + dots everywhere */
+.pr-t-grid { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; scrollbar-width: none; outline: none; }
+.pr-t-grid::-webkit-scrollbar { display: none; }
+.pr-t-nav { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 16px; }
+.pr-t-nav[hidden] { display: none; }
+.pr-t-arrow { width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid #DDE2E8; background: #fff; color: #041E42;
+  font-size: 20px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: border-color .15s, background .15s; }
+.pr-t-arrow:hover { border-color: #041E42; background: #F7F8FA; }
+.pr-t-dots { display: flex; gap: 8px; }
+.pr-t-dot { width: 8px; height: 8px; border-radius: 4px; border: none; padding: 0; background: #DDE2E8; cursor: pointer; transition: width .2s, background .2s; }
+.pr-t-dot.active { width: 22px; background: #041E42; }
+.pr-t-card { flex: 0 0 100%; scroll-snap-align: center; box-sizing: border-box; background: #fff; border: 1.5px solid #EEF0F3; border-radius: 12px; padding: 22px 22px 18px; display: flex; flex-direction: column; gap: 14px; }
 .pr-t-quote { font-family: 'Inter',sans-serif; font-size: 15px; line-height: 1.6; color: #2D3748; margin: 0; }
 .pr-t-quote::before { content: '\201C'; font-family: 'Barlow Condensed',sans-serif; font-size: 44px; line-height: 0; color: #F5C518; vertical-align: -18px; margin-right: 4px; }
 .pr-t-who { font-family: 'Inter',sans-serif; font-size: 13px; color: #6B7686; margin-top: auto; }
@@ -138,7 +153,7 @@ body { background: #fff; margin: 0; }
       <h1 class="pr-h1">Your game, broken down the way a pro scout would.</h1>
       <p class="pr-sub">A personalized analytics report on your season — shot locations, zone entries, puck battles, and everything else that doesn't show up in the box score. We pair the model with direct video review, using tools such as InStat and FloHockey, and deliver it built to order.</p>
       <div class="pr-cta-row">
-        <a href="#pr-quote" class="pr-btn pr-btn-primary">Check My Player</a>
+        <a href="#pr-quote" class="pr-btn pr-btn-primary">Get Your Report</a>
         <a href="#pr-pricing" class="pr-btn pr-btn-ghost">See Pricing</a>
       </div>
     </div>
@@ -200,7 +215,7 @@ body { background: #fff; margin: 0; }
       <div class="pr-price-amt">$200<small>per card</small></div>
       <div class="pr-price-founding">Founding rate: $149</div>
       <p class="pr-price-desc">A complete season report for one player. Built for players and families who want a clear picture of what to work on, and something to send to coaches and scouts.</p>
-      <a href="#pr-quote" class="pr-btn pr-btn-primary" data-package="Single player">Check my player</a>
+      <a href="#pr-quote" class="pr-btn pr-btn-primary" data-package="Single player">Get your report</a>
     </div>
     <div class="pr-price-card">
       <div class="pr-price-name">5-Player Pack</div>
@@ -214,7 +229,7 @@ body { background: #fff; margin: 0; }
       <div class="pr-price-amt">$100<small>per player</small></div>
       <div class="pr-price-founding">Founding rate: $75 per player</div>
       <p class="pr-price-desc">A card for every player on the roster, goalies included, whatever the roster size (15 players minimum). Built for coaches who want a development plan for each player.</p>
-      <a href="#pr-quote" class="pr-btn pr-btn-ghost" style="color:#041E42;border-color:#041E42;" data-package="Full team">Talk team pricing</a>
+      <a href="#pr-quote" class="pr-btn pr-btn-ghost" style="color:#041E42;border-color:#041E42;" data-package="Full team">Get the team package</a>
     </div>
   </div>
   <p class="pr-coverage"><strong>Is my player covered?</strong> Send a request and we'll confirm your player's league and season are covered within 24 hours, before you pay anything.</p>
@@ -261,20 +276,31 @@ body { background: #fff; margin: 0; }
   <h2 class="pr-h2">Every stat, explained</h2>
   <p class="pr-p">Every report comes with a full glossary so nothing on the page is a mystery — what each stat means, how percentiles are calculated, and how to read the color coding at a glance.</p>
   <div class="pr-guide-row">
-    <img src="assets/card-guide-web.jpg" data-full="assets/card-guide-full.jpg" alt="Analytics card guide">
-    <p class="pr-p" style="margin:0;">From basic stats to zone entries, puck battles, and expected goals — the guide breaks down exactly what you're looking at, stat by stat, so you can read your report the same way we do.</p>
+    <div class="pr-guide-pages">
+      <img src="assets/card-guide-p1-web.jpg" data-full="assets/card-guide-p1-full.jpg" alt="Analytics card guide, page 1: how to read the card">
+      <img src="assets/card-guide-p2-web.jpg" data-full="assets/card-guide-p2-full.jpg" alt="Analytics card guide, page 2: stat glossary">
+      <img src="assets/card-guide-p3-web.jpg" data-full="assets/card-guide-p3-full.jpg" alt="Analytics card guide, page 3: stat glossary">
+    </div>
+    <p class="pr-p" style="margin:0;">A three-page guide comes with every card: how to read it and how the percentiles work, then a glossary of every stat on the card — what it measures, how it's calculated, and whether higher or lower is better. Tap a page to open it.</p>
   </div>
 </div>
 
 <div class="pr-section pr-testimonials" id="pr-testimonials" style="padding-top:0;" hidden>
-  <div class="pr-section-label">What Players &amp; Families Say</div>
+  <div class="pr-section-label">Reviews</div>
   <h2 class="pr-h2">From the people who've used it</h2>
-  <div class="pr-t-grid" id="pr-t-grid"></div>
+  <div class="pr-t-wrap">
+    <div class="pr-t-grid" id="pr-t-grid" tabindex="0" aria-label="Reviews"></div>
+    <div class="pr-t-nav" id="pr-t-nav" hidden>
+      <button class="pr-t-arrow" id="pr-t-prev" aria-label="Previous review">&#8249;</button>
+      <div class="pr-t-dots" id="pr-t-dots"></div>
+      <button class="pr-t-arrow" id="pr-t-next" aria-label="Next review">&#8250;</button>
+    </div>
+  </div>
 </div>
 
 <div class="pr-section pr-quote-section" id="pr-quote">
   <div class="pr-section-label">Get Started</div>
-  <h2 class="pr-h2">Check my player</h2>
+  <h2 class="pr-h2">Get your report</h2>
   <p class="pr-p">Tell us who the card is for. We'll confirm their league and season are covered and follow up by email with next steps.</p>
 
   <form class="pr-form" id="pr-quote-form" action="https://formspree.io/f/xdenjobo" method="POST">
@@ -299,7 +325,7 @@ body { background: #fff; margin: 0; }
       </div>
       <div>
         <label class="pr-label" for="pr-level">League / Level</label>
-        <input class="pr-input" type="text" id="pr-level" name="league_level" placeholder="U15 AAA, U18, Junior, College" required>
+        <input class="pr-input" type="text" id="pr-level" name="league_level" placeholder="U15 AAA, U18, Junior, College, Pro" required>
       </div>
       <div>
         <label class="pr-label" for="pr-season">Season</label>
@@ -318,7 +344,7 @@ body { background: #fff; margin: 0; }
       <label class="pr-label" for="pr-details">Anything else we should know?</label>
       <textarea class="pr-textarea" id="pr-details" name="details" placeholder="Timeline, specific games/season, or anything else useful for a quote"></textarea>
     </div>
-    <button type="submit" class="pr-btn pr-btn-primary pr-submit">Check My Player</button>
+    <button type="submit" class="pr-btn pr-btn-primary pr-submit">Get Your Report</button>
     <div class="pr-form-note">We'll confirm coverage by email within 24 hours. Prefer email? Write to <a href="mailto:blueprinthockeyanalytics@gmail.com">blueprinthockeyanalytics@gmail.com</a>. See our <a href="privacy.html">Privacy Policy</a> for how we handle your information.</div>
     <div class="pr-success" id="pr-success">Thanks — your request is in. We'll confirm your player's coverage by email within 24 hours.</div>
   </form>
@@ -339,7 +365,7 @@ body { background: #fff; margin: 0; }
   <img id="pr-lightbox-img" src="" alt="">
 </div>
 
-<script src="nav-search.js?v=3"></script>
+<script src="nav-search.js?v=5"></script>
 <script>
 fetch('nav.html').then(r => r.text()).then(html => {
   document.getElementById('nav-placeholder').innerHTML = html;
@@ -352,6 +378,8 @@ fetch('nav.html').then(r => r.text()).then(html => {
 // Use a first name, a role ("Parent", "Head Coach") or initials if they'd rather
 // not be named. Only use quotes people actually gave you, with their permission.
 const TESTIMONIALS = [
+  { quote: "Without knowing the numbers, the card seems very representative of his game, both strengths and areas to improve. Whether analytics or the eye test, a realistic evaluation has areas to improve for any player. Important to recognize it, state it, and then go to work on it!",
+    name: "Amateur Scout", detail: "NHL organization" },
 ];
 (function renderTestimonials() {
   if (!TESTIMONIALS.length) return;
@@ -360,6 +388,27 @@ const TESTIMONIALS = [
     `<figure class="pr-t-card"><blockquote class="pr-t-quote">${esc(t.quote)}</blockquote>` +
     `<figcaption class="pr-t-who"><strong>${esc(t.name)}</strong>${esc(t.detail)}</figcaption></figure>`).join('');
   document.getElementById('pr-testimonials').hidden = false;
+  // carousel controls (only when there's more than one review)
+  if (TESTIMONIALS.length < 2) return;
+  const track = document.getElementById('pr-t-grid');
+  const dots = document.getElementById('pr-t-dots');
+  const n = TESTIMONIALS.length;
+  dots.innerHTML = TESTIMONIALS.map((_, i) => `<button class="pr-t-dot" aria-label="Review ${i + 1}"></button>`).join('');
+  document.getElementById('pr-t-nav').hidden = false;
+  const step = () => track.querySelector('.pr-t-card').offsetWidth + 20;
+  const cur = () => Math.round(track.scrollLeft / step());
+  const go = i => track.scrollTo({ left: ((i % n) + n) % n * step() });
+  const mark = () => dots.querySelectorAll('.pr-t-dot').forEach((d, i) => d.classList.toggle('active', i === cur()));
+  document.getElementById('pr-t-prev').onclick = () => go(cur() - 1);
+  document.getElementById('pr-t-next').onclick = () => go(cur() + 1);
+  dots.querySelectorAll('.pr-t-dot').forEach((d, i) => d.onclick = () => go(i));
+  track.addEventListener('scroll', () => requestAnimationFrame(mark), { passive: true });
+  track.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') { e.preventDefault(); go(cur() + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); go(cur() - 1); }
+  });
+  window.addEventListener('resize', () => go(cur()));
+  mark();
 })();
 
 // Pricing buttons preselect the package in the form

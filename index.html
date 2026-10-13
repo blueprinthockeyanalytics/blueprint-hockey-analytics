@@ -196,7 +196,7 @@ td.num { text-align: right; }
   <div class="stats">
     <div class="stat"><div class="stat-num">16</div><div class="stat-label">Seasons modeled</div></div>
     <div class="stat"><div class="stat-num">4.9M</div><div class="stat-label">Shifts analyzed</div></div>
-    <div class="stat"><div class="stat-num">1,227</div><div class="stat-label">Players rated</div></div>
+    <div class="stat"><div class="stat-num">1,377</div><div class="stat-label">Players rated</div></div>
     <div class="stat"><div class="stat-num">0.78</div><div class="stat-label">xG model AUC</div></div>
   </div>
   <div class="accent-line"></div>
@@ -256,7 +256,7 @@ td.num { text-align: right; }
   <div class="bp-footer-legal"><a href="mailto:blueprinthockeyanalytics@gmail.com">blueprinthockeyanalytics@gmail.com</a> &middot; <a href="privacy.html">Privacy Policy</a></div>
 </div>
 
-<script src="nav-search.js?v=3"></script>
+<script src="nav-search.js?v=5"></script>
 <script>
 fetch('nav.html').then(r => r.text()).then(html => {
   document.getElementById('nav-placeholder').innerHTML = html;
@@ -307,6 +307,7 @@ async function loadHome() {
   `).join('');
 }
 
+bpRememberView();   // (Oct 13) Back returns to the same scroll position
 loadHome();
 </script>
 </body>
