@@ -11,12 +11,12 @@
 <meta property="og:title" content="Clay Stevenson — Blueprint Hockey">
 <meta property="og:description" content="Clay Stevenson (WPG · G): +0.66 WAR in 2025-26, market value $0.9M. Player card from the Blueprint Hockey WAR model.">
 <meta property="og:url" content="https://blueprinthockeyanalytics.com/cards/8483532.html">
-<meta property="og:image" content="https://blueprinthockeyanalytics.com/assets/og-share.png">
+<meta property="og:image" content="https://blueprinthockeyanalytics.com/cards/headshots/8483532.png">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="@BlueprintHky">
 <meta name="twitter:title" content="Clay Stevenson — Blueprint Hockey">
 <meta name="twitter:description" content="Clay Stevenson (WPG · G): +0.66 WAR in 2025-26, market value $0.9M. Player card from the Blueprint Hockey WAR model.">
-<meta name="twitter:image" content="https://blueprinthockeyanalytics.com/assets/og-share.png">
+<meta name="twitter:image" content="https://blueprinthockeyanalytics.com/cards/headshots/8483532.png">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -277,7 +277,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
   <div class="header">
     <div class="header-inner">
       <div class="headshot-wrap">
-        <img src="https://assets.nhle.com/mugs/nhl/20242025/WPG/8483532.png" alt="Clay Stevenson"
+        <img src="headshots/8483532.png" alt="Clay Stevenson"
         onerror="(function(img){
           var tries=[
             'https://assets.nhle.com/mugs/nhl/20242025/WSH/8483532.png',
@@ -381,7 +381,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="brand-right">
         <div class="brand-url">blueprinthockeyanalytics.com</div>
-        <div class="brand-date">Data thru 2025-26 &middot; Updated Oct 13, 2026</div>
+        <div class="brand-date">Data thru 2025-26 &middot; Updated Oct 15, 2026</div>
       </div>
     </div>
   </div>
@@ -408,7 +408,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
   <div class="header">
     <div class="header-inner">
       <div class="headshot-wrap">
-        <img src="https://assets.nhle.com/mugs/nhl/20242025/WPG/8483532.png" alt="Clay Stevenson"
+        <img src="headshots/8483532.png" alt="Clay Stevenson"
         onerror="(function(img){
           var tries=[
             'https://assets.nhle.com/mugs/nhl/20242025/WSH/8483532.png',
@@ -513,7 +513,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="brand-right">
         <div class="brand-url">blueprinthockeyanalytics.com</div>
-        <div class="brand-date">Data thru 2025-26 &middot; Updated Oct 13, 2026</div>
+        <div class="brand-date">Data thru 2025-26 &middot; Updated Oct 15, 2026</div>
       </div>
     </div>
   </div>
@@ -685,6 +685,10 @@ const BRAND_LOGO_SRC = "../assets/bp_logo_128.png";
 function loadImg(src) {
   return new Promise(resolve => {
     const im = new Image();
+    // (Oct 15) a photo from another site (e.g. the NHL's) would "taint" the
+    // canvas and block Save/Share entirely -- ask for it CORS-clean; if the
+    // other site refuses, the image just loads as null and is skipped.
+    try { if (new URL(src, location.href).origin !== location.origin) im.crossOrigin = 'anonymous'; } catch (e) {}
     im.onload = () => resolve(im);
     im.onerror = () => resolve(null);
     im.src = src;
