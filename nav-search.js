@@ -182,7 +182,7 @@ function bpStateSet(obj) {
 function bpBackTo(page) {
   try {
     const ref = document.referrer ? new URL(document.referrer) : null;
-    if (ref && ref.origin === window.location.origin && ref.pathname.endsWith('/' + page) && history.length > 1) {
+    if (ref && ref.origin === window.location.origin && ref.pathname.replace(/\.html$/, '').endsWith('/' + page.replace(/\.html$/, '')) && history.length > 1) {
       history.back();
       return false;
     }
