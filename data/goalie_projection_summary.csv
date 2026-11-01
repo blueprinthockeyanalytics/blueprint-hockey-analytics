@@ -1,5 +1,5 @@
 playerId,name,team,pos_group,aav_m,years_left,expiry_year,surplus_total_m,next_deal_fair_aav_5yr_m
-8476945,Connor Hellebuyck,WPG,G,8.5,5,2031,-9.95,
+8476945,Connor Hellebuyck,NJD,G,8.5,5,2031,-9.95,
 8478009,Ilya Sorokin,NYI,G,8.2,6,2032,-4.13,
 8480313,Logan Thompson,WSH,G,5.8,5,2031,19.42,
 8478048,Igor Shesterkin,NYR,G,11.6,7,2033,-30.6,
@@ -60,12 +60,12 @@ playerId,name,team,pos_group,aav_m,years_left,expiry_year,surplus_total_m,next_d
 8481035,Samuel Ersson,OTT,G,2.2,2,2028,1.05,
 8481033,Akira Schmid,FLA,G,2.0,2,2028,2.25,
 8477970,Vitek Vanecek,UTA,G,1.0,1,2027,0.87,1.37
-8477992,Jonas Johansson,TBL,G,1.2,1,2027,0.44,1.27
+8477992,Jonas Johansson,OTT,G,1.2,1,2027,0.44,1.27
 8478024,Ville Husso,ANA,G,2.2,1,2027,-0.72,1.21
 8481668,Arturs Silovs,PIT,G,2.8,1,2027,-0.36,3.65
 8476316,Laurent Brossoit,SJS,G,1.1,1,2027,-0.16,1.2
 8480051,Cayden Primeau,TOR,G,0.85,2,2028,1.97,
-8482076,Nico Daws,NJD,G,1.1,2,2028,2.01,
+8482076,Nico Daws,WPG,G,1.1,2,2028,2.01,
 8482447,Leevi Meriläinen,VAN,G,1.1,1,2027,0.8,3.95
 8482761,Carl Lindbom,VGK,G,0.9,3,2029,5.52,
 8483703,Sergei Murashov,PIT,G,0.8611,1,2027,0.51,4.45
