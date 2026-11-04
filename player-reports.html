@@ -91,6 +91,9 @@ body { background: #fff; margin: 0; }
 .pr-textarea { resize: vertical; min-height: 100px; font-family: 'Inter',sans-serif; }
 .pr-submit { align-self: flex-start; margin-top: 6px; }
 .pr-form-note { font-family: 'Inter',sans-serif; font-size: 12px; color: #9AA5B8; margin-top: 4px; }
+.pr-hint { font-family: 'Inter',sans-serif; font-size: 12px; color: #5A6B82; margin-top: 6px; line-height: 1.4; }
+.pr-price { font-family: 'Inter',sans-serif; font-size: 14px; color: #041E42; background: #EEF4FB; border-left: 3px solid #F5C518; padding: 10px 12px; border-radius: 6px; margin-top: 10px; line-height: 1.45; }
+.pr-price strong { font-size: 16px; }
 .pr-success { display: none; font-family: 'Inter',sans-serif; background: #E8F5EE; color: #1a7a3c; padding: 16px 18px; border-radius: 8px; font-size: 14px; font-weight: 600; margin-top: 16px; }
 
 .pr-lightbox { display: none; position: fixed; inset: 0; background: rgba(4,30,66,0.9); z-index: 999; align-items: center; justify-content: center; padding: 32px; cursor: zoom-out; }
@@ -227,7 +230,7 @@ body { background: #fff; margin: 0; }
     <div class="pr-price-card">
       <div class="pr-price-name">Full Team</div>
       <div class="pr-price-amt">$100<small>per player</small></div>
-      <p class="pr-price-desc">A card for every player on the roster, goalies included, whatever the roster size (15 players minimum). Built for coaches who want a development plan for each player.</p>
+      <p class="pr-price-desc">A card for every player on the roster, goalies included, whatever the roster size. Built for coaches who want a development plan for each player.</p>
       <a href="#pr-quote" class="pr-btn pr-btn-ghost" style="color:#041E42;border-color:#041E42;" data-package="Full team">Get the team package</a>
     </div>
   </div>
@@ -311,6 +314,21 @@ body { background: #fff; margin: 0; }
       <div>
         <label class="pr-label" for="pr-email">Email</label>
         <input class="pr-input" type="email" id="pr-email" name="email" required>
+        <div class="pr-hint">We'll reply from blueprinthockeyanalytics@gmail.com. Check your spam or promotions folder if you don't see it.</div>
+      </div>
+    </div>
+    <div class="pr-form-row">
+      <div>
+        <label class="pr-label" for="pr-phone">Phone (optional)</label>
+        <input class="pr-input" type="tel" id="pr-phone" name="phone" placeholder="For text updates">
+      </div>
+      <div>
+        <label class="pr-label" for="pr-contact">Best way to reach you</label>
+        <select class="pr-select" id="pr-contact" name="preferred_contact">
+          <option>Email</option>
+          <option>Text</option>
+          <option>Instagram DM</option>
+        </select>
       </div>
     </div>
     <div class="pr-form-row">
@@ -338,6 +356,7 @@ body { background: #fff; margin: 0; }
         <option>5-player pack</option>
         <option>Full team</option>
       </select>
+      <div class="pr-price" id="pr-price"></div>
     </div>
     <div>
       <label class="pr-label" for="pr-details">Anything else we should know?</label>
@@ -345,8 +364,8 @@ body { background: #fff; margin: 0; }
     </div>
     <button type="submit" class="pr-btn pr-btn-primary pr-submit">Get Your Report</button>
     <div class="pr-form-note">We'll confirm coverage by email within 24 hours. Prefer email? Write to <a href="mailto:blueprinthockeyanalytics@gmail.com">blueprinthockeyanalytics@gmail.com</a>. See our <a href="privacy.html">Privacy Policy</a> for how we handle your information.</div>
-    <div class="pr-success" id="pr-success">Thanks — your request is in. We'll confirm your player's coverage by email within 24 hours.</div>
   </form>
+  <div class="pr-success" id="pr-success">Thanks — your request is in. You'll hear from us within 24 hours from <strong>blueprinthockeyanalytics@gmail.com</strong>. If you don't see it, check your spam or promotions folder, and add us to your contacts so nothing gets missed.</div>
 </div>
 
 <div class="bp-footer">
@@ -426,6 +445,18 @@ document.querySelectorAll('img[data-full]').forEach(img => {
   });
 });
 lightbox.addEventListener('click', () => lightbox.classList.remove('open'));
+
+// Show the price for the selected package
+const PRICES = {
+  'Single player': '<strong>$149 CAD</strong> founding rate (regular $200). You only pay once we confirm your league is covered.',
+  '5-player pack': '<strong>$649 CAD</strong> founding rate for 5 cards, about $130 each (regular $800). You only pay once we confirm coverage.',
+  'Full team': '<strong>$100 CAD per player</strong>. We\'ll confirm the roster and send a quote before you pay anything.'
+};
+const pkgSel = document.getElementById('pr-package');
+function showPrice() { document.getElementById('pr-price').innerHTML = PRICES[pkgSel.value] || ''; }
+pkgSel.addEventListener('change', showPrice);
+document.querySelectorAll('[data-package]').forEach(a => a.addEventListener('click', () => setTimeout(showPrice, 0)));
+showPrice();
 
 // Form submit via fetch so we can show an inline success message instead of
 // a redirect (Formspree supports this via the Accept: application/json header)
