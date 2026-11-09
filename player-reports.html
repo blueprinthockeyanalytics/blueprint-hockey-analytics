@@ -60,6 +60,13 @@ body { background: #fff; margin: 0; }
 @media (max-width: 560px) { .pr-guide-pages { width: 100%; } .pr-guide-pages img { width: calc((100% - 24px) / 3); } }
 
 .pr-quote-section { background: #F7F8FA; }
+/* (Nov 9) credibility strip under the hero copy */
+.pr-trust { display: flex; flex-wrap: wrap; gap: 8px 10px; margin: -6px 0 22px; }
+.pr-trust-item { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 600; color: #fff;
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); border-radius: 999px; padding: 6px 12px; }
+.pr-trust-item::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #F5B70A; flex-shrink: 0; }
+@media (max-width: 760px) { .pr-trust { justify-content: center; } }
+
 
 /* Testimonials: add entries to TESTIMONIALS in the script at the bottom; the
    section stays hidden until there is at least one. */
@@ -155,6 +162,10 @@ body { background: #fff; margin: 0; }
       <div class="pr-kicker">Custom Player Reports</div>
       <h1 class="pr-h1">Your game, broken down the way a pro scout would.</h1>
       <p class="pr-sub">A personalized analytics report on your season — shot locations, zone entries, puck battles, and everything else that doesn't show up in the box score. We pair the analytics with direct video review and deliver it built to order.</p>
+      <div class="pr-trust">
+        <span class="pr-trust-item">Former Division I &amp; pro player</span>
+        <span class="pr-trust-item">Worked with NHL players &amp; NHL draft picks</span>
+      </div>
       <div class="pr-cta-row">
         <a href="#pr-quote" class="pr-btn pr-btn-primary">Get Your Report</a>
         <a href="#pr-pricing" class="pr-btn pr-btn-ghost">See Pricing</a>
@@ -398,6 +409,8 @@ fetch('nav.html').then(r => r.text()).then(html => {
 const TESTIMONIALS = [
   { quote: "Without knowing the numbers, the card seems very representative of his game, both strengths and areas to improve. Whether analytics or the eye test, a realistic evaluation has areas to improve for any player. Important to recognize it, state it, and then go to work on it!",
     name: "NHL Amateur Scout", detail: "" },
+  { quote: "I like your information very much. I'm passing it around to my team.",
+    name: "Hockey parent, New Jersey", detail: "" },
 ];
 (function renderTestimonials() {
   if (!TESTIMONIALS.length) return;
