@@ -60,12 +60,16 @@ body { background: #fff; margin: 0; }
 @media (max-width: 560px) { .pr-guide-pages { width: 100%; } .pr-guide-pages img { width: calc((100% - 24px) / 3); } }
 
 .pr-quote-section { background: #F7F8FA; }
-/* (Nov 9) credibility strip under the hero copy */
-.pr-trust { display: flex; flex-wrap: wrap; gap: 8px 10px; margin: -6px 0 22px; }
-.pr-trust-item { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 600; color: #fff;
-  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); border-radius: 999px; padding: 6px 12px; }
-.pr-trust-item::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #F5B70A; flex-shrink: 0; }
-@media (max-width: 760px) { .pr-trust { justify-content: center; } }
+/* (Nov 12) credibility strip under the hero copy: three cards with icons */
+.pr-trust { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: -4px 0 26px; max-width: 620px; }
+.pr-trust-item { display: flex; align-items: flex-start; gap: 10px; padding: 12px 12px; border-radius: 10px;
+  background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14); text-align: left; }
+.pr-trust-icon { flex-shrink: 0; width: 34px; height: 34px; border-radius: 8px; background: rgba(245,197,24,0.14);
+  display: flex; align-items: center; justify-content: center; }
+.pr-trust-icon svg { width: 19px; height: 19px; display: block; }
+.pr-trust-title { font-family: 'Inter',sans-serif; font-size: 14px; font-weight: 800; color: #fff; line-height: 1.2; }
+.pr-trust-sub { font-family: 'Inter',sans-serif; font-size: 12px; font-weight: 500; color: #B9C4D6; line-height: 1.35; margin-top: 3px; }
+@media (max-width: 760px) { .pr-trust { grid-template-columns: 1fr; max-width: 360px; margin-left: auto; margin-right: auto; } }
 
 
 /* Testimonials: add entries to TESTIMONIALS in the script at the bottom; the
@@ -136,11 +140,11 @@ body { background: #fff; margin: 0; }
   .pr-cta-row { justify-content: center; }
 }
 </style>
-<meta name="description" content="Custom hockey player reports built by a former Division I player: advanced analytics, percentiles against teammates and video review.">
+<meta name="description" content="Custom hockey player reports built by a former Division I player: advanced analytics, percentiles against teammates and a written assessment from film review.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Blueprint Hockey Analytics">
 <meta property="og:title" content="Player Reports — Blueprint Hockey">
-<meta property="og:description" content="Custom hockey player reports built by a former Division I player: advanced analytics, percentiles against teammates and video review.">
+<meta property="og:description" content="Custom hockey player reports built by a former Division I player: advanced analytics, percentiles against teammates and a written assessment from film review.">
 <meta property="og:url" content="https://blueprinthockeyanalytics.com/player-reports">
 <meta property="og:image" content="https://blueprinthockeyanalytics.com/assets/og-share.png">
 <meta property="og:image:width" content="1200">
@@ -148,7 +152,7 @@ body { background: #fff; margin: 0; }
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@BlueprintHky">
 <meta name="twitter:title" content="Player Reports — Blueprint Hockey">
-<meta name="twitter:description" content="Custom hockey player reports built by a former Division I player: advanced analytics, percentiles against teammates and video review.">
+<meta name="twitter:description" content="Custom hockey player reports built by a former Division I player: advanced analytics, percentiles against teammates and a written assessment from film review.">
 <meta name="twitter:image" content="https://blueprinthockeyanalytics.com/assets/og-share.png">
 <script src="analytics.js" defer></script>
 </head>
@@ -160,11 +164,21 @@ body { background: #fff; margin: 0; }
   <div class="pr-hero-inner">
     <div class="pr-hero-text">
       <div class="pr-kicker">Custom Player Reports</div>
-      <h1 class="pr-h1">Your game, broken down the way a pro scout would.</h1>
-      <p class="pr-sub">A personalized analytics report on your season — shot locations, zone entries, puck battles, and everything else that doesn't show up in the box score. We pair the analytics with direct video review and deliver it built to order.</p>
+      <h1 class="pr-h1">Scouting &amp; analytics reports trusted by NHL players &amp; top prospects.</h1>
+      <p class="pr-sub"><strong style="color:#fff">Now built for your player.</strong> Your game broken down the way a pro scout would: shot locations, zone entries, puck battles and everything else the box score misses, paired with our own film review of your games.</p>
       <div class="pr-trust">
-        <span class="pr-trust-item">Former Division I &amp; pro player</span>
-        <span class="pr-trust-item">Worked with NHL players &amp; NHL draft picks</span>
+        <div class="pr-trust-item">
+          <div class="pr-trust-icon"><svg viewBox="0 0 24 24" stroke="#F5C518" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg></div>
+          <div><div class="pr-trust-title">Pro-level analytics</div><div class="pr-trust-sub">The same reports NHL players get</div></div>
+        </div>
+        <div class="pr-trust-item">
+          <div class="pr-trust-icon"><svg viewBox="0 0 24 24" stroke="#F5C518" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l9-9"/><path d="M13 11l3-7 2 1-2 7"/><circle cx="18" cy="19" r="1.6" fill="#F5C518" stroke="none"/></svg></div>
+          <div><div class="pr-trust-title">Former D1 &amp; pro player</div><div class="pr-trust-sub">Built by someone who's played it</div></div>
+        </div>
+        <div class="pr-trust-item">
+          <div class="pr-trust-icon"><svg viewBox="0 0 24 24" stroke="#F5C518" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4h6v3H9z"/><path d="M8.5 13l2.2 2.2 4.8-4.8"/></svg></div>
+          <div><div class="pr-trust-title">Built to order</div><div class="pr-trust-sub">Analytics backed by our own film review</div></div>
+        </div>
       </div>
       <div class="pr-cta-row">
         <a href="#pr-quote" class="pr-btn pr-btn-primary">Get Your Report</a>
@@ -221,7 +235,7 @@ body { background: #fff; margin: 0; }
 <div class="pr-section">
   <div class="pr-section-label">Pricing</div>
   <h2 class="pr-h2">Simple, upfront pricing</h2>
-  <p class="pr-p">One full season of tracked game data, percentile rankings against teammates at your position, shot and zone maps, and a written video assessment of your game. All prices in CAD.</p>
+  <p class="pr-p">One full season of tracked game data, percentile rankings against teammates at your position, shot and zone maps, and a written assessment of your game from our film review. All prices in CAD.</p>
   <div class="pr-founding"><span class="pr-founding-tag">Founding rate</span><span>Our first 20 players get <strong>$149 per card</strong> in exchange for an honest review once it's delivered.</span></div>
   <div class="pr-price-grid">
     <div class="pr-price-card featured">
