@@ -357,8 +357,8 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="comp-row">
         <span class="comp-name bad">Shooting</span>
-        <div class="bar-track"><div class="bar-fill red" style="width:2%"></div></div>
-        <span class="pct-badge red">0th</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:32%"></div></div>
+        <span class="pct-badge red">32nd</span>
       </div>
     </div>
 
@@ -504,8 +504,8 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="comp-row">
         <span class="comp-name good">Shooting</span>
-        <div class="bar-track"><div class="bar-fill green" style="width:91%"></div></div>
-        <span class="pct-badge green">91st</span>
+        <div class="bar-track"><div class="bar-fill green" style="width:89%"></div></div>
+        <span class="pct-badge green">89th</span>
       </div>
     </div>
 
@@ -539,9 +539,9 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
     
     <div class="proj-wrap">
       <div class="section-label">Contract Outlook &middot; Projected WAR &amp; Surplus</div>
-      <div class="proj-grid" style="grid-template-columns: repeat(1, 1fr);"><div class="proj-cell"><div class="proj-yr">26-27</div><div class="proj-age">Age 30</div><div class="proj-war">+0.2</div><div class="proj-sp pos">+$0.7M</div></div></div>
-      <div class="proj-total pos">Projected value over the deal: <b>+$0.7M</b></div>
-      <div class="proj-next">Next contract: fair price about <b>$5.3M</b> a year (5-year deal)</div>
+      <div class="proj-grid" style="grid-template-columns: repeat(1, 1fr);"><div class="proj-cell"><div class="proj-yr">26-27</div><div class="proj-age">Age 30</div><div class="proj-war">-0.0</div><div class="proj-sp neg">−$0.1M</div></div></div>
+      <div class="proj-total neg">Projected value over the deal: <b>−$0.1M</b></div>
+      <div class="proj-next">Next contract: fair price about <b>$4.7M</b> a year (5-year deal)</div>
       <div class="proj-note">Projected from how 2,500+ NHL careers aged since 2010-11, including injury and decline risk, on each season's salary cap.</div>
     </div>
 
@@ -589,12 +589,13 @@ function makeCareerChart(canvasId) {
   new Chart(ctx, {
   type: 'line',
   data: {
-    labels: ['19-20', '20-21', '21-22', '22-23', '23-24', '24-25', '25-26', '26-27'],
+    labels: ['19-20', '20-21', '21-22', '22-23', '23-24', '24-25', '25-26', '26-27 (pace)'],
     datasets: [{
-      data: [0.01, 0.08, -0.22, 0.13, 0.38, -0.34, 0.82, -0.14],
+      data: [0.01, 0.08, -0.22, 0.13, 0.38, -0.34, 0.82, -0.55],
       borderColor: '#041E42',
       borderWidth: 2.5,
-      pointBackgroundColor: ['#041E42', '#041E42', '#041E42', '#041E42', '#041E42', '#041E42', '#F5C518', '#041E42'],
+      segment: { borderDash: (c) => [false, false, false, false, false, false, false, true][c.p1DataIndex] ? [6, 4] : undefined },
+      pointBackgroundColor: ['#041E42', '#041E42', '#041E42', '#041E42', '#041E42', '#041E42', '#F5C518', '#FFFFFF'],
       pointBorderColor: '#041E42',
       pointBorderWidth: 2,
       pointRadius: [4, 4, 4, 4, 4, 4, 6, 4],
@@ -644,7 +645,7 @@ function makeCareerChart(canvasId) {
         bodyColor: '#fff',
         padding: 8,
         callbacks: {
-          label: (c) => [false, false, false, false, false, false, true, false][c.dataIndex] ? ` ${c.raw} WAR · Career Best` : ` ${c.raw} WAR`
+          label: (c) => [false, false, false, false, false, false, true, false][c.dataIndex] ? ` ${c.raw} WAR · Career Best` : ([false, false, false, false, false, false, false, true][c.dataIndex] ? ` ${c.raw} WAR · full-season pace` : ` ${c.raw} WAR`)
         }
       }
     },

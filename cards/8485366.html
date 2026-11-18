@@ -357,8 +357,8 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="comp-row">
         <span class="comp-name good">Shooting</span>
-        <div class="bar-track"><div class="bar-fill green" style="width:99%"></div></div>
-        <span class="pct-badge green">99th</span>
+        <div class="bar-track"><div class="bar-fill green" style="width:89%"></div></div>
+        <span class="pct-badge green">89th</span>
       </div>
     </div>
 
@@ -384,7 +384,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
     </div>
     <div class="value-row">
       <div>
-        <div class="value-delta">+$9.7M/yr</div>
+        <div class="value-delta">+$9.6M/yr</div>
         <div class="value-desc">Under market value</div>
       </div>
       <div class="grade-chip a"><div class="grade-letter">A+</div><div class="grade-lbl">Grade</div></div>
@@ -531,7 +531,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
     </div>
     <div class="value-row">
       <div>
-        <div class="value-delta">+$9.7M/yr</div>
+        <div class="value-delta">+$9.6M/yr</div>
         <div class="value-desc">Under market value</div>
       </div>
       <div class="grade-chip a"><div class="grade-letter">A+</div><div class="grade-lbl">Grade</div></div>
@@ -539,8 +539,8 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
     
     <div class="proj-wrap">
       <div class="section-label">Contract Outlook &middot; Projected WAR &amp; Surplus</div>
-      <div class="proj-grid" style="grid-template-columns: repeat(2, 1fr);"><div class="proj-cell"><div class="proj-yr">26-27</div><div class="proj-age">Age 19</div><div class="proj-war">+3.3</div><div class="proj-sp pos">+$12.9M</div></div><div class="proj-cell"><div class="proj-yr">27-28</div><div class="proj-age">Age 20</div><div class="proj-war">+3.3</div><div class="proj-sp pos">+$14.2M</div></div></div>
-      <div class="proj-total pos">Projected value over the deal: <b>+$27.1M</b></div>
+      <div class="proj-grid" style="grid-template-columns: repeat(2, 1fr);"><div class="proj-cell"><div class="proj-yr">26-27</div><div class="proj-age">Age 19</div><div class="proj-war">+3.0</div><div class="proj-sp pos">+$12.2M</div></div><div class="proj-cell"><div class="proj-yr">27-28</div><div class="proj-age">Age 20</div><div class="proj-war">+3.1</div><div class="proj-sp pos">+$13.5M</div></div></div>
+      <div class="proj-total pos">Projected value over the deal: <b>+$25.7M</b></div>
       
       <div class="proj-note">Projected from how 2,500+ NHL careers aged since 2010-11, including injury and decline risk, on each season's salary cap.</div>
     </div>
@@ -589,12 +589,13 @@ function makeCareerChart(canvasId) {
   new Chart(ctx, {
   type: 'line',
   data: {
-    labels: ['25-26', '26-27'],
+    labels: ['25-26', '26-27 (pace)'],
     datasets: [{
-      data: [3.53, 0.6],
+      data: [3.53, 2.45],
       borderColor: '#041E42',
       borderWidth: 2.5,
-      pointBackgroundColor: ['#F5C518', '#041E42'],
+      segment: { borderDash: (c) => [false, true][c.p1DataIndex] ? [6, 4] : undefined },
+      pointBackgroundColor: ['#F5C518', '#FFFFFF'],
       pointBorderColor: '#041E42',
       pointBorderWidth: 2,
       pointRadius: [6, 4],
@@ -644,7 +645,7 @@ function makeCareerChart(canvasId) {
         bodyColor: '#fff',
         padding: 8,
         callbacks: {
-          label: (c) => [true, false][c.dataIndex] ? ` ${c.raw} WAR · Career Best` : ` ${c.raw} WAR`
+          label: (c) => [true, false][c.dataIndex] ? ` ${c.raw} WAR · Career Best` : ([false, true][c.dataIndex] ? ` ${c.raw} WAR · full-season pace` : ` ${c.raw} WAR`)
         }
       }
     },

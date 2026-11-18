@@ -357,8 +357,8 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="comp-row">
         <span class="comp-name bad">Shooting</span>
-        <div class="bar-track"><div class="bar-fill red" style="width:2%"></div></div>
-        <span class="pct-badge red">0th</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:32%"></div></div>
+        <span class="pct-badge red">32nd</span>
       </div>
     </div>
 
@@ -493,8 +493,8 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="comp-row">
         <span class="comp-name good">Shooting</span>
-        <div class="bar-track"><div class="bar-fill green" style="width:87%"></div></div>
-        <span class="pct-badge green">87th</span>
+        <div class="bar-track"><div class="bar-fill green" style="width:86%"></div></div>
+        <span class="pct-badge green">86th</span>
       </div>
     </div>
 
@@ -560,15 +560,16 @@ function makeCareerChart(canvasId) {
   new Chart(ctx, {
   type: 'line',
   data: {
-    labels: ['20-21', '21-22', '22-23', '23-24', '24-25', '25-26', '26-27'],
+    labels: ['20-21', '21-22', '22-23', '23-24', '24-25', '25-26', '26-27 (pace)'],
     datasets: [{
-      data: [-0.13, -0.23, -0.06, 0.01, -0.43, -0.04, 0.1],
+      data: [-0.13, -0.23, -0.06, 0.01, -0.43, -0.04, 0.42],
       borderColor: '#041E42',
       borderWidth: 2.5,
-      pointBackgroundColor: ['#041E42', '#041E42', '#041E42', '#041E42', '#041E42', '#041E42', '#F5C518'],
+      segment: { borderDash: (c) => [false, false, false, false, false, false, true][c.p1DataIndex] ? [6, 4] : undefined },
+      pointBackgroundColor: ['#041E42', '#041E42', '#041E42', '#F5C518', '#041E42', '#041E42', '#FFFFFF'],
       pointBorderColor: '#041E42',
       pointBorderWidth: 2,
-      pointRadius: [4, 4, 4, 4, 4, 4, 6],
+      pointRadius: [4, 4, 4, 6, 4, 4, 4],
       pointHoverRadius: 7,
       fill: true,
       backgroundColor: (ctx) => {
@@ -598,11 +599,11 @@ function makeCareerChart(canvasId) {
           },
           peak: {
             type: 'label',
-            xValue: 6,
-            yValue: 0.1,
+            xValue: 3,
+            yValue: 0.01,
             yAdjust: -15,
-            xAdjust: -16,
-            content: ['PEAK 0.1'],
+            xAdjust: 0,
+            content: ['PEAK 0.0'],
             color: '#9A6B00',
             font: { size: 9, weight: '800', family: 'Inter' },
             display: true
@@ -615,7 +616,7 @@ function makeCareerChart(canvasId) {
         bodyColor: '#fff',
         padding: 8,
         callbacks: {
-          label: (c) => [false, false, false, false, false, false, true][c.dataIndex] ? ` ${c.raw} WAR · Career Best` : ` ${c.raw} WAR`
+          label: (c) => [false, false, false, true, false, false, false][c.dataIndex] ? ` ${c.raw} WAR · Career Best` : ([false, false, false, false, false, false, true][c.dataIndex] ? ` ${c.raw} WAR · full-season pace` : ` ${c.raw} WAR`)
         }
       }
     },
@@ -627,7 +628,7 @@ function makeCareerChart(canvasId) {
       },
       y: {
         min: -1.0,
-        max: 1.0,
+        max: 1.5,
         grid: { color: '#f0f0f3' },
         border: { display: false },
         title: { display: true, text: 'WAR', color: '#999', font: { size: 9, weight: '700' }, padding: 2 },
