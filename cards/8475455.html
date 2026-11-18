@@ -357,8 +357,8 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="comp-row">
         <span class="comp-name bad">Shooting</span>
-        <div class="bar-track"><div class="bar-fill red" style="width:32%"></div></div>
-        <span class="pct-badge red">32nd</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:31%"></div></div>
+        <span class="pct-badge red">31st</span>
       </div>
     </div>
 
@@ -419,7 +419,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
 </div>
 
 <div class="card-column col-career">
-<div class="card card-career" id="card-career" data-name="Brenden Dillon" data-sub="NJD · D · Age 36" data-war="-0.35" data-label="3-Year Weighted" data-accent="#CE1126">
+<div class="card card-career" id="card-career" data-name="Brenden Dillon" data-sub="NJD · D · Age 36" data-war="-0.37" data-label="3-Year Weighted" data-accent="#CE1126">
   <div class="card-badge">3-Year Weighted &middot; 2024-25 to 2026-27</div>
   <div class="header">
     <div class="header-inner">
@@ -458,8 +458,8 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="war-box">
         <div class="war-box-label">WAR</div>
-        <div class="war-box-value">-0.35</div>
-        <div class="war-box-gar">-2.1 GAR</div>
+        <div class="war-box-value">-0.37</div>
+        <div class="war-box-gar">-2.2 GAR</div>
       </div>
     </div>
   </div>
@@ -504,8 +504,8 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="comp-row">
         <span class="comp-name bad">Shooting</span>
-        <div class="bar-track"><div class="bar-fill red" style="width:20%"></div></div>
-        <span class="pct-badge red">20th</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:18%"></div></div>
+        <span class="pct-badge red">18th</span>
       </div>
     </div>
 
@@ -539,9 +539,9 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
     
     <div class="proj-wrap">
       <div class="section-label">Contract Outlook &middot; Projected WAR &amp; Surplus</div>
-      <div class="proj-grid" style="grid-template-columns: repeat(1, 1fr);"><div class="proj-cell"><div class="proj-yr">26-27</div><div class="proj-age">Age 36</div><div class="proj-war">-0.3</div><div class="proj-sp neg">−$1.1M</div></div></div>
-      <div class="proj-total neg">Projected value over the deal: <b>−$1.1M</b></div>
-      <div class="proj-next">Next contract: fair price about <b>$4.7M</b> a year (5-year deal)</div>
+      <div class="proj-grid" style="grid-template-columns: repeat(1, 1fr);"><div class="proj-cell"><div class="proj-yr">26-27</div><div class="proj-age">Age 36</div><div class="proj-war">-0.3</div><div class="proj-sp neg">−$1.0M</div></div></div>
+      <div class="proj-total neg">Projected value over the deal: <b>−$1.0M</b></div>
+      <div class="proj-next">Next contract: fair price about <b>$4.8M</b> a year (5-year deal)</div>
       <div class="proj-note">Projected from how 2,500+ NHL careers aged since 2010-11, including injury and decline risk, on each season's salary cap.</div>
     </div>
 
@@ -591,14 +591,14 @@ function makeCareerChart(canvasId) {
   data: {
     labels: ['12-13', '13-14', '14-15', '15-16', '16-17', '17-18', '18-19', '19-20', '20-21', '21-22', '22-23', '23-24', '24-25', '25-26', '26-27 (pace)'],
     datasets: [{
-      data: [0.1, 0.18, -0.6, -0.39, 0.37, 0.41, 0.48, -0.49, 0.14, 0.07, 0.17, 0.78, -0.53, -0.61, 0.32],
+      data: [0.09, -0.24, -0.35, -0.19, 0.52, 0.24, 0.68, -0.32, 0.06, 0.28, 0.34, 0.1, -0.48, -0.61, 0.32],
       borderColor: '#041E42',
       borderWidth: 2.5,
       segment: { borderDash: (c) => [false, false, false, false, false, false, false, false, false, false, false, false, false, false, true][c.p1DataIndex] ? [6, 4] : undefined },
-      pointBackgroundColor: ['#041E42', '#041E42', '#041E42', '#041E42', '#041E42', '#041E42', '#041E42', '#041E42', '#041E42', '#041E42', '#041E42', '#F5C518', '#041E42', '#041E42', '#FFFFFF'],
+      pointBackgroundColor: ['#041E42', '#041E42', '#041E42', '#041E42', '#041E42', '#041E42', '#F5C518', '#041E42', '#041E42', '#041E42', '#041E42', '#041E42', '#041E42', '#041E42', '#FFFFFF'],
       pointBorderColor: '#041E42',
       pointBorderWidth: 2,
-      pointRadius: [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 6, 4, 4, 4],
+      pointRadius: [4, 4, 4, 4, 4, 4, 6, 4, 4, 4, 4, 4, 4, 4, 4],
       pointHoverRadius: 7,
       fill: true,
       backgroundColor: (ctx) => {
@@ -628,11 +628,11 @@ function makeCareerChart(canvasId) {
           },
           peak: {
             type: 'label',
-            xValue: 11,
-            yValue: 0.78,
+            xValue: 6,
+            yValue: 0.68,
             yAdjust: -15,
             xAdjust: 0,
-            content: ['PEAK 0.8'],
+            content: ['PEAK 0.7'],
             color: '#9A6B00',
             font: { size: 9, weight: '800', family: 'Inter' },
             display: true
@@ -645,7 +645,7 @@ function makeCareerChart(canvasId) {
         bodyColor: '#fff',
         padding: 8,
         callbacks: {
-          label: (c) => [false, false, false, false, false, false, false, false, false, false, false, true, false, false, false][c.dataIndex] ? ` ${c.raw} WAR · Career Best` : ([false, false, false, false, false, false, false, false, false, false, false, false, false, false, true][c.dataIndex] ? ` ${c.raw} WAR · full-season pace` : ` ${c.raw} WAR`)
+          label: (c) => [false, false, false, false, false, false, true, false, false, false, false, false, false, false, false][c.dataIndex] ? ` ${c.raw} WAR · Career Best` : ([false, false, false, false, false, false, false, false, false, false, false, false, false, false, true][c.dataIndex] ? ` ${c.raw} WAR · full-season pace` : ` ${c.raw} WAR`)
         }
       }
     },
@@ -657,7 +657,7 @@ function makeCareerChart(canvasId) {
       },
       y: {
         min: -1.0,
-        max: 2.0,
+        max: 1.5,
         grid: { color: '#f0f0f3' },
         border: { display: false },
         title: { display: true, text: 'WAR', color: '#999', font: { size: 9, weight: '700' }, padding: 2 },
