@@ -332,13 +332,13 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
     <div class="components">
       <div class="comp-row">
         <span class="comp-name bad">EV Offense</span>
-        <div class="bar-track"><div class="bar-fill red" style="width:37%"></div></div>
-        <span class="pct-badge red">37th</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:36%"></div></div>
+        <span class="pct-badge red">36th</span>
       </div>
       <div class="comp-row">
         <span class="comp-name mid">EV Defense</span>
-        <div class="bar-track"><div class="bar-fill amber" style="width:43%"></div></div>
-        <span class="pct-badge amber">43rd</span>
+        <div class="bar-track"><div class="bar-fill amber" style="width:40%"></div></div>
+        <span class="pct-badge amber">40th</span>
       </div>
       <div class="comp-row" title="Limited power play time">
         <span class="comp-name na" title="Limited power play time">Power Play</span>
@@ -419,7 +419,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
 </div>
 
 <div class="card-column col-career">
-<div class="card card-career" id="card-career" data-name="Ilya Lyubushkin" data-sub="NSH · D · Age 32" data-war="-0.48" data-label="3-Year Weighted" data-accent="#FFB81C">
+<div class="card card-career" id="card-career" data-name="Ilya Lyubushkin" data-sub="NSH · D · Age 32" data-war="-0.49" data-label="3-Year Weighted" data-accent="#FFB81C">
   <div class="card-badge">3-Year Weighted &middot; 2024-25 to 2026-27</div>
   <div class="header">
     <div class="header-inner">
@@ -458,7 +458,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="war-box">
         <div class="war-box-label">WAR</div>
-        <div class="war-box-value">-0.48</div>
+        <div class="war-box-value">-0.49</div>
         <div class="war-box-gar">-2.9 GAR</div>
       </div>
     </div>
@@ -484,8 +484,8 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="comp-row">
         <span class="comp-name mid">EV Defense</span>
-        <div class="bar-track"><div class="bar-fill amber" style="width:64%"></div></div>
-        <span class="pct-badge amber">64th</span>
+        <div class="bar-track"><div class="bar-fill amber" style="width:66%"></div></div>
+        <span class="pct-badge amber">66th</span>
       </div>
       <div class="comp-row" title="Limited power play time">
         <span class="comp-name na" title="Limited power play time">Power Play</span>
@@ -591,7 +591,7 @@ function makeCareerChart(canvasId) {
   data: {
     labels: ['18-19', '19-20', '20-21', '21-22', '22-23', '23-24', '24-25', '25-26', '26-27 (pace)'],
     datasets: [{
-      data: [0.13, 0.51, -0.02, -0.83, -0.42, -0.51, -0.81, -0.59, 0.0],
+      data: [0.13, 0.46, 0.01, -0.82, -0.42, -0.51, -0.81, -0.59, 0.0],
       borderColor: '#041E42',
       borderWidth: 2.5,
       segment: { borderDash: (c) => [false, false, false, false, false, false, false, false, true][c.p1DataIndex] ? [6, 4] : undefined },
@@ -629,7 +629,7 @@ function makeCareerChart(canvasId) {
           peak: {
             type: 'label',
             xValue: 1,
-            yValue: 0.51,
+            yValue: 0.46,
             yAdjust: -15,
             xAdjust: 0,
             content: ['PEAK 0.5'],

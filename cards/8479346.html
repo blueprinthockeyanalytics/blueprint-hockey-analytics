@@ -332,13 +332,13 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
     <div class="components">
       <div class="comp-row">
         <span class="comp-name bad">EV Offense</span>
-        <div class="bar-track"><div class="bar-fill red" style="width:24%"></div></div>
-        <span class="pct-badge red">24th</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:23%"></div></div>
+        <span class="pct-badge red">23rd</span>
       </div>
       <div class="comp-row">
         <span class="comp-name mid">EV Defense</span>
-        <div class="bar-track"><div class="bar-fill amber" style="width:50%"></div></div>
-        <span class="pct-badge amber">50th</span>
+        <div class="bar-track"><div class="bar-fill amber" style="width:53%"></div></div>
+        <span class="pct-badge amber">53rd</span>
       </div>
       <div class="comp-row" title="Limited power play time">
         <span class="comp-name na" title="Limited power play time">Power Play</span>
@@ -473,8 +473,8 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="comp-row">
         <span class="comp-name bad">EV Defense</span>
-        <div class="bar-track"><div class="bar-fill red" style="width:29%"></div></div>
-        <span class="pct-badge red">29th</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:28%"></div></div>
+        <span class="pct-badge red">28th</span>
       </div>
       <div class="comp-row" title="Limited power play time">
         <span class="comp-name na" title="Limited power play time">Power Play</span>
@@ -562,7 +562,7 @@ function makeCareerChart(canvasId) {
   data: {
     labels: ['18-19', '19-20', '20-21', '21-22', '22-23', '23-24', '26-27 (pace)'],
     datasets: [{
-      data: [0.06, 0.13, 0.14, 0.8, -0.2, -0.02, -0.06],
+      data: [0.06, 0.13, 0.12, 0.78, -0.2, -0.03, -0.06],
       borderColor: '#041E42',
       borderWidth: 2.5,
       segment: { borderDash: (c) => [false, false, false, false, false, false, true][c.p1DataIndex] ? [6, 4] : undefined },
@@ -600,7 +600,7 @@ function makeCareerChart(canvasId) {
           peak: {
             type: 'label',
             xValue: 3,
-            yValue: 0.8,
+            yValue: 0.78,
             yAdjust: -15,
             xAdjust: 0,
             content: ['PEAK 0.8'],
