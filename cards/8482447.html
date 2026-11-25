@@ -466,14 +466,14 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       <div class="stat-box"><div class="stat-val">50</div><div class="stat-lbl">Total GP</div></div>
       <div class="stat-box"><div class="stat-val">.888</div><div class="stat-lbl">SV%</div></div>
       <div class="stat-box"><div class="stat-val">.904</div><div class="stat-lbl">xSV%</div></div>
-      <div class="stat-box"><div class="stat-val">-20.1</div><div class="stat-lbl">GSAx</div></div>
+      <div class="stat-box"><div class="stat-val">-20.2</div><div class="stat-lbl">GSAx</div></div>
       <div class="stat-box"><div class="stat-val">-0.18</div><div class="stat-lbl">GSAx/100</div></div>
     </div>
 
     <div class="section-label">3-Year Percentile vs. NHL Goalies</div>
     <div class="components">
-      <div class="comp-row" title="-20.1 goals saved above expected, last 3 seasons">
-        <span class="comp-name bad" title="-20.1 goals saved above expected, last 3 seasons">Goals Saved</span>
+      <div class="comp-row" title="-20.2 goals saved above expected, last 3 seasons">
+        <span class="comp-name bad" title="-20.2 goals saved above expected, last 3 seasons">Goals Saved</span>
         <div class="bar-track"><div class="bar-fill red" style="width:7%"></div></div>
         <span class="pct-badge red">7th</span>
       </div>
@@ -581,7 +581,7 @@ function makeCareerChart(canvasId) {
   data: {
     labels: ['22-23', '24-25', '25-26', '26-27 (pace)'],
     datasets: [{
-      data: [-0.24, 0.75, -2.81, 2.61],
+      data: [-0.24, 0.75, -2.81, 2.6],
       borderColor: '#041E42',
       borderWidth: 2.5,
       segment: { borderDash: (c) => [false, false, false, true][c.p1DataIndex] ? [6, 4] : undefined },

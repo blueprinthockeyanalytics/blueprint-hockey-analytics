@@ -332,13 +332,13 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
     <div class="components">
       <div class="comp-row">
         <span class="comp-name mid">EV Offense</span>
-        <div class="bar-track"><div class="bar-fill amber" style="width:55%"></div></div>
-        <span class="pct-badge amber">55th</span>
+        <div class="bar-track"><div class="bar-fill amber" style="width:54%"></div></div>
+        <span class="pct-badge amber">54th</span>
       </div>
       <div class="comp-row">
         <span class="comp-name good">EV Defense</span>
-        <div class="bar-track"><div class="bar-fill green" style="width:78%"></div></div>
-        <span class="pct-badge green">78th</span>
+        <div class="bar-track"><div class="bar-fill green" style="width:76%"></div></div>
+        <span class="pct-badge green">76th</span>
       </div>
       <div class="comp-row" title="Limited power play time">
         <span class="comp-name na" title="Limited power play time">Power Play</span>
@@ -494,8 +494,8 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="comp-row">
         <span class="comp-name good">Penalty Kill</span>
-        <div class="bar-track"><div class="bar-fill green" style="width:90%"></div></div>
-        <span class="pct-badge green">90th</span>
+        <div class="bar-track"><div class="bar-fill green" style="width:91%"></div></div>
+        <span class="pct-badge green">91st</span>
       </div>
       <div class="comp-row">
         <span class="comp-name good">Penalties</span>
@@ -539,7 +539,7 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
     
     <div class="proj-wrap">
       <div class="section-label">Contract Outlook &middot; Projected WAR &amp; Surplus</div>
-      <div class="proj-grid" style="grid-template-columns: repeat(6, 1fr);"><div class="proj-cell"><div class="proj-yr">26-27</div><div class="proj-age">Age 25</div><div class="proj-war">+1.9</div><div class="proj-sp pos">+$2.1M</div></div><div class="proj-cell"><div class="proj-yr">27-28</div><div class="proj-age">Age 26</div><div class="proj-war">+1.8</div><div class="proj-sp pos">+$2.7M</div></div><div class="proj-cell"><div class="proj-yr">28-29</div><div class="proj-age">Age 27</div><div class="proj-war">+1.8</div><div class="proj-sp pos">+$3.6M</div></div><div class="proj-cell"><div class="proj-yr">29-30</div><div class="proj-age">Age 28</div><div class="proj-war">+1.6</div><div class="proj-sp pos">+$3.6M</div></div><div class="proj-cell"><div class="proj-yr">30-31</div><div class="proj-age">Age 29</div><div class="proj-war">+1.5</div><div class="proj-sp pos">+$3.5M</div></div><div class="proj-cell"><div class="proj-yr">31-32</div><div class="proj-age">Age 30</div><div class="proj-war">+1.4</div><div class="proj-sp pos">+$3.4M</div></div></div>
+      <div class="proj-grid" style="grid-template-columns: repeat(6, 1fr);"><div class="proj-cell"><div class="proj-yr">26-27</div><div class="proj-age">Age 25</div><div class="proj-war">+1.9</div><div class="proj-sp pos">+$2.1M</div></div><div class="proj-cell"><div class="proj-yr">27-28</div><div class="proj-age">Age 26</div><div class="proj-war">+1.9</div><div class="proj-sp pos">+$2.7M</div></div><div class="proj-cell"><div class="proj-yr">28-29</div><div class="proj-age">Age 27</div><div class="proj-war">+1.8</div><div class="proj-sp pos">+$3.6M</div></div><div class="proj-cell"><div class="proj-yr">29-30</div><div class="proj-age">Age 28</div><div class="proj-war">+1.6</div><div class="proj-sp pos">+$3.6M</div></div><div class="proj-cell"><div class="proj-yr">30-31</div><div class="proj-age">Age 29</div><div class="proj-war">+1.5</div><div class="proj-sp pos">+$3.5M</div></div><div class="proj-cell"><div class="proj-yr">31-32</div><div class="proj-age">Age 30</div><div class="proj-war">+1.4</div><div class="proj-sp pos">+$3.3M</div></div></div>
       <div class="proj-total pos">Projected value over the deal: <b>+$18.9M</b></div>
       
       <div class="proj-note">Projected from how 2,500+ NHL careers aged since 2010-11, including injury and decline risk, on each season's salary cap.</div>
@@ -591,7 +591,7 @@ function makeCareerChart(canvasId) {
   data: {
     labels: ['21-22', '22-23', '23-24', '24-25', '25-26', '26-27 (pace)'],
     datasets: [{
-      data: [1.38, 1.67, 2.06, 2.21, 1.49, 0.73],
+      data: [1.38, 1.67, 2.06, 2.21, 1.49, 0.74],
       borderColor: '#041E42',
       borderWidth: 2.5,
       segment: { borderDash: (c) => [false, false, false, false, false, true][c.p1DataIndex] ? [6, 4] : undefined },

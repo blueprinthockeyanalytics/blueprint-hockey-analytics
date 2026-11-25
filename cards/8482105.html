@@ -332,8 +332,8 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
     <div class="components">
       <div class="comp-row">
         <span class="comp-name mid">EV Offense</span>
-        <div class="bar-track"><div class="bar-fill amber" style="width:62%"></div></div>
-        <span class="pct-badge amber">62nd</span>
+        <div class="bar-track"><div class="bar-fill amber" style="width:61%"></div></div>
+        <span class="pct-badge amber">61st</span>
       </div>
       <div class="comp-row">
         <span class="comp-name good">EV Defense</span>
@@ -347,8 +347,8 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="comp-row">
         <span class="comp-name mid">Penalty Kill</span>
-        <div class="bar-track"><div class="bar-fill amber" style="width:42%"></div></div>
-        <span class="pct-badge amber">42nd</span>
+        <div class="bar-track"><div class="bar-fill amber" style="width:41%"></div></div>
+        <span class="pct-badge amber">41st</span>
       </div>
       <div class="comp-row">
         <span class="comp-name mid">Penalties</span>
@@ -494,8 +494,8 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="comp-row">
         <span class="comp-name good">Penalty Kill</span>
-        <div class="bar-track"><div class="bar-fill green" style="width:78%"></div></div>
-        <span class="pct-badge green">78th</span>
+        <div class="bar-track"><div class="bar-fill green" style="width:77%"></div></div>
+        <span class="pct-badge green">77th</span>
       </div>
       <div class="comp-row">
         <span class="comp-name good">Penalties</span>
@@ -539,8 +539,8 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
     
     <div class="proj-wrap">
       <div class="section-label">Contract Outlook &middot; Projected WAR &amp; Surplus</div>
-      <div class="proj-grid" style="grid-template-columns: repeat(6, 1fr);"><div class="proj-cell"><div class="proj-yr">26-27</div><div class="proj-age">Age 24</div><div class="proj-war">+1.5</div><div class="proj-sp pos">+$0.3M</div></div><div class="proj-cell"><div class="proj-yr">27-28</div><div class="proj-age">Age 25</div><div class="proj-war">+1.4</div><div class="proj-sp pos">+$0.7M</div></div><div class="proj-cell"><div class="proj-yr">28-29</div><div class="proj-age">Age 26</div><div class="proj-war">+1.2</div><div class="proj-sp pos">+$1.3M</div></div><div class="proj-cell"><div class="proj-yr">29-30</div><div class="proj-age">Age 27</div><div class="proj-war">+1.1</div><div class="proj-sp pos">+$1.3M</div></div><div class="proj-cell"><div class="proj-yr">30-31</div><div class="proj-age">Age 28</div><div class="proj-war">+1.0</div><div class="proj-sp pos">+$1.3M</div></div><div class="proj-cell"><div class="proj-yr">31-32</div><div class="proj-age">Age 29</div><div class="proj-war">+0.9</div><div class="proj-sp pos">+$1.3M</div></div></div>
-      <div class="proj-total pos">Projected value over the deal: <b>+$6.2M</b></div>
+      <div class="proj-grid" style="grid-template-columns: repeat(6, 1fr);"><div class="proj-cell"><div class="proj-yr">26-27</div><div class="proj-age">Age 24</div><div class="proj-war">+1.5</div><div class="proj-sp pos">+$0.3M</div></div><div class="proj-cell"><div class="proj-yr">27-28</div><div class="proj-age">Age 25</div><div class="proj-war">+1.4</div><div class="proj-sp pos">+$0.7M</div></div><div class="proj-cell"><div class="proj-yr">28-29</div><div class="proj-age">Age 26</div><div class="proj-war">+1.2</div><div class="proj-sp pos">+$1.3M</div></div><div class="proj-cell"><div class="proj-yr">29-30</div><div class="proj-age">Age 27</div><div class="proj-war">+1.1</div><div class="proj-sp pos">+$1.3M</div></div><div class="proj-cell"><div class="proj-yr">30-31</div><div class="proj-age">Age 28</div><div class="proj-war">+1.0</div><div class="proj-sp pos">+$1.3M</div></div><div class="proj-cell"><div class="proj-yr">31-32</div><div class="proj-age">Age 29</div><div class="proj-war">+0.9</div><div class="proj-sp pos">+$1.2M</div></div></div>
+      <div class="proj-total pos">Projected value over the deal: <b>+$6.1M</b></div>
       
       <div class="proj-note">Projected from how 2,500+ NHL careers aged since 2010-11, including injury and decline risk, on each season's salary cap.</div>
     </div>
@@ -591,7 +591,7 @@ function makeCareerChart(canvasId) {
   data: {
     labels: ['22-23', '23-24', '24-25', '25-26', '26-27 (pace)'],
     datasets: [{
-      data: [1.33, 1.12, 1.53, 1.61, 0.96],
+      data: [1.33, 1.12, 1.53, 1.61, 0.99],
       borderColor: '#041E42',
       borderWidth: 2.5,
       segment: { borderDash: (c) => [false, false, false, false, true][c.p1DataIndex] ? [6, 4] : undefined },

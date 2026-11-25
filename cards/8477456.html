@@ -337,8 +337,8 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="comp-row">
         <span class="comp-name bad">EV Defense</span>
-        <div class="bar-track"><div class="bar-fill red" style="width:18%"></div></div>
-        <span class="pct-badge red">18th</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:15%"></div></div>
+        <span class="pct-badge red">15th</span>
       </div>
       <div class="comp-row" title="Limited power play time">
         <span class="comp-name na" title="Limited power play time">Power Play</span>
@@ -504,8 +504,8 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="comp-row">
         <span class="comp-name bad">Shooting</span>
-        <div class="bar-track"><div class="bar-fill red" style="width:17%"></div></div>
-        <span class="pct-badge red">17th</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:18%"></div></div>
+        <span class="pct-badge red">18th</span>
       </div>
     </div>
 
@@ -539,8 +539,8 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
     
     <div class="proj-wrap">
       <div class="section-label">Contract Outlook &middot; Projected WAR &amp; Surplus</div>
-      <div class="proj-grid" style="grid-template-columns: repeat(2, 1fr);"><div class="proj-cell"><div class="proj-yr">26-27</div><div class="proj-age">Age 31</div><div class="proj-war">-0.0</div><div class="proj-sp neg">−$2.7M</div></div><div class="proj-cell"><div class="proj-yr">27-28</div><div class="proj-age">Age 32</div><div class="proj-war">-0.1</div><div class="proj-sp neg">−$2.6M</div></div></div>
-      <div class="proj-total neg">Projected value over the deal: <b>−$5.3M</b></div>
+      <div class="proj-grid" style="grid-template-columns: repeat(2, 1fr);"><div class="proj-cell"><div class="proj-yr">26-27</div><div class="proj-age">Age 31</div><div class="proj-war">-0.0</div><div class="proj-sp neg">−$2.7M</div></div><div class="proj-cell"><div class="proj-yr">27-28</div><div class="proj-age">Age 32</div><div class="proj-war">-0.1</div><div class="proj-sp neg">−$2.7M</div></div></div>
+      <div class="proj-total neg">Projected value over the deal: <b>−$5.4M</b></div>
       
       <div class="proj-note">Projected from how 2,500+ NHL careers aged since 2010-11, including injury and decline risk, on each season's salary cap.</div>
     </div>
@@ -591,7 +591,7 @@ function makeCareerChart(canvasId) {
   data: {
     labels: ['16-17', '17-18', '18-19', '19-20', '20-21', '21-22', '22-23', '23-24', '24-25', '25-26', '26-27 (pace)'],
     datasets: [{
-      data: [0.08, -0.17, -0.06, 0.2, -0.03, 0.03, 0.8, 0.95, -0.27, 0.23, -0.01],
+      data: [0.08, -0.17, -0.06, 0.2, -0.03, 0.03, 0.8, 0.95, -0.27, 0.23, -0.02],
       borderColor: '#041E42',
       borderWidth: 2.5,
       segment: { borderDash: (c) => [false, false, false, false, false, false, false, false, false, false, true][c.p1DataIndex] ? [6, 4] : undefined },

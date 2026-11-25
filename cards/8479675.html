@@ -332,13 +332,13 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
     <div class="components">
       <div class="comp-row">
         <span class="comp-name bad">EV Offense</span>
-        <div class="bar-track"><div class="bar-fill red" style="width:27%"></div></div>
-        <span class="pct-badge red">27th</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:28%"></div></div>
+        <span class="pct-badge red">28th</span>
       </div>
       <div class="comp-row">
         <span class="comp-name bad">EV Defense</span>
-        <div class="bar-track"><div class="bar-fill red" style="width:33%"></div></div>
-        <span class="pct-badge red">33rd</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:32%"></div></div>
+        <span class="pct-badge red">32nd</span>
       </div>
       <div class="comp-row" title="Limited power play time">
         <span class="comp-name na" title="Limited power play time">Power Play</span>
@@ -352,8 +352,8 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="comp-row">
         <span class="comp-name good">Penalties</span>
-        <div class="bar-track"><div class="bar-fill green" style="width:75%"></div></div>
-        <span class="pct-badge green">75th</span>
+        <div class="bar-track"><div class="bar-fill green" style="width:74%"></div></div>
+        <span class="pct-badge green">74th</span>
       </div>
       <div class="comp-row">
         <span class="comp-name good">Shooting</span>
@@ -484,8 +484,8 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="comp-row">
         <span class="comp-name bad">EV Defense</span>
-        <div class="bar-track"><div class="bar-fill red" style="width:34%"></div></div>
-        <span class="pct-badge red">34th</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:33%"></div></div>
+        <span class="pct-badge red">33rd</span>
       </div>
       <div class="comp-row" title="Limited power play time">
         <span class="comp-name na" title="Limited power play time">Power Play</span>
@@ -494,8 +494,8 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="comp-row">
         <span class="comp-name good">Penalty Kill</span>
-        <div class="bar-track"><div class="bar-fill green" style="width:81%"></div></div>
-        <span class="pct-badge green">81st</span>
+        <div class="bar-track"><div class="bar-fill green" style="width:82%"></div></div>
+        <span class="pct-badge green">82nd</span>
       </div>
       <div class="comp-row">
         <span class="comp-name good">Penalties</span>
@@ -539,8 +539,8 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
     
     <div class="proj-wrap">
       <div class="section-label">Contract Outlook &middot; Projected WAR &amp; Surplus</div>
-      <div class="proj-grid" style="grid-template-columns: repeat(2, 1fr);"><div class="proj-cell"><div class="proj-yr">26-27</div><div class="proj-age">Age 31</div><div class="proj-war">+0.5</div><div class="proj-sp neg">−$0.1M</div></div><div class="proj-cell"><div class="proj-yr">27-28</div><div class="proj-age">Age 32</div><div class="proj-war">+0.3</div><div class="proj-sp neg">−$0.1M</div></div></div>
-      <div class="proj-total neg">Projected value over the deal: <b>−$0.2M</b></div>
+      <div class="proj-grid" style="grid-template-columns: repeat(2, 1fr);"><div class="proj-cell"><div class="proj-yr">26-27</div><div class="proj-age">Age 31</div><div class="proj-war">+0.5</div><div class="proj-sp neg">−$0.1M</div></div><div class="proj-cell"><div class="proj-yr">27-28</div><div class="proj-age">Age 32</div><div class="proj-war">+0.3</div><div class="proj-sp neg">−$0.2M</div></div></div>
+      <div class="proj-total neg">Projected value over the deal: <b>−$0.3M</b></div>
       
       <div class="proj-note">Projected from how 2,500+ NHL careers aged since 2010-11, including injury and decline risk, on each season's salary cap.</div>
     </div>
@@ -591,7 +591,7 @@ function makeCareerChart(canvasId) {
   data: {
     labels: ['18-19', '19-20', '20-21', '21-22', '22-23', '23-24', '24-25', '25-26', '26-27 (pace)'],
     datasets: [{
-      data: [0.02, 0.13, -0.12, 0.66, 0.44, 1.67, 0.59, 0.51, 0.52],
+      data: [0.02, 0.13, -0.12, 0.66, 0.44, 1.67, 0.59, 0.51, 0.54],
       borderColor: '#041E42',
       borderWidth: 2.5,
       segment: { borderDash: (c) => [false, false, false, false, false, false, false, false, true][c.p1DataIndex] ? [6, 4] : undefined },

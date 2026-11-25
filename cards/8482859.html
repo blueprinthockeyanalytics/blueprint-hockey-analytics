@@ -347,8 +347,8 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="comp-row">
         <span class="comp-name good">Penalty Kill</span>
-        <div class="bar-track"><div class="bar-fill green" style="width:86%"></div></div>
-        <span class="pct-badge green">86th</span>
+        <div class="bar-track"><div class="bar-fill green" style="width:85%"></div></div>
+        <span class="pct-badge green">85th</span>
       </div>
       <div class="comp-row">
         <span class="comp-name bad">Penalties</span>
@@ -382,12 +382,12 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
         <div class="contract-lbl">Market Value</div>
       </div>
     </div>
-    <div class="value-row">
+    <div class="value-row over">
       <div>
-        <div class="value-delta">+$0.0M/yr</div>
-        <div class="value-desc">Under market value</div>
+        <div class="value-delta">-$0.0M/yr</div>
+        <div class="value-desc">Over market value</div>
       </div>
-      <div class="grade-chip b"><div class="grade-letter">B</div><div class="grade-lbl">Grade</div></div>
+      <div class="grade-chip c"><div class="grade-letter">C</div><div class="grade-lbl">Grade</div></div>
     </div>
 
     <div class="brand-footer">
@@ -504,8 +504,8 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
       </div>
       <div class="comp-row">
         <span class="comp-name bad">Shooting</span>
-        <div class="bar-track"><div class="bar-fill red" style="width:35%"></div></div>
-        <span class="pct-badge red">35th</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:33%"></div></div>
+        <span class="pct-badge red">33rd</span>
       </div>
     </div>
 
@@ -529,18 +529,18 @@ html.embed-season .col-career, html.embed-career .col-season { display: none; }
         <div class="contract-lbl">Market Value</div>
       </div>
     </div>
-    <div class="value-row">
+    <div class="value-row over">
       <div>
-        <div class="value-delta">+$0.0M/yr</div>
-        <div class="value-desc">Under market value</div>
+        <div class="value-delta">-$0.0M/yr</div>
+        <div class="value-desc">Over market value</div>
       </div>
-      <div class="grade-chip b"><div class="grade-letter">B</div><div class="grade-lbl">Grade</div></div>
+      <div class="grade-chip c"><div class="grade-letter">C</div><div class="grade-lbl">Grade</div></div>
     </div>
     
     <div class="proj-wrap">
       <div class="section-label">Contract Outlook &middot; Projected WAR &amp; Surplus</div>
       <div class="proj-grid" style="grid-template-columns: repeat(4, 1fr);"><div class="proj-cell"><div class="proj-yr">26-27</div><div class="proj-age">Age 23</div><div class="proj-war">+0.1</div><div class="proj-sp pos">+$0.3M</div></div><div class="proj-cell"><div class="proj-yr">27-28</div><div class="proj-age">Age 24</div><div class="proj-war">+0.1</div><div class="proj-sp pos">+$0.8M</div></div><div class="proj-cell"><div class="proj-yr">28-29</div><div class="proj-age">Age 25</div><div class="proj-war">+0.1</div><div class="proj-sp pos">+$1.3M</div></div><div class="proj-cell"><div class="proj-yr">29-30</div><div class="proj-age">Age 26</div><div class="proj-war">+0.2</div><div class="proj-sp pos">+$1.6M</div></div></div>
-      <div class="proj-total pos">Projected value over the deal: <b>+$4.1M</b></div>
+      <div class="proj-total pos">Projected value over the deal: <b>+$4.0M</b></div>
       
       <div class="proj-note">Projected from how 2,500+ NHL careers aged since 2010-11, including injury and decline risk, on each season's salary cap.</div>
     </div>
@@ -591,7 +591,7 @@ function makeCareerChart(canvasId) {
   data: {
     labels: ['23-24', '24-25', '25-26', '26-27 (pace)'],
     datasets: [{
-      data: [0.01, -0.01, -0.01, -0.39],
+      data: [0.01, -0.01, -0.01, -0.37],
       borderColor: '#041E42',
       borderWidth: 2.5,
       segment: { borderDash: (c) => [false, false, false, true][c.p1DataIndex] ? [6, 4] : undefined },

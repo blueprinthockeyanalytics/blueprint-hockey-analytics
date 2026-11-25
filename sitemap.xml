@@ -3171,6 +3171,11 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://blueprinthockeyanalytics.com/player?id=8482765</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://blueprinthockeyanalytics.com/player?id=8482766</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -3467,6 +3472,11 @@
   </url>
   <url>
     <loc>https://blueprinthockeyanalytics.com/player?id=8483513</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://blueprinthockeyanalytics.com/player?id=8483514</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3816,12 +3826,22 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://blueprinthockeyanalytics.com/player?id=8484392</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://blueprinthockeyanalytics.com/player?id=8484403</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://blueprinthockeyanalytics.com/player?id=8484406</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://blueprinthockeyanalytics.com/player?id=8484409</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3867,6 +3887,11 @@
   </url>
   <url>
     <loc>https://blueprinthockeyanalytics.com/player?id=8484783</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://blueprinthockeyanalytics.com/player?id=8484786</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -4041,6 +4066,11 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://blueprinthockeyanalytics.com/player?id=8486025</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://blueprinthockeyanalytics.com/player?id=8486052</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -4052,6 +4082,11 @@
   </url>
   <url>
     <loc>https://blueprinthockeyanalytics.com/player?id=8486103</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://blueprinthockeyanalytics.com/player?id=8486130</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -4142,6 +4177,11 @@
   </url>
   <url>
     <loc>https://blueprinthockeyanalytics.com/player?id=8476883</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://blueprinthockeyanalytics.com/player?id=8476899</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -4427,11 +4467,6 @@
   </url>
   <url>
     <loc>https://blueprinthockeyanalytics.com/player?id=8483548</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://blueprinthockeyanalytics.com/player?id=8483575</loc>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
